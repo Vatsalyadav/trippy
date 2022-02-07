@@ -8,9 +8,9 @@ class TestFileTest {
     {
         TestFile test = new TestFile();
         int a =5;
-        int b= 98;
+        int b= 100;
         int actual = test.add(a,b);
-        int expected = 103;
+        int expected = 105;
         Assertions.assertEquals(expected,actual,"Test Passed");
     }
 
