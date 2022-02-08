@@ -2,7 +2,7 @@ image: maven:latest
 
 cache:
   paths:
-    - .m2/repository/
+    - .m2/repository/Trip_Management_System_Group_16/
     - target/
 
 stages:
