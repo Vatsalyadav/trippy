@@ -14,7 +14,7 @@
 	<name>asdc</name>
 	<description>Trip Management Spring</description>
 	<properties>
-		<java.version>16</java.version>
+		<java.version>14</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
