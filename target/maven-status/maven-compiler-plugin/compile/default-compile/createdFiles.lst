@@ -1,1 +1,7 @@
-TestFile.class
+com\tripmanagement\asdc\controller\CarOwnerController.class
+com\tripmanagement\asdc\model\CarOwner.class
+com\tripmanagement\asdc\service\CarOwnerServiceImpl.class
+com\tripmanagement\asdc\AsdcApplication.class
+com\tripmanagement\asdc\dao\CarOwnerDAO.class
+com\tripmanagement\asdc\dao\CarOwnerDAOImpl.class
+com\tripmanagement\asdc\service\CarOwnerService.class
