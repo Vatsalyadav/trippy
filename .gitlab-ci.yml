@@ -28,7 +28,7 @@ build:
       - feature_backend
       - develop
       - merge_requests
-      - main
+      - heroku_configuration
 
 # test stage will compile the code and run all the unit tests present in the
 # test folder.
@@ -52,7 +52,7 @@ test:
       - feature_backend
       - develop
       - merge_requests
-      - main
+      - heroku_configuration
 
 #deploy:
 #  stage: develop
