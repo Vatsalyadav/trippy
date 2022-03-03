@@ -9,14 +9,13 @@ stages:
   - build
   - test
   - deploy
+  - deploy-prod
 
 build:
   image: maven:3-jdk-8
   stage: build
-  #  tags:
-  #    - ugrad
   script:
-    - mvn clean install -DskipTests=true
+    - mvn clean package -DskipTests=true
     - ls
   artifacts:
     paths:
@@ -28,14 +27,14 @@ build:
       - feature_backend
       - develop
       - merge_requests
+      - heroku_configuration
+      - main
 
 # test stage will compile the code and run all the unit tests present in the
 # test folder.
 test:
   image: maven:3-jdk-8
   stage: test
-  #  tags:
-  #    - ugrad
   script:
     - mvn clean test
   artifacts:
@@ -51,31 +50,25 @@ test:
       - feature_backend
       - develop
       - merge_requests
+      - heroku_configuration
+      - main
 
-#deploy:
-#  stage: develop
-#  tags:
-#    - ugrad
-#  before_script:
-#    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-#    - eval $(ssh-agent -s)
-#    - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
-#  script:
-#    - echo "dbURL=$DATABASE_URL" > config.properties
-#    - echo "dbUserName=$TEST_DATABASE_USERNAME" >> config.properties
-#    - echo "dbPassword=$TEST_DATABASE_PASSWORD" >> config.properties
-#    - echo "dbDriver=$TEST_DATABASE" >> config.properties
-#    - pwd
-#    - ls -lrth
-#    - ls target/
-#    - ls -lrth ~/.ssh
-#    - echo "$CI_COMMIT_REF_NAME"
-#    - zip -r ${CI_COMMIT_SHORT_SHA}.zip . -i target/*.jar
-#    - ls -lrth ${CI_COMMIT_SHORT_SHA}.zip
-#    - scp -r -o StrictHostKeyChecking=no ${CI_COMMIT_SHORT_SHA}.zip "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/${CI_COMMIT_SHORT_SHA}.zip"
-#    - scp -r -o StrictHostKeyChecking=no config.properties "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_DIR}/config.properties"
-#  only:
-#    - develop
+deploy-prod:
+  image: ruby:latest
+  stage: deploy
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$DEPLOY_SSH_KEY" | tr -d '\r' | ssh-add -
+  script:
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
+#    TODO: Add Production App Environment Variables
+  only:
+    - main
+
 deploy:
   image: ruby:latest
   stage: deploy
