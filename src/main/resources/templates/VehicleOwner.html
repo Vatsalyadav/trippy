@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p th:text="'vehicleowner_id, ' + ${vehicleowner_id}" />
+<p th:text="'vehicleowner_name, ' + ${vehicleowner_name}" />
+<p th:text="'email, ' + ${email}" />
+<p th:text="'address, ' + ${address}" />
+<p th:text="'phone, ' + ${phone}" />
+<p th:text="'vehicle_id, ' + ${vehicle_id}" />
+<div id="saveVehicleOwner">
+	<form:form action="/saveVehicleOwner" method="post"
+			   modelAttribute="vehicleOwner">
+		<p>
+			<label>vehicleowner_id</label>
+			<form:input path="vehicleowner_id" />
+		</p>
+		<p>
+			<label>vehicleowner_name</label>
+			<form:input path="vehicleowner_name" />
+		</p>
+		<p>
+			<label>email</label>
+			<form:input path="email" />
+		</p>
+		<p>
+			<label>address</label>
+			<form:input path="address" />
+		</p>
+		<p>
+			<label>phone</label>
+			<form:input path="phone" />
+		</p>
+		<p>
+			<label>vehicle_id</label>
+			<form:input path="vehicle_id" />
+		</p>
+		<input type="SUBMIT" value="Submit" />
+	</form:form></div>
+<!--	<form:form action="/saveVehicleOwner" method="post"-->
+<!--				modelAttribute="vehicleOwner">-->
+<!--				<p>-->
+<!--					<label>vehicleowner_id</label>-->
+<!--					<form:input path="vehicleowner_id" />-->
+<!--				</p>-->
+<!--				<p>-->
+<!--					<label>vehicleowner_name</label>-->
+<!--					<form:input path="vehicleowner_name" />-->
+<!--				</p>-->
+<!--				<p>-->
+<!--					<label>email</label>-->
+<!--					<form:input path="email" />-->
+<!--				</p>-->
+<!--				<p>-->
+<!--					<label>address</label>-->
+<!--					<form:input path="address" />-->
+<!--				</p>-->
+<!--				<p>-->
+<!--					<label>phone</label>-->
+<!--					<form:input path="phone" />-->
+<!--				</p>-->
+<!--				<p>-->
+<!--					<label>vehicle_id</label>-->
+<!--					<form:input path="vehicle_id" />-->
+<!--				</p>-->
+<form action="#" th:action="@{/adduser}" th:object="${vehicleOwner}" method="post">
+	<!--			<label for="fname">First name:</label><br>-->
+	<!--			<input type="text" id="fname" name="fname"><br>-->
+	<!--			<label for="lname">Last name:</label><br>-->
+	<!--			<input type="text" id="lname" name="lname">-->
+
+	<label for="email">Email:</label><br>
+	<input type="text" id="email" name="email"><br>
+	<label for="phone">Phone:</label><br>
+	<input type="text" id="phone" name="phone"><br>
+
+	<input type="submit" value="Add User">
+</form>
+<!--				<input type="SUBMIT" value="Submit" />-->
+<!--			</form:form></div>-->
+</div>
+</body>
+</html>
