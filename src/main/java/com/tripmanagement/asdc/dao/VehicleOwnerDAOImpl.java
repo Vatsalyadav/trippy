@@ -25,7 +25,7 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 
         String sql = "insert into vehicleowner values("+vehicleOwner.getVehicleowner_fname()+","+vehicleOwner.getVehicleowner_lname()+","+vehicleOwner.getPhone()+","+vehicleOwner.getAddress()+","+vehicleOwner.getEmail()+","+vehicleOwner.getVehicle_id()+","+vehicleOwner.getPassword()+");";
         jdbcTemplate.update(sql);
-		notificationService.sendEmail(vehicleOwner.getVehicleowner_fname()+StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
+		//notificationService.sendEmail(vehicleOwner.getVehicleowner_fname()+StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
 
 		
 	}
@@ -43,15 +43,6 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 		VehicleOwner.class);
 		return vehicleOwners;
 	}
-
-	
-    
-
-
-    
-    
-
-
 }
 
 

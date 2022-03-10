@@ -7,9 +7,9 @@ public interface VehicleOwnerDAO {
 
 	public List<VehicleOwner> getVehicleOwners();
 
-	public void saveCarOwner(VehicleOwner carOwner);
+	public void saveVehicleOwner(VehicleOwner carOwner);
 
-	public VehicleOwner getCarOwner(int theId);
+	public VehicleOwner getVehicleOwner(int theId);
 
 	
 }

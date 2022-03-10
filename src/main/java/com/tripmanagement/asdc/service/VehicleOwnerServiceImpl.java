@@ -11,21 +11,21 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 
 	// need to inject customer dao
 	@Autowired
-	private VehicleOwnerDAO carOwnerDAO;
+	private VehicleOwnerDAO vehicleOwnerDAO;
 	
 	
 	@Override
 	@Transactional
 	public void saveVehicleOwner(VehicleOwner carOwner) {
 
-		carOwnerDAO.saveVehicleOwner(carOwner);
+		vehicleOwnerDAO.saveVehicleOwner(carOwner);
 	}
 
 	@Override
 	@Transactional
 	public VehicleOwner getVehicleOwner(int theId) {
 		
-		return carOwnerDAO.getVehicleOwner(theId);
+		return vehicleOwnerDAO.getVehicleOwner(theId);
 	}
 
 }
