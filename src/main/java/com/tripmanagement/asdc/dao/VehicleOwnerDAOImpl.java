@@ -1,8 +1,6 @@
 package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.service.NotificationService;
-import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,8 +15,6 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-	@Autowired
-	NotificationService notificationService;
 
 	@Override
 	public void saveVehicleOwner(VehicleOwner vehicleOwner) {
