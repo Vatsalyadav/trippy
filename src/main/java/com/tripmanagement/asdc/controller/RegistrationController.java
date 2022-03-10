@@ -60,7 +60,7 @@ public class RegistrationController {
 
     @PostMapping("/register-vehicle-owner")
     public String registerVehicleOwner(VehicleOwner vehicleOwner, BindingResult result, Model model) {
-        // TODO: Link with service
+        // TODO: Link with Vehicle service
         // service.checkEmailExists(vehicleOwner.email)
         // service.registerVehicleOwner(vehicleOwner)
         System.out.println("Name: "+ vehicleOwner.getVehicleowner_name());
@@ -81,13 +81,11 @@ public class RegistrationController {
     @PostMapping("/add-customer")
     public String registerCustomer(VehicleOwner vehicleOwner, BindingResult result, Model model) {
         // TODO: Link with service
-        // service.
-        System.out.println("YOLO 1"+ vehicleOwner.getVehicleowner_name());
-        System.out.println("YOLO 2"+ vehicleOwner.getPhone());
-        System.out.println("YOLO 3"+ vehicleOwner.getEmail());
-        System.out.println("YOLO 4"+ vehicleOwner.getAddress());
-        System.out.println("YOLO 5"+ vehicleOwner.getVehicle_id());
-
+        System.out.println("Name: "+ vehicleOwner.getVehicleowner_name());
+        System.out.println("Phone Number:"+ vehicleOwner.getPhone());
+        System.out.println("Email: "+ vehicleOwner.getEmail());
+        System.out.println("Address: "+ vehicleOwner.getAddress());
+        System.out.println("Vehicle ID:"+ vehicleOwner.getVehicle_id());
         return "login";
     }
 
