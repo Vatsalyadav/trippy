@@ -25,9 +25,9 @@ public class VehicleOwnerController {
 
     @GetMapping("/getVehicleOwner")
     public String getVehicleOwner(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        VehicleOwner carOwner=carOwnerService.getCarOwner(1);
+        VehicleOwner carOwner=carOwnerService.getVehicleOwner(1);
         model.addAttribute("vehicleowner_id", carOwner.getVehicle_id());
-        model.addAttribute("vehicleowner_name", carOwner.getVehicleowner_name());
+        model.addAttribute("vehicleowner_name", carOwner.getVehicleowner_fname());
         model.addAttribute("address", carOwner.getAddress());
         model.addAttribute("email", carOwner.getEmail());
         model.addAttribute("phone", carOwner.getPhone());
@@ -40,9 +40,9 @@ public class VehicleOwnerController {
         if (result.hasErrors()) {
             return "add-user";
         }
-        VehicleOwner carOwner=carOwnerService.getCarOwner(1);
+        VehicleOwner carOwner=carOwnerService.getVehicleOwner(1);
         model.addAttribute("vehicleowner_id", carOwner.getVehicle_id());
-        model.addAttribute("vehicleowner_name", carOwner.getVehicleowner_name());
+        model.addAttribute("vehicleowner_name", carOwner.getVehicleowner_fname());
         model.addAttribute("address", carOwner.getAddress());
         model.addAttribute("email", vehicleOwner.getEmail());
         model.addAttribute("phone", vehicleOwner.getPhone());

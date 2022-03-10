@@ -1,12 +1,7 @@
 package com.tripmanagement.asdc.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 @Entity
 @Table(name="customer")
 public class Customer {
@@ -16,8 +11,11 @@ public class Customer {
     @Column(name="customer_id")
     private int customer_id;
 
-    @Column(name="customer_name")
-    private String customer_name;
+    @Column(name="customer_fname")
+    private String customer_fname;
+
+    @Column(name="customer_lname")
+    private String customer_lname;
 
     @Column(name="mobile_no")
     private String mobile_no;
@@ -37,20 +35,25 @@ public class Customer {
     @Column(name="payment_id")
     private int payment_id;
 
+    @Column(name="password")
+    private String password;
+
     public Customer() {
 
     }
 
-    public Customer(int customer_id, String customer_name, String mobile_no, String address, String email, String owner_tag, int trip_id, int payment_id)
+    public Customer(int customer_id, String customer_fname, String customer_lname,String mobile_no, String address, String email, String owner_tag, int trip_id, int payment_id, String password)
     {
        this.customer_id=customer_id;
-       this.customer_name=customer_name;
+       this.customer_fname=customer_fname;
+       this.customer_lname=customer_lname;
        this.mobile_no=mobile_no;
        this.address=address;
        this.email=email;
        this.owner_tag=owner_tag;
        this.trip_id=trip_id;
        this.payment_id=payment_id;
+       this.password=password;
     }
 
     public int getCustomer_id() {
@@ -61,12 +64,12 @@ public class Customer {
         this.customer_id = customer_id;
     }
 
-    public String getCustomer_name() {
-        return customer_name;
+    public String getCustomer_lname() {
+        return customer_lname;
     }
 
-    public void setCustomer_name(String customer_name) {
-        this.customer_name = customer_name;
+    public void setCustomer_lname(String customer_lname) {
+        this.customer_lname = customer_lname;
     }
 
     public String getMobile_no() {
@@ -87,6 +90,14 @@ public class Customer {
 
     public String getEmail(){
         return email;
+    }
+
+    public String getCustomer_fname() {
+        return customer_fname;
+    }
+
+    public void setCustomer_fname(String customer_fname) {
+        this.customer_fname = customer_fname;
     }
 
     public void setEmail(String email){
@@ -117,11 +128,29 @@ public class Customer {
         this.trip_id = trip_id;
     }
 
-    @Override
-    public String toString() {
-        return "customer [customer_id=" + customer_id + ", customer_name=" + customer_name + ", mobile_no=" + mobile_no + ", address=" + address + ", email=" + email + ",owner_tag=" + owner_tag + ",trip_id=" + trip_id + ",payment_id=" + payment_id +"]";
+    public String getPassword() {
+        return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customer_id=" + customer_id +
+                ", customer_fname='" + customer_fname + '\'' +
+                ", customer_lname='" + customer_lname + '\'' +
+                ", mobile_no='" + mobile_no + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", owner_tag='" + owner_tag + '\'' +
+                ", trip_id=" + trip_id +
+                ", payment_id=" + payment_id +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
 
 
