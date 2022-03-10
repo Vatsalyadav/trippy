@@ -1,8 +1,8 @@
 package com.tripmanagement.asdc.service;
 
-import java.util.List;
-
 import com.tripmanagement.asdc.model.Customer;
+
+import java.util.List;
 
 public interface CustomerService {
 
