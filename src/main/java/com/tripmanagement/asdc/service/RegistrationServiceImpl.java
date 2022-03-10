@@ -1,8 +1,7 @@
 package com.tripmanagement.asdc.service;
 
 import com.tripmanagement.asdc.dao.RegistrationDAO;
-import com.tripmanagement.stringsAndConstants.StringMessages;
-
+import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

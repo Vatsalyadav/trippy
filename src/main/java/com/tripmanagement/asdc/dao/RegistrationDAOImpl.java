@@ -2,8 +2,7 @@ package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.Customer;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.stringsAndConstants.Constants;
-
+import com.tripmanagement.asdc.stringsAndConstants.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -42,7 +41,7 @@ public class RegistrationDAOImpl implements RegistrationDAO{
 
     @Override
     public boolean checkEmailExists(String email, String userType) {
-        if(userType==Constants.uType_Customer)
+        if(userType== Constants.uType_Customer)
         {
             Customer customer=jdbcTemplate.queryForObject("select * from customer where email="+email,
             BeanPropertyRowMapper.newInstance(Customer.class)); 
