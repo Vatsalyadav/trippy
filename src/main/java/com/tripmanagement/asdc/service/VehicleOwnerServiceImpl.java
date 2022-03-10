@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import com.tripmanagement.asdc.dao.VehicleOwnerDAO;
 import com.tripmanagement.asdc.model.VehicleOwner;
 
@@ -27,6 +29,11 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 	public VehicleOwner getCarOwner(int theId) {
 		
 		return carOwnerDAO.getCarOwner(theId);
+	}
+
+	@Override
+	public List<VehicleOwner> getVehicleOwners() {
+		return carOwnerDAO.getVehicleOwners();
 	}
 
 }

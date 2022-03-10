@@ -1,12 +1,14 @@
 package com.tripmanagement.asdc.service;
 
+import java.util.List;
+
 //import java.util.List;
 
 import com.tripmanagement.asdc.model.VehicleOwner;;
 
 public interface VehicleOwnerService {
 
-	//public List<CarOwner> getCustomers();
+	public List<VehicleOwner> getVehicleOwners();
 
 	public void saveCarOwner(VehicleOwner carOwner);
 
