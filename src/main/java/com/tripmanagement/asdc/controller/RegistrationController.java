@@ -1,11 +1,14 @@
 package com.tripmanagement.asdc.controller;
 
 import com.tripmanagement.asdc.model.UserLogin;
+import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.service.RegistrationService;
 import com.tripmanagement.stringsAndConstants.StringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -53,6 +56,38 @@ public class RegistrationController {
     public String dashboard() {
         // TODO: open dashboard depending upon user type
         return "dashboard";
+    }
+
+    @PostMapping("/register-vehicle-owner")
+    public String registerVehicleOwner(VehicleOwner vehicleOwner, BindingResult result, Model model) {
+        // TODO: Link with Vehicle service
+        // service.checkEmailExists(vehicleOwner.email)
+        // service.registerVehicleOwner(vehicleOwner)
+        System.out.println("YOLO 1"+ vehicleOwner.getVehicleowner_name());
+        System.out.println("YOLO 2"+ vehicleOwner.getPhone());
+        System.out.println("YOLO 3"+ vehicleOwner.getEmail());
+        System.out.println("YOLO 4"+ vehicleOwner.getAddress());
+        System.out.println("YOLO 5"+ vehicleOwner.getVehicle_id());
+
+        String message = "return message";
+        if(message.equalsIgnoreCase("Success"))
+            return "register-user";
+        else {
+            model.addAttribute("error_message", message);
+            return "login";
+        }
+    }
+
+    @PostMapping("/add-customer")
+    public String registerCustomer(VehicleOwner vehicleOwner, BindingResult result, Model model) {
+        // TODO: Link with service
+        System.out.println("Name: "+ vehicleOwner.getVehicleowner_name());
+        System.out.println("Phone Number:"+ vehicleOwner.getPhone());
+        System.out.println("Email: "+ vehicleOwner.getEmail());
+        System.out.println("Address: "+ vehicleOwner.getAddress());
+        System.out.println("Vehicle ID:"+ vehicleOwner.getVehicle_id());
+
+        return "login";
     }
 
 }
