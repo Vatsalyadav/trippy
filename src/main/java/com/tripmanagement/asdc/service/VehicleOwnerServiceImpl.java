@@ -1,13 +1,10 @@
 package com.tripmanagement.asdc.service;
 
+import com.tripmanagement.asdc.dao.VehicleOwnerDAO;
+import com.tripmanagement.asdc.model.VehicleOwner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
-import com.tripmanagement.asdc.dao.VehicleOwnerDAO;
-import com.tripmanagement.asdc.model.VehicleOwner;
 
 @Service
 public class VehicleOwnerServiceImpl implements VehicleOwnerService {
@@ -19,21 +16,16 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 	
 	@Override
 	@Transactional
-	public void saveCarOwner(VehicleOwner carOwner) {
+	public void saveVehicleOwner(VehicleOwner carOwner) {
 
-		carOwnerDAO.saveCarOwner(carOwner);
+		carOwnerDAO.saveVehicleOwner(carOwner);
 	}
 
 	@Override
 	@Transactional
-	public VehicleOwner getCarOwner(int theId) {
+	public VehicleOwner getVehicleOwner(int theId) {
 		
-		return carOwnerDAO.getCarOwner(theId);
-	}
-
-	@Override
-	public List<VehicleOwner> getVehicleOwners() {
-		return carOwnerDAO.getVehicleOwners();
+		return carOwnerDAO.getVehicleOwner(theId);
 	}
 
 }
