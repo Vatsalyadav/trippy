@@ -12,6 +12,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import com.tripmanagement.asdc.model.VehicleOwner;
 
 @Repository
@@ -37,6 +39,15 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
        BeanPropertyRowMapper.newInstance(VehicleOwner.class));
 	  return carOwner;
 	}
+
+	@Override
+	public List<VehicleOwner> getVehicleOwners() {
+		List<VehicleOwner> vehicleOwners=jdbcTemplate.queryForList("select * from vehicleowner",
+		VehicleOwner.class);
+		return vehicleOwners;
+	}
+
+	
     
 
 
