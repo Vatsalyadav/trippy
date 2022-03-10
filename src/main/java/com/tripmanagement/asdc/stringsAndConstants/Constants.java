@@ -1,4 +1,4 @@
-package com.tripmanagement.stringsAndConstants;
+package com.tripmanagement.asdc.stringsAndConstants;
 
 public interface Constants {
     public static String uType_Customer="CUSTOMER";
