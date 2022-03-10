@@ -22,14 +22,16 @@
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Trip Management</h3></div>
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <form th:action="@{/login}" th:object="${UserLogin}" method="post">
+                                        <form th:action= "@{dashboard}">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" />
-                                                <label for="email">Email address</label>
+                                                <input class="form-control" id="inputEmail" type="email" autocomplete="off" placeholder="name@example.com" required />
+                                                <label for="inputEmail">Email address</label>
+
+
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="password" name="password" type="password" placeholder="Password" />
-                                                <label for="password">Password</label>
+                                                <input class="form-control" id="inputPassword" type="password" autocomplete="off" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" required/>
+                                                <label for="inputPassword">Password</label>
                                             </div>
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
@@ -37,12 +39,10 @@
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <a class="small" th:href="@{forgot-password}">Forgot Password?</a>
-<!--                                                <a class="btn btn-primary" th:href="@{login}">Login</a>-->
-                                                <input class="btn btn-primary" type="submit" value="Login">
+                                                <input type="submit" class="btn btn-primary" />
                                             </div>
                                         </form>
                                     </div>
-                                    <label class="form-check-label" th:text="${error_message}"></label>
                                     <div class="card-footer text-center py-3">
                                         <div class="small"><a th:href="@{register-user}">Need an account? Sign up!</a></div>
                                     </div>
