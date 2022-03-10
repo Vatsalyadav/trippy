@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 
 
@@ -27,6 +26,7 @@ public class CarOwnerController {
         return "carOwner";
     }
 
+
     @GetMapping("/getOwner")
     public String getCarOwner(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         CarOwner carOwner=carOwnerService.getCarOwner(101);
@@ -36,13 +36,13 @@ public class CarOwnerController {
         model.addAttribute("email", carOwner.getEmail());
         return "carOwner";
     }
-    @RequestMapping(value = "/saveOwner", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/saveOwner", method = RequestMethod.GET)
     public String saveCarOwner(@ModelAttribute("carOwner") CarOwner formData, BindingResult 
     result) {
         System.out.println(formData.toString());
        carOwnerService.saveCarOwner(formData);
         return "carOwner";
-    }
+    }*/
 
     //show the add employee form and also pass an empty backing bean object to store the form field values
 	/*@RequestMapping(value = "/addNewOwner", method = RequestMethod.GET)
