@@ -3,6 +3,7 @@ package com.tripmanagement.asdc.controller;
 import com.tripmanagement.asdc.model.UserLogin;
 import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.service.RegistrationService;
+import com.tripmanagement.asdc.service.VehicleOwnerService;
 import com.tripmanagement.stringsAndConstants.StringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,9 @@ public class RegistrationController {
 
     @Autowired
     RegistrationService registrationService;
+
+    @Autowired
+    VehicleOwnerService vehicleOwnerService;
 
     @RequestMapping("/")
     public String basePage() {
@@ -63,29 +67,32 @@ public class RegistrationController {
         // TODO: Link with Vehicle service
         // service.checkEmailExists(vehicleOwner.email)
         // service.registerVehicleOwner(vehicleOwner)
-        System.out.println("Name: "+ vehicleOwner.getVehicleowner_name());
+        System.out.println("Name: "+ vehicleOwner.getVehicleowner_fname());
+        System.out.println("Last Name: "+ vehicleOwner.getVehicleowner_lname());
         System.out.println("Phone Number: "+ vehicleOwner.getPhone());
         System.out.println("Email: "+ vehicleOwner.getEmail());
-        System.out.println("Address: "+ vehicleOwner.getAddress());
-        System.out.println(""+ vehicleOwner.getVehicle_id());
+        System.out.println("Password: "+ vehicleOwner.getPassword());
 
-        String message = "return message";
-        if(message.equalsIgnoreCase("Success"))
-            return "register-user";
-        else {
-            model.addAttribute("error_message", message);
+        if(!registrationService.checkUserExistByEmail(vehicleOwner.getEmail())) {
+            vehicleOwnerService.saveVehicleOwner(vehicleOwner);
             return "login";
         }
+        else {
+            model.addAttribute("error_message", StringMessages.USER_ALREADY_EXIST);
+            return "register";
+        }
+
     }
 
     @PostMapping("/add-customer")
     public String registerCustomer(VehicleOwner vehicleOwner, BindingResult result, Model model) {
         // TODO: Link with service
-        System.out.println("Name: "+ vehicleOwner.getVehicleowner_name());
-        System.out.println("Phone Number:"+ vehicleOwner.getPhone());
+        System.out.println("Name: "+ vehicleOwner.getVehicleowner_fname());
+        System.out.println("Last Name: "+ vehicleOwner.getVehicleowner_lname());
+        System.out.println("Phone Number: "+ vehicleOwner.getPhone());
         System.out.println("Email: "+ vehicleOwner.getEmail());
-        System.out.println("Address: "+ vehicleOwner.getAddress());
-        System.out.println("Vehicle ID:"+ vehicleOwner.getVehicle_id());
+        System.out.println("Password: "+ vehicleOwner.getPassword());
+
         return "login";
     }
 
