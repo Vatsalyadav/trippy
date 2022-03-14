@@ -19,9 +19,10 @@ public class RegistrationDAOImpl implements RegistrationDAO{
     @Override
     public boolean checkEmailExists(String email) {
         
-           VehicleOwner carOwner=jdbcTemplate.queryForObject("select * from vehicleowner where email="+email,
-           BeanPropertyRowMapper.newInstance(VehicleOwner.class)); 
-           if(carOwner!=null&&!carOwner.getEmail().isEmpty())
+           int emailCount=jdbcTemplate.queryForObject("select count(*) from vehicleowner where email='"+email+"'"
+           , Integer.class);
+           System.out.println(emailCount);
+           if(emailCount>0)
            return true;
            else
            return false;
