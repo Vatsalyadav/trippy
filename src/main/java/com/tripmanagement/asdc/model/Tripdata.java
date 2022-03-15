@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
+
 @Entity
 @Table(name="Tripdata")
 public class Tripdata {
@@ -39,9 +41,9 @@ public class Tripdata {
     private float kms_travelled;
 
     @Column(name = "timestamp")
-    private date timestamp;
+    private Date timestamp;
 
-    public Tripdata(int trip_id, String destination, int location_id, int vehicle_id, int vehicleowner_id, int customer_id, float estimated_kms, float kms_travelled, date timestamp) {
+    public Tripdata(int trip_id, String destination, int location_id, int vehicle_id, int vehicleowner_id, int customer_id, float estimated_kms, float kms_travelled, Date timestamp) {
         this.trip_id = trip_id;
         this.destination = destination;
         this.location_id = location_id;
@@ -117,11 +119,11 @@ public class Tripdata {
         this.kms_travelled = kms_travelled;
     }
 
-    public date getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(date timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

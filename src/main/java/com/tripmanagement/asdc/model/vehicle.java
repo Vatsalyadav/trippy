@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 @Entity
 @Table(name="Vehicle")
-public class Vehicle {
+public class vehicle {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -38,10 +38,10 @@ public class Vehicle {
     @Column(name="fuel_consumed")
     private float fuel_consumed;
 
-    public Vehicle() {
+    public vehicle() {
     }
 
-    public Vehicle(int vehicle_id, vehicleowner_id, String number_plate, String vehicle_name, String type, float kms_driven, float fuel_consumed, int available_seats)
+    public vehicle(int vehicle_id, int vehicleowner_id, String number_plate, String vehicle_name, String type, float kms_driven, float fuel_consumed, int available_seats)
     {
         this.vehicle_id= vehicle_id;
         this.vehicleowner_id= vehicleowner_id;

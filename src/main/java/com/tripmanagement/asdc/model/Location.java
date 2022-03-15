@@ -32,11 +32,11 @@ public class Location {
     private float estimated_kms;
 
 
-    public CarOwner() {
+    public void Location() {
 
     }
 
-    public CarOwner(int location_id, int vehicle_id, String current_location, String starting_location, String destination, float estimated_kms)
+    public void Location(int location_id, int vehicle_id, String current_location, String starting_location, String destination, float estimated_kms)
     {
         this.current_location= current_location;
         this.estimated_kms= estimated_kms;

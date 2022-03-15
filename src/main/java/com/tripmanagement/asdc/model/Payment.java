@@ -7,9 +7,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
+
 @Entity
-@Table(name="Vehicle")
-public class Vehicle {
+@Table(name="Payment")
+public class Payment {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -26,16 +28,23 @@ public class Vehicle {
     @Column(name="trip_id")
     private int trip_id;
 
-    @Column(name="timestamp")
-    private date timestamp;
+    @Column(name="type")
+    private String type;
 
-    public Vehicle(int payment_id, int vehicleowner_id, float amount, int trip_id, date timestamp) {
+    @Column(name="timestamp")
+    private Date timestamp;
+
+    public Payment(int payment_id, int vehicleowner_id, float amount, int trip_id, String type, Date timestamp) {
         this.payment_id = payment_id;
         this.vehicleowner_id = vehicleowner_id;
         this.amount = amount;
         this.trip_id = trip_id;
         this.type = type;
         this.timestamp = timestamp;
+    }
+
+    public Payment() {
+
     }
 
     public int getPayment_id() {
@@ -70,11 +79,11 @@ public class Vehicle {
         this.trip_id = trip_id;
     }
 
-    public date getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(date timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

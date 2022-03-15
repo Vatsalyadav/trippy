@@ -41,6 +41,10 @@ public class Fuel_economy {
      this.total_cost=total_cost;
     }
 
+    public Fuel_economy() {
+
+    }
+
     public int getVehicle_id() {
         return vehicle_id;
     }
