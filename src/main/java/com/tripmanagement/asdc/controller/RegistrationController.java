@@ -2,9 +2,12 @@ package com.tripmanagement.asdc.controller;
 
 import com.tripmanagement.asdc.model.UserLogin;
 import com.tripmanagement.asdc.model.VehicleOwner;
+import com.tripmanagement.asdc.service.NotificationService;
 import com.tripmanagement.asdc.service.RegistrationService;
 import com.tripmanagement.asdc.service.VehicleOwnerService;
-import com.tripmanagement.stringsAndConstants.StringMessages;
+import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,9 @@ public class RegistrationController {
     @Autowired
     VehicleOwnerService vehicleOwnerService;
 
+    @Autowired
+    NotificationService notificationService;
+    
     @RequestMapping("/")
     public String basePage() {
         return "login";
@@ -29,8 +35,10 @@ public class RegistrationController {
     @RequestMapping("/login")
     public String userLogin(UserLogin userLogin, Model model) {
         String message = registrationService.checkEmailPassword(userLogin.getEmail(), userLogin.getPassword());
-        if (message.equalsIgnoreCase(StringMessages.SUCCESS))
+        if (message.equalsIgnoreCase(StringMessages.SUCCESS)){
+        notificationService.sendEmail(StringMessages.LOGIN_SUCCESSFUL,StringMessages.AUTH_SUCCESSFUL,userLogin.getEmail());
             return "dashboard";
+        }
         else {
             model.addAttribute("error_message", message);
             return "login";
