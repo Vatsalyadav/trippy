@@ -19,7 +19,7 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 	@Override
 	public void saveVehicleOwner(VehicleOwner vehicleOwner) {
 
-        String sql = "insert into vehicleowner values("+vehicleOwner.getVehicleowner_fname()+","+vehicleOwner.getVehicleowner_lname()+","+vehicleOwner.getPhone()+","+vehicleOwner.getAddress()+","+vehicleOwner.getEmail()+","+vehicleOwner.getVehicle_id()+","+vehicleOwner.getPassword()+");";
+        String sql = "insert into vehicleowner values("+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getAddress()+"','"+vehicleOwner.getEmail()+"',"+vehicleOwner.getVehicle_id()+",'"+vehicleOwner.getPassword()+"');";
         jdbcTemplate.update(sql);
 		//notificationService.sendEmail(vehicleOwner.getVehicleowner_fname()+StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
 
