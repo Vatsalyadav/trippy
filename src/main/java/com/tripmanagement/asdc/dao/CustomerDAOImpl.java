@@ -1,4 +1,4 @@
-package com.tripmanagement.asdc.dao;
+ package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.Customer;
 import com.tripmanagement.asdc.service.NotificationService;
