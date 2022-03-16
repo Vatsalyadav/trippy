@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 
-	// need to inject customer dao
 	@Autowired
 	private VehicleOwnerDAO vehicleOwnerDAO;
 	
