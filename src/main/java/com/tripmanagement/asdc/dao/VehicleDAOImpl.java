@@ -1,6 +1,8 @@
 package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.Vehicle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,14 +13,22 @@ import java.util.List;
 @Repository
 public class VehicleDAOImpl implements VehicleDAO {
 
+	Logger logger = LoggerFactory.getLogger(VehicleDAOImpl.class);
 
     @Autowired
     JdbcTemplate jdbcTemplate;
 
 	@Override
-	public void saveVehicle(Vehicle vehicle) {
-		String sql = "insert into vehicle values("+null+",'"+vehicle.getVehicle_id()+"','"+vehicle.getVehicleowner_id()+"','"+vehicle.getNumber_plate()+"','"+vehicle.getVehicle_name()+"','"+vehicle.getType()+"',"+vehicle.getTrips()+","+vehicle.getKms_driven()+","+vehicle.getAvailable_seats()+","+vehicle.getFuel_consumed()+","+vehicle.getFuel_consumed()+");";
-        jdbcTemplate.update(sql);
+	public Boolean addVehicle(Vehicle vehicle) {
+		try {
+			String sql = "insert into vehicle values(" + null + ",'" + vehicle.getVehicle_id() + "','" + vehicle.getVehicleowner_id() + "','" + vehicle.getNumber_plate() + "','" + vehicle.getVehicle_name() + "','" + vehicle.getType() + "'," + vehicle.getTrips() + "," + vehicle.getKms_driven() + "," + vehicle.getAvailable_seats() + "," + vehicle.getFuel_consumed() + "," + vehicle.getFuel_consumed() + ");";
+			jdbcTemplate.update(sql);
+			logger.info("Vehicle successfully added.");
+			return true;
+		} catch (Exception exception){
+			logger.error("Error while adding Vehicle", exception);
+			return false;
+		}
 		
 	}
 
@@ -44,10 +54,16 @@ public class VehicleDAOImpl implements VehicleDAO {
 	}
 
 	@Override
-	public void deleteVehicle(int vehicleId) {
-		String sql = "delete from Vehicle where vehicle_id="+vehicleId;
-        jdbcTemplate.update(sql);
-		
+	public Boolean deleteVehicle(int vehicleId) {
+		try {
+			String sql = "delete from Vehicle where vehicle_id=" + vehicleId;
+			jdbcTemplate.update(sql);
+			logger.info("Vehicle successfully deleted.");
+			return true;
+		} catch (Exception exception){
+			logger.error("Error while deleting Vehicle", exception);
+			return false;
+		}
 	}
 
 	
