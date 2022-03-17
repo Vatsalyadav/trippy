@@ -31,7 +31,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 	@Override
 	public List<Vehicle> getVehicles(int vehicleOwnerId) {
-		List<Vehicle> vehicles= jdbcTemplate.queryForList("select * from vehicle where id="+vehicleOwnerId,
+		List<Vehicle> vehicles= jdbcTemplate.queryForList("select * from vehicle where vehicleOwner_id="+vehicleOwnerId,
 		Vehicle.class);
 		return vehicles;
 	}
