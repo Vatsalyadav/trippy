@@ -9,6 +9,6 @@ public interface VehicleOwnerService {
 
 	public void saveVehicleOwner(User user);
 
-	public VehicleOwner getVehicleOwner(int theId);
+	public VehicleOwner getVehicleOwner(String email);
 
 }

@@ -30,9 +30,9 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 
     @Override
     public String checkEmailPassword(String email, String password) {
-        VehicleOwner carOwner = jdbcTemplate.queryForObject("select * from vehicleowner where email=" + email + " and password=" + password,
+        VehicleOwner carOwner = jdbcTemplate.queryForObject("select * from vehicleowner where email='" + email + "' and password='" + password+"'",
                 BeanPropertyRowMapper.newInstance(VehicleOwner.class));
-        Customer customer = jdbcTemplate.queryForObject("select * from customer where email=" + email + " and password=" + password,
+        Customer customer = jdbcTemplate.queryForObject("select * from customer where email='" + email + "' and password='" + password+"'",
                 BeanPropertyRowMapper.newInstance(Customer.class));
         if (carOwner != null && !carOwner.getEmail().isEmpty())
             return Constants.USER_TYPE_VEHICLE_OWNER;
@@ -46,14 +46,14 @@ public class RegistrationDAOImpl implements RegistrationDAO {
     @Override
     public boolean checkEmailExists(String email, String userType) {
         if (userType == Constants.USER_TYPE_CUSTOMER) {
-            Customer customer = jdbcTemplate.queryForObject("select * from customer where email=" + email,
+            Customer customer = jdbcTemplate.queryForObject("select * from customer where email='" + email+"'",
                     BeanPropertyRowMapper.newInstance(Customer.class));
             if (customer != null && !customer.getEmail().isEmpty())
                 return true;
             else
                 return false;
         } else if (userType == Constants.USER_TYPE_CUSTOMER) {
-            VehicleOwner carOwner = jdbcTemplate.queryForObject("select * from vehicleowner where email=" + email,
+            VehicleOwner carOwner = jdbcTemplate.queryForObject("select * from vehicleowner where email='" + email+"'",
                     BeanPropertyRowMapper.newInstance(VehicleOwner.class));
             if (carOwner != null && !carOwner.getEmail().isEmpty())
                 return true;

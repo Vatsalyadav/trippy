@@ -27,9 +27,9 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 
 	@Override
 	@Transactional
-	public VehicleOwner getVehicleOwner(int theId) {
+	public VehicleOwner getVehicleOwner(String email) {
 		
-		return vehicleOwnerDAO.getVehicleOwner(theId);
+		return vehicleOwnerDAO.getVehicleOwner(email);
 	}
 
 }

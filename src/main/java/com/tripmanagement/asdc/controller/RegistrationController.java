@@ -1,9 +1,11 @@
 package com.tripmanagement.asdc.controller;
 
 import com.tripmanagement.asdc.model.User;
+import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.service.CustomerService;
 import com.tripmanagement.asdc.service.RegistrationService;
 import com.tripmanagement.asdc.service.VehicleOwnerService;
+import com.tripmanagement.asdc.service.VehicleService;
 import com.tripmanagement.asdc.stringsAndConstants.Constants;
 import com.tripmanagement.stringsAndConstants.StringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class RegistrationController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    VehicleService vehicleService;
+
     @RequestMapping("/")
     public String basePage() {
         return "login";
@@ -38,11 +43,14 @@ public class RegistrationController {
             return "login";
         }
         else {
-            if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER))
-                return "dashboard";
+            if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER)) {
+                VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwner(user.getEmail());
+                model.addAttribute("vehicleOwner", vehicleOwner);
+                model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+                return "owner-dashboard";
+            }
             else
                 return "customer-dashboard";
-
         }
     }
 
