@@ -26,8 +26,8 @@ public class VehicleOwner {
     @Column(name="email")
     private String email;
 
-    @Column(name="vehicle_id")
-    private int vehicle_id;
+    @Column(name="vehicleOwner_id")
+    private int vehicleOwner_id;
 
     @Column(name="password")
     private String password;
@@ -36,14 +36,14 @@ public class VehicleOwner {
 
     }
 
-    public VehicleOwner(int id, String vehicleowner_fname, String vehicleowner_lname, String phone, String address, String email, int vehicle_id, String password) {
+    public VehicleOwner(int id, String vehicleowner_fname, String vehicleowner_lname, String phone, String address, String email, int vehicleOwner_id, String password) {
         this.id = id;
         this.vehicleowner_fname = vehicleowner_fname;
         this.vehicleowner_lname = vehicleowner_lname;
         this.phone = phone;
         this.address = address;
         this.email = email;
-        this.vehicle_id = vehicle_id;
+        this.vehicleOwner_id = vehicleOwner_id;
         this.password = password;
     }
 
@@ -95,12 +95,12 @@ public class VehicleOwner {
         this.email = email;
     }
 
-    public int getVehicle_id() {
-        return vehicle_id;
+    public int getVehicleOwner_id() {
+        return vehicleOwner_id;
     }
 
-    public void setVehicle_id(int vehicle_id) {
-        this.vehicle_id = vehicle_id;
+    public void setVehicleOwner_id(int vehicleOwner_id) {
+        this.vehicleOwner_id = vehicleOwner_id;
     }
 
     public String getPassword() {
@@ -120,7 +120,7 @@ public class VehicleOwner {
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
-                ", vehicle_id=" + vehicle_id +
+                ", vehicle_id=" + vehicleOwner_id +
                 ", password='" + password + '\'' +
                 '}';
     }

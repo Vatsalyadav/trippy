@@ -16,15 +16,15 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 	@Override
 	public void saveVehicleOwner(VehicleOwner vehicleOwner) {
 
-        String sql = "insert into vehicleowner values("+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getAddress()+"','"+vehicleOwner.getEmail()+"',"+vehicleOwner.getVehicle_id()+",'"+vehicleOwner.getPassword()+"');";
+        String sql = "insert into vehicleowner values("+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getAddress()+"','"+vehicleOwner.getEmail()+"',"+vehicleOwner.getVehicleOwner_id()+",'"+vehicleOwner.getPassword()+"');";
         jdbcTemplate.update(sql);
 //		notificationService.sendEmail(vehicleOwner.getVehicleowner_fname()+StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
 		
 	}
 
 	@Override
-	public VehicleOwner getVehicleOwner(int theId) {
-	   VehicleOwner carOwner=jdbcTemplate.queryForObject("select * from vehicleowner where email="+theId,
+	public VehicleOwner getVehicleOwner(String email) {
+	   VehicleOwner carOwner=jdbcTemplate.queryForObject("select * from vehicleowner where email='"+email+"'",
        BeanPropertyRowMapper.newInstance(VehicleOwner.class));
 	  return carOwner;
 	}
