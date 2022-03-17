@@ -1,7 +1,7 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.UserLogin;
-import com.tripmanagement.asdc.model.VehicleOwner;
+import com.tripmanagement.asdc.model.User;
+import com.tripmanagement.asdc.service.CustomerService;
 import com.tripmanagement.asdc.service.RegistrationService;
 import com.tripmanagement.asdc.service.VehicleOwnerService;
 import com.tripmanagement.asdc.stringsAndConstants.Constants;
@@ -22,14 +22,17 @@ public class RegistrationController {
     @Autowired
     VehicleOwnerService vehicleOwnerService;
 
+    @Autowired
+    CustomerService customerService;
+
     @RequestMapping("/")
     public String basePage() {
         return "login";
     }
 
-    @RequestMapping("/login")
-    public String userLogin(UserLogin userLogin, Model model) {
-        String message = registrationService.checkEmailPassword(userLogin.getEmail(), userLogin.getPassword());
+    @PostMapping("/dashboard")
+    public String userLogin(User user, BindingResult result, Model model) {
+        String message = registrationService.checkEmailPassword(user.getEmail(), user.getPassword());
         if (message.equalsIgnoreCase(StringMessages.INCORRECT_AUTH)){
             model.addAttribute("error_message", message);
             return "login";
@@ -52,7 +55,7 @@ public class RegistrationController {
     }
 
     /*
-     * Will return Forget Password Page
+     * Will return Registration Page
      * */
     @RequestMapping("/register-user")
     public String registerUser() {
@@ -68,19 +71,19 @@ public class RegistrationController {
         return "dashboard";
     }
 
-    @PostMapping("/register-vehicle-owner")
-    public String registerVehicleOwner(VehicleOwner vehicleOwner, BindingResult result, Model model) {
-        // TODO: Link with Vehicle service
-        // service.checkEmailExists(vehicleOwner.email)
-        // service.registerVehicleOwner(vehicleOwner)
-        System.out.println("Name: "+ vehicleOwner.getVehicleowner_fname());
-        System.out.println("Last Name: "+ vehicleOwner.getVehicleowner_lname());
-        System.out.println("Phone Number: "+ vehicleOwner.getPhone());
-        System.out.println("Email: "+ vehicleOwner.getEmail());
-        System.out.println("Password: "+ vehicleOwner.getPassword());
+    @PostMapping("/register-user")
+    public String registerUser(User user, BindingResult result, Model model) {
+        System.out.println("Name: "+ user.getFirst_name());
+        System.out.println("Last Name: "+ user.getLast_name());
+        System.out.println("User Type: "+ user.getUserType());
+        System.out.println("Email: "+ user.getEmail());
+        System.out.println("Password: "+ user.getPassword());
 
-        if(!registrationService.checkUserExistByEmail(vehicleOwner.getEmail())) {
-            vehicleOwnerService.saveVehicleOwner(vehicleOwner);
+        if(!registrationService.checkUserExistByEmail(user.getEmail())) {
+            if (user.getUserType().equals("Vehicle Owner"))
+                vehicleOwnerService.saveVehicleOwner(user);
+            else
+                customerService.saveCustomer(user);
             return "login";
         }
         else {
@@ -88,18 +91,6 @@ public class RegistrationController {
             return "register";
         }
 
-    }
-
-    @PostMapping("/add-customer")
-    public String registerCustomer(VehicleOwner vehicleOwner, BindingResult result, Model model) {
-        // TODO: Link with service
-        System.out.println("Name: "+ vehicleOwner.getVehicleowner_fname());
-        System.out.println("Last Name: "+ vehicleOwner.getVehicleowner_lname());
-        System.out.println("Phone Number: "+ vehicleOwner.getPhone());
-        System.out.println("Email: "+ vehicleOwner.getEmail());
-        System.out.println("Password: "+ vehicleOwner.getPassword());
-
-        return "login";
     }
 
 }
