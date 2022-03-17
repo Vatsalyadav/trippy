@@ -29,6 +29,9 @@ public class Vehicle {
     @Column(name="type")
     private String type;
 
+    @Column(name="trips")
+    private int trips;    
+
     @Column(name="kms_driven")
     private float kms_driven;
 
@@ -38,22 +41,53 @@ public class Vehicle {
     @Column(name="fuel_consumed")
     private float fuel_consumed;
 
+    @Column(name="fuel_economy")
+    private float fuel_economy;
+
     public Vehicle() {
     }
 
-    public Vehicle(int vehicle_id, int vehicleowner_id, String number_plate, String vehicle_name, String type, float kms_driven, float fuel_consumed, int available_seats)
-    {
-        this.vehicle_id= vehicle_id;
-        this.vehicleowner_id= vehicleowner_id;
-        this.number_plate= number_plate;
-        this.vehicle_name= vehicle_name;
-        this.type= type;
-        this.kms_driven= kms_driven;
-        this.fuel_consumed= fuel_consumed;
-        this.available_seats= available_seats;
+    
 
-
+    public Vehicle(int vehicle_id, int vehicleowner_id, String number_plate, String vehicle_name, String type,
+            int trips, float kms_driven, int available_seats, float fuel_consumed, float fuel_economy) {
+        this.vehicle_id = vehicle_id;
+        this.vehicleowner_id = vehicleowner_id;
+        this.number_plate = number_plate;
+        this.vehicle_name = vehicle_name;
+        this.type = type;
+        this.trips = trips;
+        this.kms_driven = kms_driven;
+        this.available_seats = available_seats;
+        this.fuel_consumed = fuel_consumed;
+        this.fuel_economy = fuel_economy;
     }
+
+
+
+    public int getTrips() {
+        return trips;
+    }
+
+
+
+    public void setTrips(int trips) {
+        this.trips = trips;
+    }
+
+
+
+    public float getFuel_economy() {
+        return fuel_economy;
+    }
+
+
+
+    public void setFuel_economy(float fuel_economy) {
+        this.fuel_economy = fuel_economy;
+    }
+
+
 
     public int getVehicle_id() {
         return vehicle_id;
@@ -119,10 +153,16 @@ public class Vehicle {
         this.fuel_consumed = fuel_consumed;
     }
 
+
+
     @Override
     public String toString() {
-        return "Vehicle [vehicle_id=" + vehicle_id + ", vehicleowner_id=" + vehicleowner_id + ", number_plate=" + number_plate + ", vehicle_name=" + vehicle_name +", kms_driven=" + kms_driven +", fuel_consumed=" + fuel_consumed +", available_seats=" + available_seats + "]";
+        return "Vehicle [available_seats=" + available_seats + ", fuel_consumed=" + fuel_consumed + ", fuel_economy="
+                + fuel_economy + ", kms_driven=" + kms_driven + ", number_plate=" + number_plate + ", trips=" + trips
+                + ", type=" + type + ", vehicle_id=" + vehicle_id + ", vehicle_name=" + vehicle_name
+                + ", vehicleowner_id=" + vehicleowner_id + "]";
     }
+
 
 }
 
