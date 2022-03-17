@@ -4,6 +4,7 @@ import com.tripmanagement.asdc.model.UserLogin;
 import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.service.RegistrationService;
 import com.tripmanagement.asdc.service.VehicleOwnerService;
+import com.tripmanagement.asdc.stringsAndConstants.Constants;
 import com.tripmanagement.stringsAndConstants.StringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,11 +30,16 @@ public class RegistrationController {
     @RequestMapping("/login")
     public String userLogin(UserLogin userLogin, Model model) {
         String message = registrationService.checkEmailPassword(userLogin.getEmail(), userLogin.getPassword());
-        if (message.equalsIgnoreCase(StringMessages.SUCCESS))
-            return "dashboard";
-        else {
+        if (message.equalsIgnoreCase(StringMessages.INCORRECT_AUTH)){
             model.addAttribute("error_message", message);
             return "login";
+        }
+        else {
+            if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER))
+                return "dashboard";
+            else
+                return "customer-dashboard";
+
         }
     }
 
