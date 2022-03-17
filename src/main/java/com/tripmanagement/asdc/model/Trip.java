@@ -10,14 +10,17 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name="Tripdata")
-public class Tripdata {
+@Table(name="Trip")
+public class Trip {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "trip_id")
     private int trip_id;
+
+    @Column(name = "source")
+    private String source;
 
     @Column(name = "destination")
     private String destination;
@@ -43,8 +46,9 @@ public class Tripdata {
     @Column(name = "timestamp")
     private Date timestamp;
 
-    public Tripdata(int trip_id, String destination, int location_id, int vehicle_id, int vehicleowner_id, int customer_id, float estimated_kms, float kms_travelled, Date timestamp) {
+    public Trip(int trip_id, String source, String destination, int location_id, int vehicle_id, int vehicleowner_id, int customer_id, float estimated_kms, float kms_travelled, Date timestamp) {
         this.trip_id = trip_id;
+        this.source=source;
         this.destination = destination;
         this.location_id = location_id;
         this.vehicle_id = vehicle_id;
@@ -61,6 +65,14 @@ public class Tripdata {
 
     public void setTrip_id(int trip_id) {
         this.trip_id = trip_id;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getDestination() {
@@ -129,8 +141,13 @@ public class Tripdata {
 
     @Override
     public String toString() {
-        return "Tripdata [trip_id=" + trip_id + ", destination=" + destination + ", estimated_kms=" + estimated_kms + ", location_id=" + location_id +", vehicle_id=" + vehicle_id +", customer_id=" + customer_id +", kms_travelled=" + kms_travelled + ", timestamp=" + timestamp + "]";
+        return "Trip [customer_id=" + customer_id + ", destination=" + destination + ", estimated_kms=" + estimated_kms
+                + ", kms_travelled=" + kms_travelled + ", location_id=" + location_id + ", source=" + source
+                + ", timestamp=" + timestamp + ", trip_id=" + trip_id + ", vehicle_id=" + vehicle_id
+                + ", vehicleowner_id=" + vehicleowner_id + "]";
     }
+
+   
 
 }
 
