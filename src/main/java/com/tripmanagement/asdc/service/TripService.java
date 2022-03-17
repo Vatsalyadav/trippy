@@ -2,7 +2,7 @@ package com.tripmanagement.asdc.service;
 
 import java.util.List;
 
-import com.tripmanagement.asdc.model.Vehicle;
+import com.tripmanagement.asdc.model.Trip;
 
 public interface TripService {
 
