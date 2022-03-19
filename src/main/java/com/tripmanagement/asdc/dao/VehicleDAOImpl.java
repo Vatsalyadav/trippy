@@ -19,9 +19,9 @@ public class VehicleDAOImpl implements VehicleDAO {
     JdbcTemplate jdbcTemplate;
 
 	@Override
-	public Boolean addVehicle(Vehicle vehicle) {
+	public boolean addVehicle(Vehicle vehicle) {
 		try {
-			String sql = "insert into vehicle values(" + null + ",'" + vehicle.getVehicle_id() + "','" + vehicle.getVehicleowner_id() + "','" + vehicle.getNumber_plate() + "','" + vehicle.getVehicle_name() + "','" + vehicle.getType() + "'," + vehicle.getTrips() + "," + vehicle.getKms_driven() + "," + vehicle.getAvailable_seats() + "," + vehicle.getFuel_consumed() + "," + vehicle.getFuel_consumed() + ");";
+			String sql = "insert into vehicle values(" + null + "," + vehicle.getVehicleowner_id() + ",'" + vehicle.getNumber_plate() + "','" + vehicle.getVehicle_name() + "','" + vehicle.getType() + "'," + vehicle.getTrips() + "," + vehicle.getKms_driven() + "," + vehicle.getAvailable_seats() + "," + vehicle.getFuel_consumed() + "," + vehicle.getFuel_consumed() + ");";
 			jdbcTemplate.update(sql);
 			logger.info("Vehicle successfully added.");
 			return true;
@@ -54,7 +54,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 	}
 
 	@Override
-	public Boolean deleteVehicle(int vehicleId) {
+	public boolean deleteVehicle(int vehicleId) {
 		try {
 			String sql = "delete from Vehicle where vehicle_id=" + vehicleId;
 			jdbcTemplate.update(sql);
