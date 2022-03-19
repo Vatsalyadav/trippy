@@ -8,5 +8,6 @@ public interface VehicleOwnerDAO {
 
 	public VehicleOwner getVehicleOwner(String email);
 
-	
+	public VehicleOwner getVehicleOwnerById(int vehicleOwnerId);
+
 }
