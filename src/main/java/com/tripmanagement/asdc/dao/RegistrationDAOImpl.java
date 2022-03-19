@@ -21,15 +21,24 @@ public class RegistrationDAOImpl implements RegistrationDAO {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public boolean checkEmailExists(String email) {
+    public boolean checkUserExistByEmail(String email) {
 
         int emailCount = jdbcTemplate.queryForObject("select count(*) from vehicleowner where email='" + email + "'"
                 , Integer.class);
         System.out.println(emailCount);
-        if (emailCount > 0)
-            return true;
+        if (emailCount <= 0)
+        {
+            emailCount = jdbcTemplate.queryForObject("select count(*) from customer where email='" + email + "'"
+                , Integer.class);
+            if(emailCount<=0)
+            {
+                return false;
+            }
+            else 
+                return true;
+        }
         else
-            return false;
+            return true;
     }
 
 
@@ -44,8 +53,6 @@ public class RegistrationDAOImpl implements RegistrationDAO {
                     DataAccessException {
                 if (rs.next()) {
                     Customer cust = new Customer();
-                    cust.setCustomer_lname(rs.getString("customer_lname"));
-                    cust.setCustomer_fname(rs.getString("customer_fname"));
                     cust.setEmail(rs.getString("email"));
                     return cust;
                 } else return null;
@@ -58,8 +65,6 @@ public class RegistrationDAOImpl implements RegistrationDAO {
                     DataAccessException {
                 if (rs.next()) {
                     VehicleOwner vo = new VehicleOwner();
-                    vo.setVehicleowner_lname(rs.getString("vehicleowner_lname"));
-                    vo.setVehicleowner_fname(rs.getString("vehicleowner_fname"));
                     vo.setEmail(rs.getString("email"));
                     return vo;
                 } else return null;
@@ -84,7 +89,7 @@ public class RegistrationDAOImpl implements RegistrationDAO {
                 return true;
             else
                 return false;
-        } else if (userType == Constants.USER_TYPE_CUSTOMER) {
+        } else if (userType == Constants.USER_TYPE_VEHICLE_OWNER) {
             VehicleOwner carOwner = jdbcTemplate.queryForObject("select * from vehicleowner where email='" + email + "'",
                     BeanPropertyRowMapper.newInstance(VehicleOwner.class));
             if (carOwner != null && !carOwner.getEmail().isEmpty())
