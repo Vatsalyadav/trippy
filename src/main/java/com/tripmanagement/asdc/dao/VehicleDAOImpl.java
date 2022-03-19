@@ -29,7 +29,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 			logger.error("Error while adding Vehicle", exception);
 			return false;
 		}
-		
+
 	}
 
 	@Override
@@ -41,8 +41,8 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 	@Override
 	public List<Vehicle> getVehicles(int vehicleOwnerId) {
-		List<Vehicle> vehicles= jdbcTemplate.queryForList("select * from vehicle where vehicleOwner_id="+vehicleOwnerId,
-		Vehicle.class);
+		List<Vehicle> vehicles= jdbcTemplate.query("select * from vehicle where vehicleOwner_id="+vehicleOwnerId,
+				BeanPropertyRowMapper.newInstance(Vehicle.class));
 		return vehicles;
 	}
 
@@ -50,7 +50,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 	public void updateFuelEconomy(int vehicle_id, float fuelEconomy) {
 		String sql = "update Vehicle set fuel_economy="+fuelEconomy+" where vehicle_id="+vehicle_id;
         jdbcTemplate.update(sql);
-		
+
 	}
 
 	@Override
