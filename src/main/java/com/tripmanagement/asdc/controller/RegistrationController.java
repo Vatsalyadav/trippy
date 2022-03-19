@@ -49,8 +49,10 @@ public class RegistrationController {
                 model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
                 return "owner-dashboard";
             }
-            else
+            else {
+                // TODO: get customer data
                 return "customer-dashboard";
+            }
         }
     }
 
