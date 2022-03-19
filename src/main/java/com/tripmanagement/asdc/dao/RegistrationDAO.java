@@ -1,7 +1,7 @@
 package com.tripmanagement.asdc.dao;
 
 public interface RegistrationDAO {
-    public boolean checkEmailExists(String email);
+    public boolean checkUserExistByEmail(String email);
 
     public boolean checkEmailExists(String email, String userType);
 
