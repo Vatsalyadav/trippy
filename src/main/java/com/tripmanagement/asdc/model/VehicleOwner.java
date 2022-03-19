@@ -8,8 +8,8 @@ public class VehicleOwner {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-    private int id;
+    @Column(name="vehicleOwner_id")
+    private int vehicleOwner_id;
 
     @Column(name="vehicleowner_fname")
     private String vehicleowner_fname;
@@ -26,9 +26,6 @@ public class VehicleOwner {
     @Column(name="email")
     private String email;
 
-    @Column(name="vehicleOwner_id")
-    private int vehicleOwner_id;
-
     @Column(name="password")
     private String password;
 
@@ -36,23 +33,14 @@ public class VehicleOwner {
 
     }
 
-    public VehicleOwner(int id, String vehicleowner_fname, String vehicleowner_lname, String phone, String address, String email, int vehicleOwner_id, String password) {
-        this.id = id;
+    public VehicleOwner(int vehicleOwner_id, String vehicleowner_fname, String vehicleowner_lname, String phone, String address, String email, String password) {
+        this.vehicleOwner_id = vehicleOwner_id;
         this.vehicleowner_fname = vehicleowner_fname;
         this.vehicleowner_lname = vehicleowner_lname;
         this.phone = phone;
         this.address = address;
         this.email = email;
-        this.vehicleOwner_id = vehicleOwner_id;
         this.password = password;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getVehicleowner_fname() {
@@ -114,7 +102,6 @@ public class VehicleOwner {
     @Override
     public String toString() {
         return "VehicleOwner{" +
-                "id=" + id +
                 ", vehicleowner_fname='" + vehicleowner_fname + '\'' +
                 ", vehicleowner_lname='" + vehicleowner_lname + '\'' +
                 ", phone='" + phone + '\'' +
