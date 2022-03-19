@@ -63,7 +63,7 @@ public class TripServiceImpl implements TripService {
 		{
 			Vehicle vehicle=vehicleDAO.getVehicleDetails(trip.getVehicle_id());
 			VehicleOwner vehicleOwner=vehicleOwnerDAO.getVehicleOwnerById(trip.getVehicleowner_id());
-			Ride ride=new Ride(trip.getTrip_id(), vehicle.getVehicle_name(), vehicle.getNumber_plate(),
+			Ride ride=new Ride(trip.getTrip_id(), vehicle.getVehicle_id(), vehicle.getNumber_plate(),
 					vehicle.getFuel_economy(), vehicleOwner.getVehicleowner_fname(), vehicle.getVehicleowner_id(),
 					vehicleOwner.getPhone(), calculateCost(vehicle,trip), trip.getAvailable_seats());
 			rideList.add(ride);
