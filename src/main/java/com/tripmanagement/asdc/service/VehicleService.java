@@ -10,6 +10,7 @@ public interface VehicleService {
 	public Vehicle getVehicleDetails(int vehicle_id);
 	public List<Vehicle> getVehicles(int vehicleOwnerId);
 	public void updateFuelEconomy(int vehicle_id, float kms_driven, float fuel_consumed);
+	public void setFuel_economy(float kms_driven, float fuel_consumed);
 	public boolean deleteVehicle(int vehicleId);
 	
 }
