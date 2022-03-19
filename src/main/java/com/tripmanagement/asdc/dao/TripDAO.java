@@ -10,5 +10,6 @@ public interface TripDAO {
 	public Trip getTripDetails(int trip_id);
 	public List<Trip> getTripsList(int vehicleOwnerId);
 	public void deleteTrip(int trip_id);
+	public List<Trip> getTripsList(String source, String destination);
 	
 }
