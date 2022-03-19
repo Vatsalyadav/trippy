@@ -1,7 +1,5 @@
 package com.tripmanagement.asdc.dao;
 
-import java.util.List;
-
 import com.tripmanagement.asdc.model.Customer;
 
 public interface CustomerDAO {
@@ -12,7 +10,7 @@ public interface CustomerDAO {
 
 	public Customer getCustomer(String email);
 
-    	//public void deleteCustomer(int theId);
+    //public void deleteCustomer(int theId);
 
     
 }
