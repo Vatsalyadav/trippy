@@ -11,4 +11,6 @@ public interface VehicleOwnerService {
 
 	public VehicleOwner getVehicleOwner(String email);
 
+	public VehicleOwner getVehicleOwnerByOwnerId(int vehicleOwnerId);
+
 }
