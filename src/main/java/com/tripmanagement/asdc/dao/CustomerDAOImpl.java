@@ -15,7 +15,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public void saveCustomer(Customer customer) {
-        String sql = "insert into customer values("+customer.getCustomer_id()+","+customer.getCustomer_fname()+","+customer.getCustomer_lname()+","+customer.getMobile_no()+","+customer.getAddress()+","+customer.getEmail()+");";
+        String sql = "insert into customer values("+null+",'"+customer.getCustomer_fname()+"','"+customer.getCustomer_lname()+"','"+customer.getMobile_no()+"','"+customer.getAddress()+"','"+customer.getEmail()+"','"+customer.getOwner_tag()+"','"+customer.getPassword()+"');";
         jdbcTemplate.update(sql);
         //notificationService.sendEmail(customer.getCustomer_fname()+ StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,customer.getEmail());
     }
@@ -29,7 +29,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public Customer getCustomer(int id) {
-        Customer customer=jdbcTemplate.queryForObject("select * from customer where customer_id='"+id+"'",
+        Customer customer=jdbcTemplate.queryForObject("select * from customer where customer_id="+id,
         BeanPropertyRowMapper.newInstance(Customer.class));
        return customer;
     }

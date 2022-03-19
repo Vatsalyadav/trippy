@@ -29,12 +29,6 @@ public class Customer {
     @Column(name="owner_tag")
     private String owner_tag;
 
-    @Column(name="trip_id")
-    private int trip_id;
-
-    @Column(name="payment_id")
-    private int payment_id;
-
     @Column(name="password")
     private String password;
 
@@ -42,7 +36,7 @@ public class Customer {
 
     }
 
-    public Customer(int customer_id, String customer_fname, String customer_lname,String mobile_no, String address, String email, String owner_tag, int trip_id, int payment_id, String password)
+    public Customer(int customer_id, String customer_fname, String customer_lname,String mobile_no, String address, String email, String owner_tag, String password)
     {
        this.customer_id=customer_id;
        this.customer_fname=customer_fname;
@@ -51,8 +45,6 @@ public class Customer {
        this.address=address;
        this.email=email;
        this.owner_tag=owner_tag;
-       this.trip_id=trip_id;
-       this.payment_id=payment_id;
        this.password=password;
     }
 
@@ -112,22 +104,6 @@ public class Customer {
         this.owner_tag = owner_tag;
     }
 
-    public int getPayment_id() {
-        return payment_id;
-    }
-
-    public void setPayment_id(int payment_id) {
-        this.payment_id = payment_id;
-    }
-
-    public int getTrip_id() {
-        return trip_id;
-    }
-
-    public void setTrip_id(int trip_id) {
-        this.trip_id = trip_id;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -146,8 +122,6 @@ public class Customer {
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", owner_tag='" + owner_tag + '\'' +
-                ", trip_id=" + trip_id +
-                ", payment_id=" + payment_id +
                 ", password='" + password + '\'' +
                 '}';
     }

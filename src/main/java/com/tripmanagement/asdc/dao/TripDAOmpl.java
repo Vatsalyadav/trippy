@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 
 @Repository
@@ -30,8 +31,8 @@ public class TripDAOmpl implements TripDAO {
 	}
 
 	@Override
-	public List<Trip> getTripsList(int vehicleOwnerId) {
-		List<Trip> trips= jdbcTemplate.queryForList("select * from trip where vehicleOwner_id="+vehicleOwnerId,
+	public List<Trip> getUpcomingTripsForVehicleOwner(int vehicleOwnerId, Date timestamp) {
+		List<Trip> trips= jdbcTemplate.queryForList("select * from trip where vehicleOwner_id="+vehicleOwnerId+" and timestamp >"+timestamp,
 		Trip.class);
 		return trips;
 	}
@@ -45,9 +46,30 @@ public class TripDAOmpl implements TripDAO {
 	}
 
 	@Override
-	public List<Trip> getTripsList(String source, String destination) {
-		List<Trip> trips= jdbcTemplate.query("select * from trip where source='"+source+"' and destination='"+destination+"'",
+	public List<Trip> getAvailableTripsList(String source, String destination, Date timestamp) {
+		List<Trip> trips= jdbcTemplate.query("select * from trip where source='"+source+"' and destination='"+destination+"'"+" and timestamp >"+timestamp,
 				BeanPropertyRowMapper.newInstance(Trip.class));
+		return trips;
+	}
+
+	@Override
+	public List<Trip> getUpcomingTripsForCustomer(int customer_id, Date timestamp) {
+		List<Trip> trips= jdbcTemplate.queryForList("select * from trip where customer_id="+customer_id+" and timestamp >"+timestamp,
+		Trip.class);
+		return trips;
+	}
+
+	@Override
+	public List<Trip> getPreviousTripsForVehicleOwner(int vehicleOwnerId, Date timestamp) {
+		List<Trip> trips= jdbcTemplate.queryForList("select * from trip where vehicleOwner_id="+vehicleOwnerId+" and timestamp <="+timestamp,
+		Trip.class);
+		return trips;
+	}
+
+	@Override
+	public List<Trip> getPreviousTripsForCustomer(int customer_id, Date timestamp) {
+		List<Trip> trips= jdbcTemplate.queryForList("select * from trip where customer_id="+customer_id+" and timestamp <="+timestamp,
+		Trip.class);
 		return trips;
 	}
 

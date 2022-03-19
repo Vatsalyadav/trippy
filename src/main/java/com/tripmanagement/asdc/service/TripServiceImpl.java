@@ -1,5 +1,6 @@
 package com.tripmanagement.asdc.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +44,8 @@ public class TripServiceImpl implements TripService {
 
 	@Override
 	@Transactional
-	public List<Trip> getTripsList(int vehicleOwnerId) {
-		List<Trip> trips=tripDAO.getTripsList(vehicleOwnerId);
-		return trips;
+	public List<Trip> getUpcomingTripsForVehicleOwner(int vehicleOwnerId) {
+		return tripDAO.getUpcomingTripsForVehicleOwner(vehicleOwnerId, getCurrentTime());
 	}
 
 	@Override
@@ -56,9 +56,10 @@ public class TripServiceImpl implements TripService {
 	}
 
 	@Override
-	public List<Ride> getTripsList(String source, String destination) {
+	@Transactional
+	public List<Ride> getAvailableTripsList(String source, String destination) {
 		List<Ride> rideList=new ArrayList<>();
-		List<Trip> tripList=tripDAO.getTripsList(source, destination);
+		List<Trip> tripList=tripDAO.getAvailableTripsList(source, destination,getCurrentTime());
 		for(Trip trip:tripList)
 		{
 			Vehicle vehicle=vehicleDAO.getVehicleDetails(trip.getVehicle_id());
@@ -72,10 +73,37 @@ public class TripServiceImpl implements TripService {
 	}
 
 	@Override
+	@Transactional
 	public float calculateCost(Vehicle vehicle, Trip trip) {
 
 		float cost=(float)(trip.getEstimated_kms()*vehicle.getFuel_economy()*(float)1.20)/vehicle.getAvailable_seats();
 		return cost;
+	}
+
+	@Override
+	@Transactional
+	public List<Trip> getUpcomingTripsForCustomer(int customer_id) {
+		return tripDAO.getUpcomingTripsForCustomer(customer_id, getCurrentTime());
+	}
+
+	@Override
+	@Transactional
+	public List<Trip> getPreviousTripsForVehicleOwner(int vehicleOwnerId) {
+		return tripDAO.getPreviousTripsForVehicleOwner(vehicleOwnerId, getCurrentTime());
+	}
+
+	@Override
+	@Transactional
+	public List<Trip> getPreviousTripsForCustomer(int customer_id) {
+		return tripDAO.getPreviousTripsForCustomer(customer_id, getCurrentTime());
+	}
+
+
+	public Date getCurrentTime()
+	{
+		long millis = System.currentTimeMillis(); 
+    	Date currentDateTime = new Date(millis);
+		return currentDateTime;
 	}
 
 }
