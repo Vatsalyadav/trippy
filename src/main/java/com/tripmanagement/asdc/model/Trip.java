@@ -46,7 +46,10 @@ public class Trip {
     @Column(name = "timestamp")
     private Date timestamp;
 
-    public Trip(int trip_id, String source, String destination, int location_id, int vehicle_id, int vehicleowner_id, int customer_id, float estimated_kms, float kms_travelled, Date timestamp) {
+    @Column(name = "available_seats")
+    private int available_seats;
+
+    public Trip(int trip_id, String source, String destination, int location_id, int vehicle_id, int vehicleowner_id, int customer_id, float estimated_kms, float kms_travelled, Date timestamp, int available_seats) {
         this.trip_id = trip_id;
         this.source=source;
         this.destination = destination;
@@ -57,6 +60,7 @@ public class Trip {
         this.estimated_kms = estimated_kms;
         this.kms_travelled = kms_travelled;
         this.timestamp= timestamp;
+        this.available_seats = available_seats;
     }
 
     public int getTrip_id() {
@@ -139,12 +143,20 @@ public class Trip {
         this.timestamp = timestamp;
     }
 
+    public int getAvailable_seats() {
+        return available_seats;
+    }
+
+    public void setAvailable_seats(int available_seats) {
+        this.available_seats = available_seats;
+    }
+
     @Override
     public String toString() {
         return "Trip [customer_id=" + customer_id + ", destination=" + destination + ", estimated_kms=" + estimated_kms
                 + ", kms_travelled=" + kms_travelled + ", location_id=" + location_id + ", source=" + source
                 + ", timestamp=" + timestamp + ", trip_id=" + trip_id + ", vehicle_id=" + vehicle_id
-                + ", vehicleowner_id=" + vehicleowner_id + "]";
+                + ", vehicleowner_id=" + vehicleowner_id + ", available_seats=" + available_seats + "]";
     }
 
    
