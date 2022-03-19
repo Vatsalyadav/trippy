@@ -44,6 +44,13 @@ public class TripDAOmpl implements TripDAO {
 		
 	}
 
+	@Override
+	public List<Trip> getTripsList(String source, String destination) {
+		List<Trip> trips= jdbcTemplate.query("select * from trip where source='"+source+"' and destination='"+destination+"'",
+				BeanPropertyRowMapper.newInstance(Trip.class));
+		return trips;
+	}
+
 	
 }
 
