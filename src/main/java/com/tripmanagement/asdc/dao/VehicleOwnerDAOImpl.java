@@ -29,7 +29,13 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 	  return carOwner;
 	}
 
-	
+	@Override
+	public VehicleOwner getVehicleOwnerById(int vehicleOwnerId) {
+		return jdbcTemplate.queryForObject("select * from vehicleowner where vehicleOwner_id="+vehicleOwnerId,
+				BeanPropertyRowMapper.newInstance(VehicleOwner.class));
+	}
+
+
 }
 
 
