@@ -16,7 +16,7 @@ public class VehicleServiceImpl implements VehicleService {
 	
 	@Override
 	@Transactional
-	public Boolean addVehicle(Vehicle vehicle) {
+	public boolean addVehicle(Vehicle vehicle) {
 		return vehicleDAO.addVehicle(vehicle);
 	}
 
@@ -46,7 +46,7 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	@Transactional
-	public Boolean deleteVehicle(int vehicleId) {
+	public boolean deleteVehicle(int vehicleId) {
 		return vehicleDAO.deleteVehicle(vehicleId);
 	}
 
