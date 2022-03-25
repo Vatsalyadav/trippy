@@ -35,4 +35,3 @@ QScored Analysis: [QScored WebPage](https://qscored.com/summary/16c7e2d9-1007-4e
 * Vatsal Yadav
 ```
 
-- [ ] Typographical Errors - ``` Commit #: 3e54e78c2113674325e0272ea732aff7527b3635 ```
