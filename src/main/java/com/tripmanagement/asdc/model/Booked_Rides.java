@@ -1,7 +1,14 @@
 package com.tripmanagement.asdc.model;
 
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Entity
@@ -41,8 +48,10 @@ public class Booked_Rides {
 
     @Column(name = "fuel_economy")
     private float fuel_economy;
+
+    
     public Booked_Rides(int booked_ride_id, String source, String destination, float distance, int vehicle_id,
-                        int vehicleowner_id, int customer_id, String timestamp, float cost, float fuel_economy) {
+            int vehicleowner_id, int customer_id, String timestamp, float cost, float fuel_economy) {
         this.booked_ride_id = booked_ride_id;
         this.source = source;
         this.destination = destination;
@@ -137,6 +146,7 @@ public class Booked_Rides {
     public void setFuel_economy(float fuel_economy) {
         this.fuel_economy = fuel_economy;
     }
+
     @Override
     public String toString() {
         return "Booked_Rides [booked_ride_id=" + booked_ride_id + ", cost=" + cost + ", customer_id=" + customer_id
@@ -144,6 +154,10 @@ public class Booked_Rides {
                 + ", source=" + source + ", timestamp=" + timestamp + ", vehicle_id=" + vehicle_id
                 + ", vehicleowner_id=" + vehicleowner_id + "]";
     }
+
+    
+
+   
 
 }
 
