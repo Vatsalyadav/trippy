@@ -1,6 +1,8 @@
 package com.tripmanagement.asdc.service;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,36 +32,63 @@ public class TripServiceImpl implements TripService {
 	
 	@Override
 	@Transactional
-	public void saveTrip(Trip trip) {
-		tripDAO.saveTrip(trip);
-		
+	public boolean saveTrip(Trip trip) {
+		//SimpleDateFormat dateTime=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+		//trip.getTimestamp();
+		try{
+		return tripDAO.saveTrip(trip);
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public Trip getTripDetails(int trip_id) {
+		try{
 		Trip trip=tripDAO.getTripDetails(trip_id);
 		return trip;
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
 	}
 
 	@Override
 	@Transactional
 	public List<Trip> getUpcomingTripsForVehicleOwner(int vehicleOwnerId) {
-		return tripDAO.getUpcomingTripsForVehicleOwner(vehicleOwnerId, getCurrentTime());
+		try{
+		return tripDAO.getUpcomingTripsForVehicleOwner(vehicleOwnerId, getCurrentTime().toString());
+		}
+		catch(Exception e)
+		{
+			return new ArrayList<Trip>();
+		}
 	}
 
 	@Override
 	@Transactional
-	public void deleteTrip(int trip_id) {
-		tripDAO.deleteTrip(trip_id);
-		
+	public boolean deleteTrip(int trip_id) {
+		try{
+		return tripDAO.deleteTrip(trip_id);
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public List<Ride> getAvailableTripsList(String source, String destination) {
+		if(source==null||destination==null)
+		return null;
+		try{
 		List<Ride> rideList=new ArrayList<>();
-		List<Trip> tripList=tripDAO.getAvailableTripsList(source, destination,getCurrentTime());
+		List<Trip> tripList=tripDAO.getAvailableTripsList(source, destination,getCurrentTime().toString());
 		for(Trip trip:tripList)
 		{
 			Vehicle vehicle=vehicleDAO.getVehicleDetails(trip.getVehicle_id());
@@ -71,32 +100,50 @@ public class TripServiceImpl implements TripService {
 		}
 		return rideList;
 	}
+	catch(Exception e)
+	{
+		return new ArrayList<Ride>();
+
+	}
+	}
 
 	@Override
 	@Transactional
 	public float calculateCost(Vehicle vehicle, Trip trip) {
-
+		if(trip==null||vehicle==null||vehicle.getAvailable_seats()==0)
+		return 0;
+		else{
 		float cost=(float)(trip.getEstimated_kms()*vehicle.getFuel_economy()*(float)1.20)/vehicle.getAvailable_seats();
 		return cost;
+		}
 	}
 
-	@Override
-	@Transactional
-	public List<Trip> getUpcomingTripsForCustomer(int customer_id) {
-		return tripDAO.getUpcomingTripsForCustomer(customer_id, getCurrentTime());
-	}
+
 
 	@Override
 	@Transactional
 	public List<Trip> getPreviousTripsForVehicleOwner(int vehicleOwnerId) {
-		return tripDAO.getPreviousTripsForVehicleOwner(vehicleOwnerId, getCurrentTime());
+		try{
+		return tripDAO.getPreviousTripsForVehicleOwner(vehicleOwnerId, getCurrentTime().toString());
+		}
+		catch(Exception e)
+		{
+			return new ArrayList<Trip>();
+		}
 	}
 
 	@Override
 	@Transactional
-	public List<Trip> getPreviousTripsForCustomer(int customer_id) {
-		return tripDAO.getPreviousTripsForCustomer(customer_id, getCurrentTime());
+	public List<String> getSources() {
+		return tripDAO.getSources();
 	}
+
+	@Override
+	@Transactional
+	public List<String> getDestinations() {
+		return tripDAO.getDestinations();
+
+}
 
 
 	public Date getCurrentTime()
