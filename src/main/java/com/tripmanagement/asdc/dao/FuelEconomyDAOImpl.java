@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 public class FuelEconomyDAOImpl implements FuelEconomyDAO {
 
 
-	@Autowired
-	JdbcTemplate jdbcTemplate;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
 	Logger logger = LoggerFactory.getLogger(FuelEconomyDAOImpl.class);
 
@@ -22,14 +22,14 @@ public class FuelEconomyDAOImpl implements FuelEconomyDAO {
 		try{
 			String sql = "insert into fuel_economy values("+null+","+fuel_economy.getTrip_id()+","+fuel_economy.getKms_travelled()+","+fuel_economy.getFuel_consumed()+","+fuel_economy.getFuel_economy()+",'"+fuel_economy.getTimestamp()+"',"+fuel_economy.getVehicle_id()+");";
 			jdbcTemplate.update(sql);
-			return true;
+				return true;
 		}
-		catch(Exception e)
-		{
-			logger.error("Error saving fuel_economy",e);
-			return false;
-
-		}
+			catch(Exception e)
+			{
+				logger.error("Error saving fuel_economy",e);
+				return false;
+	
+			}
 	}
 
 
