@@ -50,21 +50,20 @@ public class Fuel_economy {
         this.timestamp = timestamp;
         this.vehicle_id = vehicle_id;
     }
-
-    public int getVehicle_id() {
-        return vehicle_id;
+    public int getTrip_history_id() {
+        return trip_history_id;
     }
 
-    public void setVehicle_id(int vehicle_id) {
-        this.vehicle_id = vehicle_id;
+    public void setTrip_history_id(int trip_history_id) {
+        this.trip_history_id = trip_history_id;
     }
 
-    public float getKms_initial() {
-        return kms_initial;
+    public int getTrip_id() {
+        return trip_id;
     }
 
-    public void setKms_initial(float kms_initial) {
-        this.kms_initial = kms_initial;
+    public void setTrip_id(int trip_id) {
+        this.trip_id = trip_id;
     }
 
     public float getKms_travelled() {
@@ -75,30 +74,37 @@ public class Fuel_economy {
         this.kms_travelled = kms_travelled;
     }
 
-    public int getAverage_speed() {
-        return average_speed;
+    public float getFuel_consumed() {
+        return fuel_consumed;
     }
 
-    public void setAverage_speed(int average_speed) {
-        this.average_speed = average_speed;
+    public void setFuel_consumed(float fuel_consumed) {
+        this.fuel_consumed = fuel_consumed;
     }
 
-    public float getFinal_economy() {
-        return final_economy;
+    public float getFuel_economy() {
+        return fuel_economy;
     }
 
-    public void setFinal_economy(float final_economy) {
-        this.final_economy = final_economy;
+    public void setFuel_economy(float fuel_economy) {
+        this.fuel_economy = fuel_economy;
     }
 
-    public float getTotal_cost() {
-        return total_cost;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setTotal_cost(float total_cost) {
-        this.total_cost = total_cost;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
+    public int getVehicle_id() {
+        return vehicle_id;
+    }
+
+    public void setVehicle_id(int vehicle_id) {
+        this.vehicle_id = vehicle_id;
+    }
     @java.lang.Override
     public java.lang.String toString() {
         return "Fuel_economy{" +
