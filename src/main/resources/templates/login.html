@@ -22,16 +22,16 @@
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Trip Management</h3></div>
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                     <div class="card-body">
-                                        <form th:action= "@{dashboard}">
+                                        <form th:action= "@{/dashboard}" th:object="${user}" method="post">
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" autocomplete="off" placeholder="name@example.com" required />
-                                                <label for="inputEmail">Email address</label>
+                                                <input class="form-control" id="email" name="email" type="email" autocomplete="off" placeholder="name@example.com" required />
+                                                <label for="email">Email address</label>
 
 
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" autocomplete="off" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" required/>
-                                                <label for="inputPassword">Password</label>
+                                                <input class="form-control" id="password" name="password" type="password" autocomplete="off" placeholder="Password" required/>
+                                                <label for="password">Password</label>
                                             </div>
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />

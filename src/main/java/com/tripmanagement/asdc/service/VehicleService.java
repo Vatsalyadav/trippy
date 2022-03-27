@@ -6,10 +6,11 @@ import com.tripmanagement.asdc.model.Vehicle;
 
 public interface VehicleService {
 
-	public void saveVehicle(Vehicle vehicle);
+	public boolean addVehicle(Vehicle vehicle);
 	public Vehicle getVehicleDetails(int vehicle_id);
 	public List<Vehicle> getVehicles(int vehicleOwnerId);
 	public void updateFuelEconomy(int vehicle_id, float kms_driven, float fuel_consumed);
-	public void deleteVehicle(int vehicleId);
+	public void setFuel_economy(float kms_driven, float fuel_consumed);
+	public boolean deleteVehicle(int vehicleId);
 	
 }

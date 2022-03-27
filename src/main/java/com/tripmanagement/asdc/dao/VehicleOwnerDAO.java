@@ -6,7 +6,8 @@ public interface VehicleOwnerDAO {
 
 	public void saveVehicleOwner(VehicleOwner carOwner);
 
-	public VehicleOwner getVehicleOwner(int theId);
+	public VehicleOwner getVehicleOwner(String email);
 
-	
+	public VehicleOwner getVehicleOwnerById(int vehicleOwnerId);
+
 }

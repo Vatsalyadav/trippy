@@ -16,8 +16,9 @@ public class VehicleServiceImpl implements VehicleService {
 	
 	@Override
 	@Transactional
-	public void saveVehicle(Vehicle vehicle) {
-		vehicleDAO.saveVehicle(vehicle);			
+	public boolean addVehicle(Vehicle vehicle) {
+		vehicle.setFuel_economy(setFuel_economy(vehicle.getKms_driven(), vehicle.getFuel_consumed()));
+		return vehicleDAO.addVehicle(vehicle);
 	}
 
 	@Override
@@ -37,18 +38,23 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	@Transactional
 	public void updateFuelEconomy(int vehicle_id, float kms_driven, float fuel_consumed) {
-		float fuelEconomy=0.00f;
-		if((int)fuel_consumed!=0){
-			fuelEconomy=fuel_consumed/kms_driven;
-		}
+		float fuelEconomy=setFuel_economy(kms_driven, fuel_consumed);
 		vehicleDAO.updateFuelEconomy(vehicle_id, fuelEconomy);
 	}
 
 	@Override
 	@Transactional
-	public void deleteVehicle(int vehicleId) {
-		vehicleDAO.deleteVehicle(vehicleId);
-		
+	public boolean deleteVehicle(int vehicleId) {
+		return vehicleDAO.deleteVehicle(vehicleId);
+	}
+
+	@Override
+	public float setFuel_economy(float kms_driven, float fuel_consumed) {
+		float fuelEconomy=0.00f;
+		if((int)fuel_consumed!=0){
+			fuelEconomy=fuel_consumed/kms_driven;
+		}
+		return fuelEconomy;
 	}
 
 }
