@@ -20,8 +20,8 @@ public class BookedRidesServiceImpl implements BookedRidesService {
 	@Override
 	public boolean saveRide(Booked_Rides booked_rides) {
 		try{
-			bookedRidesDAO.saveRide(booked_rides);
-			return true;
+		bookedRidesDAO.saveRide(booked_rides);
+		return true;
 		}
 		catch(Exception e)
 		{
@@ -32,7 +32,7 @@ public class BookedRidesServiceImpl implements BookedRidesService {
 	@Override
 	public List<Booked_Rides> getUpcomingRidesForCustomer(int customer_id) {
 		try{
-			return bookedRidesDAO.getUpcomingRidesForCustomer(customer_id, getCurrentTime().toString());
+		return bookedRidesDAO.getUpcomingRidesForCustomer(customer_id, getCurrentTime().toString());
 		}
 		catch(Exception e)
 		{
@@ -43,18 +43,18 @@ public class BookedRidesServiceImpl implements BookedRidesService {
 	@Override
 	public List<Booked_Rides> getPreviousRidesForCustomer(int customer_id) {
 		try{
-			return bookedRidesDAO.getPreviousRidesForCustomer(customer_id, getCurrentTime().toString());
+		return bookedRidesDAO.getPreviousRidesForCustomer(customer_id, getCurrentTime().toString());
 		}
 		catch(Exception e)
 		{
 			return new ArrayList<Booked_Rides>();
 		}
 
-	}
-	public Date getCurrentTime()
+}
+public Date getCurrentTime()
 	{
-		long millis = System.currentTimeMillis();
-		Date currentDateTime = new Date(millis);
+		long millis = System.currentTimeMillis(); 
+    	Date currentDateTime = new Date(millis);
 		return currentDateTime;
 	}
 }

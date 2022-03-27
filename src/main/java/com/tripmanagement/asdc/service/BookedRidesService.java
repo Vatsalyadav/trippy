@@ -1,8 +1,8 @@
 package com.tripmanagement.asdc.service;
 
-import com.tripmanagement.asdc.model.Booked_Rides;
-
 import java.util.List;
+
+import com.tripmanagement.asdc.model.Booked_Rides;
 
 
 public interface BookedRidesService {
