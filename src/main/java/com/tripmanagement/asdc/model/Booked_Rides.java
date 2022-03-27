@@ -137,7 +137,13 @@ public class Booked_Rides {
     public void setFuel_economy(float fuel_economy) {
         this.fuel_economy = fuel_economy;
     }
-
+    @Override
+    public String toString() {
+        return "Booked_Rides [booked_ride_id=" + booked_ride_id + ", cost=" + cost + ", customer_id=" + customer_id
+                + ", destination=" + destination + ", distance=" + distance + ", fuel_economy=" + fuel_economy
+                + ", source=" + source + ", timestamp=" + timestamp + ", vehicle_id=" + vehicle_id
+                + ", vehicleowner_id=" + vehicleowner_id + "]";
+    }
 
 }
 
