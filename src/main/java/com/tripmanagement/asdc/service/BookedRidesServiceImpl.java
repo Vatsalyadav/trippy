@@ -37,5 +37,16 @@ public class BookedRidesServiceImpl implements BookedRidesService {
 			return new ArrayList<Booked_Rides>();
 		}
 	}
+	@Override
+	public List<Booked_Rides> getPreviousRidesForCustomer(int customer_id) {
+		try{
+			return bookedRidesDAO.getPreviousRidesForCustomer(customer_id, getCurrentTime().toString());
+		}
+		catch(Exception e)
+		{
+			return new ArrayList<Booked_Rides>();
+		}
+
+	}
 
 }
