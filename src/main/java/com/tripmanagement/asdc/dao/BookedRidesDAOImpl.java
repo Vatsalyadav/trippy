@@ -35,6 +35,21 @@ public class BookedRidesDAOImpl implements BookedRidesDAO {
 		}
 	}
 
+	@Override
+	public List<Booked_Rides> getUpcomingRidesForCustomer(int customer_id, String timestamp) {
+		List<Booked_Rides> rides=new ArrayList<>();
+		try{
+			rides= jdbcTemplate.queryForList("select * from booked_rides where customer_id="+customer_id,
+					Booked_Rides.class);
+			return rides;
+		}
+		catch(Exception e)
+		{
+			logger.error("Error while getting upcoming rides for customer", e);
+			return rides;
+
+		}
+	}
 
 
 	
