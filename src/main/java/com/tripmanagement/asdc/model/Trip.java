@@ -1,13 +1,16 @@
 package com.tripmanagement.asdc.model;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
+import java.sql.Date;
+
 
 @Entity
 @Table(name="Trip")
@@ -15,7 +18,6 @@ public class Trip {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "trip_id")
     private int trip_id;
 
@@ -44,14 +46,15 @@ public class Trip {
     private float kms_travelled;
 
     @Column(name = "timestamp")
-    private Date timestamp;
+    private String timestamp;
 
     @Column(name = "available_seats")
     private int available_seats;
 
-    public Trip(int trip_id, String source, String destination, int location_id, int vehicle_id, int vehicleowner_id, int customer_id, float estimated_kms, float kms_travelled, Date timestamp, int available_seats) {
+    @Autowired
+    public Trip(int trip_id, String source, String destination, int location_id, int vehicle_id, int vehicleowner_id, int customer_id, float estimated_kms, float kms_travelled, String timestamp, int available_seats) {
         this.trip_id = trip_id;
-        this.source=source;
+        this.source = source;
         this.destination = destination;
         this.location_id = location_id;
         this.vehicle_id = vehicle_id;
@@ -59,8 +62,11 @@ public class Trip {
         this.customer_id = customer_id;
         this.estimated_kms = estimated_kms;
         this.kms_travelled = kms_travelled;
-        this.timestamp= timestamp;
+        this.timestamp = timestamp;
         this.available_seats = available_seats;
+    }
+
+    public Trip() {
     }
 
     public int getTrip_id() {
@@ -135,11 +141,11 @@ public class Trip {
         this.kms_travelled = kms_travelled;
     }
 
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
