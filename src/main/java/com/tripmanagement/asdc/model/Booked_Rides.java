@@ -58,6 +58,87 @@ public class Booked_Rides {
     public Booked_Rides() {
     }
 
+    public int getBooked_ride_id() {
+        return booked_ride_id;
+    }
+
+    public void setBooked_ride_id(int booked_ride_id) {
+        this.booked_ride_id = booked_ride_id;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+    public int getVehicle_id() {
+        return vehicle_id;
+    }
+
+    public void setVehicle_id(int vehicle_id) {
+        this.vehicle_id = vehicle_id;
+    }
+
+    public int getVehicleowner_id() {
+        return vehicleowner_id;
+    }
+
+    public void setVehicleowner_id(int vehicleowner_id) {
+        this.vehicleowner_id = vehicleowner_id;
+    }
+
+    public int getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(int customer_id) {
+        this.customer_id = customer_id;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public float getCost() {
+        return cost;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
+
+    public float getFuel_economy() {
+        return fuel_economy;
+    }
+
+    public void setFuel_economy(float fuel_economy) {
+        this.fuel_economy = fuel_economy;
+    }
+
+
 }
 
 
