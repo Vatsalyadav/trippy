@@ -41,7 +41,22 @@ public class Booked_Rides {
 
     @Column(name = "fuel_economy")
     private float fuel_economy;
+    public Booked_Rides(int booked_ride_id, String source, String destination, float distance, int vehicle_id,
+                        int vehicleowner_id, int customer_id, String timestamp, float cost, float fuel_economy) {
+        this.booked_ride_id = booked_ride_id;
+        this.source = source;
+        this.destination = destination;
+        this.distance = distance;
+        this.vehicle_id = vehicle_id;
+        this.vehicleowner_id = vehicleowner_id;
+        this.customer_id = customer_id;
+        this.timestamp = timestamp;
+        this.cost = cost;
+        this.fuel_economy = fuel_economy;
+    }
 
+    public Booked_Rides() {
+    }
 
 }
 
