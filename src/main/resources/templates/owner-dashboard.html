@@ -11,8 +11,29 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{/styles/styles.css}"/>
     <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet'>
+    <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
     <script crossorigin="anonymous"
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+        $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+            icons: {
+                time: 'far fa-clock',
+                date: 'far fa-calendar',
+                up: 'fas fa-arrow-up',
+                down: 'fas fa-arrow-down',
+                previous: 'fas fa-chevron-left',
+                next: 'fas fa-chevron-right',
+                today: 'far fa-calendar-check-o',
+                clear: 'far fa-trash',
+                close: 'far fa-times'
+            } });
+
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY h:mm A'
+        });
+    </script>
 </head>
 <body class="sb-nav-toggled">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -217,7 +238,8 @@
                                                 <label class="text-secondary">Select Vehicle:</label><br/>
                                                 <div class="form-group blu-margin">
                                                     <select class="form-control" name="vehicle_id"
-                                                            id="vehicle_id">
+                                                            id="vehicle_id" required>
+                                                        <option value="" selected>Select your Car</option>
                                                         <option th:each="vehicle : ${listOfVehicle}"
                                                                 th:value="${vehicle.vehicle_id}"
                                                                 th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"></option>
@@ -225,20 +247,30 @@
                                                 </div>
                                                 <label class="text-secondary">Source:</label><br/>
                                                 <input class="form-control" id="source" name="source"
-                                                       type="text">
+                                                       type="text" placeholder="Enter the source" required>
                                                 <label class="text-secondary">Destination:</label><br/>
                                                 <input class="form-control" id="destination" name="destination"
-                                                       type="text">
+                                                       type="text" placeholder="Enter the destination" required>
                                                 <label class="text-secondary">Available seats:</label><br/>
-                                                <input class="form-control" id="available_seats_trip"
-                                                       name="available_seats" type="text">
+<!--                                                <input class="form-control" id="available_seats_trip"-->
+<!--                                                       name="available_seats" type="text" placeholder="Enter the available seats" required>-->
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="available_seats_trip" name="available_seats_trip"
+                                                           placeholder="Enter the available seats" max="8" min="1" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"> Seats </span>
+                                                    </div>
+                                                </div>
                                                 <label class="text-secondary">Time:</label><br/>
-                                                <input class="form-control" id="timestamp" name="timestamp"
-                                                       type="text">
+                                                <input type="datetime-local" class="form-control" id="timestamp" name="timestamp" required>
                                                 <label class="text-secondary">Distance:</label><br/>
-                                                <input class="form-control" id="estimated_kms"
-                                                       name="estimated_kms" type="text">
-
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="estimated_km" name="estimated_kms"
+                                                           placeholder="Distance in kms" min="0" max="1000000" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"> kms </span>
+                                                    </div>
+                                                </div>
                                                 <br/>
                                                 <input th:attr="name='vehicleowner_id'"
                                                        th:value="${vehicleOwner.vehicleOwner_id}"
@@ -250,7 +282,7 @@
                                                        type="hidden"/>
                                                 <input th:attr="name='kms_travelled'" th:value="-1"
                                                        type="hidden"/>
-
+                                                <br/>
                                                 <input class="btn btn-secondary" type="submit"
                                                        value="Add Ride Details">
                                             </form>
