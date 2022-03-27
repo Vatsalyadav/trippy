@@ -13,7 +13,6 @@ public class Vehicle {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-
     @Column(name="vehicle_id")
     private int vehicle_id;
 
@@ -44,13 +43,16 @@ public class Vehicle {
     @Column(name="fuel_economy")
     private float fuel_economy;
 
+    @Column(name = "brand")
+    private String brand;
+
+    @Column(name = "fuel_economy_status")
+    private String fuel_economy_status;
+
     public Vehicle() {
     }
 
-    
-
-    public Vehicle(int vehicle_id, int vehicleowner_id, String number_plate, String vehicle_name, String type,
-            int trips, float kms_driven, int available_seats, float fuel_consumed, float fuel_economy) {
+    public Vehicle(int vehicle_id, int vehicleowner_id, String number_plate, String vehicle_name, String type, int trips, float kms_driven, int available_seats, float fuel_consumed, float fuel_economy, String brand, String fuel_economy_status) {
         this.vehicle_id = vehicle_id;
         this.vehicleowner_id = vehicleowner_id;
         this.number_plate = number_plate;
@@ -61,9 +63,9 @@ public class Vehicle {
         this.available_seats = available_seats;
         this.fuel_consumed = fuel_consumed;
         this.fuel_economy = fuel_economy;
+        this.brand = brand;
+        this.fuel_economy_status = fuel_economy_status;
     }
-
-
 
     public int getTrips() {
         return trips;
@@ -153,17 +155,39 @@ public class Vehicle {
         this.fuel_consumed = fuel_consumed;
     }
 
+    public String getBrand() {
+        return brand;
+    }
 
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getFuel_economy_status() {
+        return fuel_economy_status;
+    }
+
+    public void setFuel_economy_status(String fuel_economy_status) {
+        this.fuel_economy_status = fuel_economy_status;
+    }
 
     @Override
     public String toString() {
-        return "Vehicle [available_seats=" + available_seats + ", fuel_consumed=" + fuel_consumed + ", fuel_economy="
-                + fuel_economy + ", kms_driven=" + kms_driven + ", number_plate=" + number_plate + ", trips=" + trips
-                + ", type=" + type + ", vehicle_id=" + vehicle_id + ", vehicle_name=" + vehicle_name
-                + ", vehicleowner_id=" + vehicleowner_id + "]";
+        return "Vehicle{" +
+                "vehicle_id=" + vehicle_id +
+                ", vehicleowner_id=" + vehicleowner_id +
+                ", number_plate='" + number_plate + '\'' +
+                ", vehicle_name='" + vehicle_name + '\'' +
+                ", type='" + type + '\'' +
+                ", trips=" + trips +
+                ", kms_driven=" + kms_driven +
+                ", available_seats=" + available_seats +
+                ", fuel_consumed=" + fuel_consumed +
+                ", fuel_economy=" + fuel_economy +
+                ", brand='" + brand + '\'' +
+                ", fuel_economy_status='" + fuel_economy_status + '\'' +
+                '}';
     }
-
-
 }
 
 

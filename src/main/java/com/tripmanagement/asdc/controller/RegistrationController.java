@@ -1,11 +1,10 @@
 package com.tripmanagement.asdc.controller;
 
+import com.tripmanagement.asdc.model.Customer;
+import com.tripmanagement.asdc.model.Ride;
 import com.tripmanagement.asdc.model.User;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.service.CustomerService;
-import com.tripmanagement.asdc.service.RegistrationService;
-import com.tripmanagement.asdc.service.VehicleOwnerService;
-import com.tripmanagement.asdc.service.VehicleService;
+import com.tripmanagement.asdc.service.*;
 import com.tripmanagement.asdc.stringsAndConstants.Constants;
 import com.tripmanagement.stringsAndConstants.StringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class RegistrationController {
@@ -29,6 +31,13 @@ public class RegistrationController {
 
     @Autowired
     VehicleService vehicleService;
+
+
+    @Autowired
+    TripService tripService;
+
+    @Autowired
+    BookedRidesService bookedRidesService;
 
     @RequestMapping("/")
     public String basePage() {
@@ -47,10 +56,21 @@ public class RegistrationController {
                 VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwner(user.getEmail());
                 model.addAttribute("vehicleOwner", vehicleOwner);
                 model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+                model.addAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+                model.addAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
                 return "owner-dashboard";
             }
             else {
-                // TODO: get customer data
+                Customer customer = customerService.getCustomerByEmail(user.getEmail());
+                model.addAttribute("source", "");
+                model.addAttribute("destination", "");
+                model.addAttribute("customer", customer);
+
+                model.addAttribute("listOfRides", new ArrayList<Ride>());
+                model.addAttribute("previousRides", bookedRidesService.getPreviousRidesForCustomer(customer.getCustomer_id()));
+                model.addAttribute("upcomingRides", bookedRidesService.getUpcomingRidesForCustomer(customer.getCustomer_id()));
+                model.addAttribute("sourceList", tripService.getSources());
+                model.addAttribute("destinationList", tripService.getDestinations());
                 return "customer-dashboard";
             }
         }
@@ -102,5 +122,6 @@ public class RegistrationController {
         }
 
     }
+
 
 }

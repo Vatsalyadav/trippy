@@ -6,11 +6,11 @@ import com.tripmanagement.asdc.model.User;
 public interface CustomerService {
 
 
-	public void saveCustomer(User user);
+	public boolean saveCustomer(User user);
 
-	public Customer getCustomer(String email);
+	public Customer getCustomerByEmail(String email);
 
-	public Customer getCustomer(int id);
+	public Customer getCustomerById(int id);
 
 	//public void deleteCustomer(int theId);
 

@@ -13,23 +13,47 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerDAO customerDAO;
 
 	@Override
-	public void saveCustomer(User user) {
+	public boolean saveCustomer(User user) {
+		if(user==null||user.getFirst_name()==null)
+		return false;
+		try{
 		Customer customer = new Customer();
 		customer.setCustomer_fname(user.getFirst_name());
 		customer.setCustomer_lname(user.getLast_name());
 		customer.setEmail(user.getEmail());
 		customer.setPassword(user.getPassword());
-		customerDAO.saveCustomer(customer);
+		return customerDAO.saveCustomer(customer);
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
 	}
 
 	@Override
-	public Customer getCustomer(String email) {
-		return customerDAO.getCustomer(email);
+	public Customer getCustomerByEmail(String email) {
+		if(email==null||email.isEmpty())
+		return null;
+		try{
+		Customer customer= customerDAO.getCustomerByEmail(email);
+		return customer;
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
 	}
 
 	@Override
-	public Customer getCustomer(int id) {
-		return customerDAO.getCustomer(id);
+	public Customer getCustomerById(int id) {
+		try{
+			Customer customer= customerDAO.getCustomerById(id);
+			return customer;
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
 	}
 
 }
