@@ -34,8 +34,6 @@ public class Fuel_economy {
     @Column(name = "vehicle_id")
     private int vehicle_id;
 
-
-
     public FuelEconomy()
     {
 
@@ -50,6 +48,7 @@ public class Fuel_economy {
         this.timestamp = timestamp;
         this.vehicle_id = vehicle_id;
     }
+
     public int getTrip_history_id() {
         return trip_history_id;
     }
@@ -105,15 +104,17 @@ public class Fuel_economy {
     public void setVehicle_id(int vehicle_id) {
         this.vehicle_id = vehicle_id;
     }
-    @java.lang.Override
-    public java.lang.String toString() {
-        return "Fuel_economy{" +
-                "vehicle_id=" + vehicle_id +
-                ", kms_initial=" + kms_initial +
+
+    @Override
+    public String toString() {
+        return "FuelEconomy{" +
+                "trip_history_id=" + trip_history_id +
+                ", trip_id=" + trip_id +
                 ", kms_travelled=" + kms_travelled +
-                ", average_speed=" + average_speed +
-                ", final_economy=" + final_economy +
-                ", total_cost=" + total_cost +
+                ", fuel_consumed=" + fuel_consumed +
+                ", fuel_economy=" + fuel_economy +
+                ", timestamp='" + timestamp + '\'' +
+                ", vehicle_id='" + vehicle_id + '\'' +
                 '}';
     }
 
