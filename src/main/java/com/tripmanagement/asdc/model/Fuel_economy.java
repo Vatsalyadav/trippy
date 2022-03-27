@@ -36,17 +36,19 @@ public class Fuel_economy {
 
 
 
-    public Fuel_economy(int vehicle_id, float kms_initial, float kms_travelled, int average_speed, float final_economy, float total_cost) {
-     this.vehicle_id=vehicle_id;
-     this.kms_initial=kms_initial;
-     this.kms_travelled=kms_travelled;
-     this.average_speed=average_speed;
-     this.final_economy=final_economy;
-     this.total_cost=total_cost;
+    public FuelEconomy()
+    {
+
     }
 
-    public Fuel_economy() {
-
+    public FuelEconomy(int trip_history_id, int trip_id, float kms_travelled, float fuel_consumed, float fuel_economy, String timestamp, int vehicle_id) {
+        this.trip_history_id = trip_history_id;
+        this.trip_id = trip_id;
+        this.kms_travelled = kms_travelled;
+        this.fuel_consumed = fuel_consumed;
+        this.fuel_economy = fuel_economy;
+        this.timestamp = timestamp;
+        this.vehicle_id = vehicle_id;
     }
 
     public int getVehicle_id() {
