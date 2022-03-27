@@ -7,7 +7,7 @@ import com.tripmanagement.asdc.model.VehicleOwner;
 
 public interface VehicleOwnerService {
 
-	public void saveVehicleOwner(User user);
+	public boolean saveVehicleOwner(User user);
 
 	public VehicleOwner getVehicleOwner(String email);
 
