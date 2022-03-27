@@ -13,23 +13,27 @@ public class Fuel_economy {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 
-    @Column(name="vehicle_id")
-    private int vehicle_id;
+    @Column(name="trip_history_id")
+    private int trip_history_id;
 
-    @Column(name="kms_initial")
-    private float kms_initial;
+    @Column(name="trip_id")
+    private int trip_id;
 
     @Column(name="kms_travelled")
     private float kms_travelled;
 
-    @Column(name="average_speed")
-    private int average_speed;
+    @Column(name="fuel_consumed")
+    private float fuel_consumed;
 
-    @Column(name="final_economy")
-    private float final_economy;
+    @Column(name="fuel_economy")
+    private float fuel_economy;
 
-    @Column(name="total_cost")
-    private float total_cost;
+    @Column(name="timestamp")
+    private String timestamp;
+
+    @Column(name = "vehicle_id")
+    private int vehicle_id;
+
 
 
     public Fuel_economy(int vehicle_id, float kms_initial, float kms_travelled, int average_speed, float final_economy, float total_cost) {
