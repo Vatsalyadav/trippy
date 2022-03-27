@@ -16,27 +16,45 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 	
 	@Override
 	@Transactional
-	public void saveVehicleOwner(User user) {
+	public boolean saveVehicleOwner(User user) {
+		try{
 		VehicleOwner vehicleOwner = new VehicleOwner();
 		vehicleOwner.setVehicleowner_fname(user.getFirst_name());
 		vehicleOwner.setVehicleowner_lname(user.getLast_name());
 		vehicleOwner.setEmail(user.getEmail());
 		vehicleOwner.setPassword(user.getPassword());
-		vehicleOwnerDAO.saveVehicleOwner(vehicleOwner);
+		return vehicleOwnerDAO.saveVehicleOwner(vehicleOwner);
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
 	}
 
 	@Override
 	@Transactional
 	public VehicleOwner getVehicleOwner(String email) {
-		
+		if(email==null)
+		return null;
+		try{
 		return vehicleOwnerDAO.getVehicleOwner(email);
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
 	}
 
 	@Override
 	@Transactional
 	public VehicleOwner getVehicleOwnerByOwnerId(int vehicleOwnerId) {
-		
+		try{
 		return vehicleOwnerDAO.getVehicleOwnerById(vehicleOwnerId);
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
 	}
 
 }
