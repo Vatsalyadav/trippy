@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -21,7 +22,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 	@Override
 	public boolean addVehicle(Vehicle vehicle) {
 		try {
-			String sql = "insert into vehicle values(" + null + "," + vehicle.getVehicleowner_id() + ",'" + vehicle.getNumber_plate() + "','" + vehicle.getVehicle_name() + "','" + vehicle.getType() + "'," + vehicle.getTrips() + "," + vehicle.getKms_driven() + "," + vehicle.getAvailable_seats() + "," + vehicle.getFuel_consumed() + "," + vehicle.getFuel_consumed() + ");";
+			String sql = "insert into vehicle values(" + null + "," + vehicle.getVehicleowner_id() + ",'" + vehicle.getNumber_plate() + "','" + vehicle.getVehicle_name() + "','" + vehicle.getType() + "'," + vehicle.getTrips() + "," + vehicle.getKms_driven() + "," + vehicle.getAvailable_seats() + "," + vehicle.getFuel_economy() + "," + vehicle.getFuel_consumed()+ ",'"+vehicle.getBrand() +"','"+vehicle.getFuel_economy_status() + "');";
 			jdbcTemplate.update(sql);
 			logger.info("Vehicle successfully added.");
 			return true;
@@ -34,22 +35,48 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 	@Override
 	public Vehicle getVehicleDetails(int vehicle_id) {
+		try{
 		Vehicle vehicle=jdbcTemplate.queryForObject("select * from vehicle where vehicle_id="+vehicle_id,
 		BeanPropertyRowMapper.newInstance(Vehicle.class));
 	   return vehicle;
+		}
+		catch(Exception e)
+		{
+			logger.error("Error getting vehicle details",e);
+			return null;
+
+		}
 	}
 
 	@Override
 	public List<Vehicle> getVehicles(int vehicleOwnerId) {
-		List<Vehicle> vehicles= jdbcTemplate.query("select * from vehicle where vehicleOwner_id="+vehicleOwnerId,
+		List<Vehicle> vehicles=new ArrayList<>();
+		try{
+		vehicles= jdbcTemplate.query("select * from vehicle where vehicleOwner_id="+vehicleOwnerId,
 				BeanPropertyRowMapper.newInstance(Vehicle.class));
 		return vehicles;
+		}
+		catch(Exception e)
+		{
+			logger.error("Error getting list of vehicles",e);
+			return vehicles;
+
+		}
 	}
 
 	@Override
-	public void updateFuelEconomy(int vehicle_id, float fuelEconomy) {
-		String sql = "update Vehicle set fuel_economy="+fuelEconomy+" where vehicle_id="+vehicle_id;
+	public boolean updateFuelEconomy(int vehicle_id, float fuelEconomy) {
+		try{
+		String sql = "update vehicle set fuel_economy="+fuelEconomy+" where vehicle_id="+vehicle_id;
         jdbcTemplate.update(sql);
+		return true;
+		}
+		catch(Exception e)
+		{
+			logger.error("Error updating fuel economy",e);
+			return false;
+
+		}
 
 	}
 
