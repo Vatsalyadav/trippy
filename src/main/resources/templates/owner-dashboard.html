@@ -11,37 +11,42 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{/styles/styles.css}"/>
     <link href='https://fonts.googleapis.com/css?family=Courgette' rel='stylesheet'>
+    <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
     <script crossorigin="anonymous"
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+        $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+            icons: {
+                time: 'far fa-clock',
+                date: 'far fa-calendar',
+                up: 'fas fa-arrow-up',
+                down: 'fas fa-arrow-down',
+                previous: 'fas fa-chevron-left',
+                next: 'fas fa-chevron-right',
+                today: 'far fa-calendar-check-o',
+                clear: 'far fa-trash',
+                close: 'far fa-times'
+            } });
+
+        $('#datetimepicker1').datetimepicker({
+            format: 'DD/MM/YYYY h:mm A'
+        });
+    </script>
 </head>
 <body class="sb-nav-toggled">
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <!-- Navbar Brand-->
+<nav class="sb-topnav navbar shadow fixed-top navbar-expand navbar-dark bg-dark">
     <a class="navbar-brand ps-3" href="@{owner-dashboard}">Trip Management</a>
-    <!-- Sidebar Toggle-->
-    <!--            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" href="#!" id="sidebarToggle"><i class="fas fa-bars"></i></button>-->
-    <!-- Navbar Search-->
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <input aria-describedby="btnNavbarSearch" aria-label="Search for..." class="form-control"
-                   placeholder="Search for..." type="text"/>
-            <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-        </div>
-    </form>
-
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
+    <button class="btn btn-outline-light" type="button" style="margin: 20px">Cars</button>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 30px">Rides</button>
     <label class="text-light" th:text="${vehicleOwner.vehicleowner_fname}"></label>
-    <!-- Navbar-->
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-
         <li class="nav-item dropdown">
             <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                id="navbarDropdown" role="button"><i class="fas fa-user fa-fw"></i></a>
             <ul aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#!">Settings</a></li>
-                <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                <li>
-                    <hr class="dropdown-divider"/>
-                </li>
                 <li><a class="dropdown-item" href="#!">Logout</a></li>
             </ul>
         </li>
@@ -50,6 +55,8 @@
 <div id="layoutSidenav_content">
     <main>
         <div class="container-fluid">
+            <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
+                th:text="'Good Evenin ' + ${vehicleOwner.vehicleowner_fname} + '!'"/>
             <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
                 th:text="'Good Evening ' + ${vehicleOwner.vehicleowner_fname} + '!'"/>
             <div class="container-fluid">
@@ -85,24 +92,59 @@
                                                   th:object="${vehicle}">
                                                 <label class="text-secondary">Brand:</label><br/>
                                                 <input class="form-control" id="brand"
-                                                       name="brand" type="text">
+                                                       name="brand" type="text" maxlength="11" minlength="1" placeholder="Enter brand name" required/><br/>
                                                 <label class="text-secondary">Car Name:</label><br/>
                                                 <input class="form-control" id="vehicle_name"
-                                                       name="vehicle_name" type="text">
+                                                       name="vehicle_name" type="text" maxlength="11" minlength="1" placeholder="Enter car name" required/><br/>
                                                 <label class="text-secondary">Registration Number:</label><br/>
                                                 <input class="form-control" id="number_plate"
-                                                       name="number_plate" type="text">
+                                                       name="number_plate" type="text" maxlength="11" minlength="1" placeholder="Enter number plate" required/><br/>
                                                 <label class="text-secondary">Type:</label><br/>
-                                                <input class="form-control" id="type" name="type" type="text">
+<!--                                                <input class="form-control" id="type" name="type" type="text">-->
+                                                <div class="form-group blu-margin">
+                                                    <select class="form-control" name="type"
+                                                            id="type" required>
+                                                        <option value="" selected>Select your car type</option>
+                                                        <option value="SUV">SUV</option>
+                                                        <option value="Sedan">Sedan</option>
+                                                        <option value="Hatchback">Hatchback</option>
+                                                    </select>
+                                                </div>
+                                                <br/>
                                                 <label class="text-secondary">Kilometers driven:</label><br/>
-                                                <input class="form-control" id="kms_driven" name="kms_driven"
-                                                       type="text">
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="kms_driven" name="kms_driven"
+                                                           placeholder="Travelled kms" min="0" max="1000000" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"> kms </span>
+                                                    </div>
+                                                </div>
+                                                <br/>
+<!--                                                <input class="form-control" id="kms_driven" name="kms_driven"-->
+<!--                                                       type="text">-->
                                                 <label class="text-secondary">Fuel Consumed:</label><br/>
-                                                <input class="form-control" id="fuel_economy"
-                                                       name="fuel_consumed" type="text">
+<!--                                                <input class="form-control" id="fuel_economy"-->
+<!--                                                       name="fuel_consumed" type="text">-->
+
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="fuel_economy" name="fuel_economy"
+                                                           placeholder="Total consumed fuel" min="0" max="10000" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"> liters </span>
+                                                    </div>
+                                                </div>
+                                                <br/>
                                                 <label class="text-secondary">Available Seats:</label><br/>
-                                                <input class="form-control" id="available_seats"
-                                                       name="available_seats" type="text">
+<!--                                                <input class="form-control" id="available_seats"-->
+<!--                                                       name="available_seats" type="text">-->
+
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="available_seats" name="available_seats"
+                                                           placeholder="Enter the available seats" max="8" min="1" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"> Seats </span>
+                                                    </div>
+                                                </div>
                                                 <br/>
                                                 <input th:attr="name='vehicleowner_id'"
                                                        th:value="${vehicleOwner.vehicleOwner_id}"
@@ -158,14 +200,29 @@
                                                             <form method="post" th:action="@{/add-fuel-economy}"
                                                                   th:object="${fuelEconomy}">
                                                                 <label class="text-secondary"
-                                                                       th:text="${vehicle.vehicle_name}"/><br/>
+                                                                       th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"/><br/><br/>
                                                                 <label class="text-secondary">Kms driven:</label><br/>
-                                                                <input class="form-control" id="kms_driven_fuel_eco"
-                                                                       name="kms_travelled" type="text">
+<!--                                                                <input class="form-control" id="kms_driven_fuel_eco"-->
+<!--                                                                       name="kms_travelled" type="text">-->
+                                                                <div class="input-group">
+                                                                    <input type="number" class="form-control" id="kms_travelled" name="kms_travelled"
+                                                                           placeholder="Travelled kms" min="0" max="1000000" required>
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text"> kms </span>
+                                                                    </div>
+                                                                </div>
+                                                                <br/>
                                                                 <label class="text-secondary">Fuel
                                                                     Consumed:</label><br/>
-                                                                <input class="form-control" id="fuel_economy_fuel_eco"
-                                                                       name="fuel_consumed" type="text">
+<!--                                                                <input class="form-control" id="fuel_economy_fuel_eco"-->
+<!--                                                                       name="fuel_consumed" type="text">-->
+                                                                <div class="input-group">
+                                                                    <input type="number" class="form-control" id="fuel_economy_fuel_eco" name="fuel_economy_fuel_eco"
+                                                                           placeholder="Total consumed fuel" min="0" max="10000" required>
+                                                                    <div class="input-group-append">
+                                                                        <span class="input-group-text"> liters </span>
+                                                                    </div>
+                                                                </div>
                                                                 <br/>
                                                                 <input th:attr="name='vehicle_id'"
                                                                        th:value="${vehicle.vehicle_id}"
@@ -217,28 +274,41 @@
                                                 <label class="text-secondary">Select Vehicle:</label><br/>
                                                 <div class="form-group blu-margin">
                                                     <select class="form-control" name="vehicle_id"
-                                                            id="vehicle_id">
+                                                            id="vehicle_id" required>
+                                                        <option value="" selected>Select your Car</option>
                                                         <option th:each="vehicle : ${listOfVehicle}"
                                                                 th:value="${vehicle.vehicle_id}"
                                                                 th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"></option>
                                                     </select>
                                                 </div>
+                                                <br/>
                                                 <label class="text-secondary">Source:</label><br/>
                                                 <input class="form-control" id="source" name="source"
-                                                       type="text">
+                                                       type="text" placeholder="Enter the source" required><br/>
                                                 <label class="text-secondary">Destination:</label><br/>
                                                 <input class="form-control" id="destination" name="destination"
-                                                       type="text">
+                                                       type="text" placeholder="Enter the destination" required><br/>
                                                 <label class="text-secondary">Available seats:</label><br/>
-                                                <input class="form-control" id="available_seats_trip"
-                                                       name="available_seats" type="text">
+<!--                                                <input class="form-control" id="available_seats_trip"-->
+<!--                                                       name="available_seats" type="text" placeholder="Enter the available seats" required>-->
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="available_seats_trip" name="available_seats_trip"
+                                                           placeholder="Enter the available seats" max="8" min="1" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"> seats </span>
+                                                    </div>
+                                                </div>
+                                                <br/>
                                                 <label class="text-secondary">Time:</label><br/>
-                                                <input class="form-control" id="timestamp" name="timestamp"
-                                                       type="text">
+                                                <input type="datetime-local" class="form-control" id="timestamp" name="timestamp" required><br/>
                                                 <label class="text-secondary">Distance:</label><br/>
-                                                <input class="form-control" id="estimated_kms"
-                                                       name="estimated_kms" type="text">
-
+                                                <div class="input-group">
+                                                    <input type="number" class="form-control" id="estimated_km" name="estimated_kms"
+                                                           placeholder="Distance in kms" min="0" max="1000000" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text"> kms </span>
+                                                    </div>
+                                                </div>
                                                 <br/>
                                                 <input th:attr="name='vehicleowner_id'"
                                                        th:value="${vehicleOwner.vehicleOwner_id}"
@@ -250,7 +320,7 @@
                                                        type="hidden"/>
                                                 <input th:attr="name='kms_travelled'" th:value="-1"
                                                        type="hidden"/>
-
+                                                <br/>
                                                 <input class="btn btn-secondary" type="submit"
                                                        value="Add Ride Details">
                                             </form>
@@ -275,8 +345,9 @@
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
+                    <div class="small">Logged in as:
                     <label class="form-check-label" th:text="${vehicleOwner.vehicleowner_fname}"></label>
+                </div>
                 </div>
                 <div class="text-muted">Copyright &copy; Trip Management 2022</div>
                 <div>
