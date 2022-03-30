@@ -8,6 +8,10 @@ public interface StringMessages {
     public static String USER_REGISTERED_SUCCESSFULLY=" is registered successfully";
     public static String LOGIN_SUCCESSFUL_FOR_USER="Login successful for User ";
     public static String AUTH_SUCCESSFUL="Authentication Successful";
-
+    public static String USER_ALREADY_EXIST = "User already exists";
+    public static String RIDE_CREATED_SUCCESSFULLY="Ride created successfully with Ride Id";
+    public static String RIDE_BOOKED_SUCCESSFULLY="Ride created successfully with Ride Id";
+    public static String RIDE_CREATED="Ride created successfully with Ride Id";
+    public static String RIDE_BOOKED="Ride created successfully with Ride Id";
 
 }

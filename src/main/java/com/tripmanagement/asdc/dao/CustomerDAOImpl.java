@@ -19,7 +19,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean saveCustomer(Customer customer) {
         try{
-        String sql = "insert into customer values("+null+",'"+customer.getCustomer_fname()+"','"+customer.getCustomer_lname()+"','"+customer.getMobile_no()+"','"+customer.getAddress()+"','"+customer.getEmail()+"','"+customer.getOwner_tag()+"','"+customer.getPassword()+"');";
+        String sql = "insert into customer values("+null+",'"+customer.getCustomer_fname()+"','"+customer.getCustomer_lname()+"','"+customer.getMobile_no()+"','"+customer.getEmail()+"','"+customer.getPassword()+"','"+customer.getAvailable_credits()+");";
         jdbcTemplate.update(sql);
         return true;
         //notificationService.sendEmail(customer.getCustomer_fname()+ StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,customer.getEmail());

@@ -15,5 +15,6 @@ public interface TripDAO {
 	public List<Trip> getAvailableTripsList(String source, String destination, String timestamp);
 	public List<String> getSources();
 	public List<String> getDestinations();
+	public boolean updateAvailableSeats(int trip_id, int available_seats);
 	
 }

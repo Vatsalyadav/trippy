@@ -6,7 +6,7 @@ import com.tripmanagement.asdc.model.User;
 import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.service.*;
 import com.tripmanagement.asdc.stringsAndConstants.Constants;
-import com.tripmanagement.stringsAndConstants.StringMessages;
+import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class RegistrationController {
@@ -32,12 +31,11 @@ public class RegistrationController {
     @Autowired
     VehicleService vehicleService;
 
-
     @Autowired
     TripService tripService;
 
     @Autowired
-    BookedRidesService bookedRidesService;
+    BookingService bookedRidesService;
 
     @RequestMapping("/")
     public String basePage() {
@@ -111,9 +109,13 @@ public class RegistrationController {
 
         if(!registrationService.checkUserExistByEmail(user.getEmail())) {
             if (user.getUserType().equals("Vehicle Owner"))
+            {
                 vehicleOwnerService.saveVehicleOwner(user);
+            }
             else
+            {
                 customerService.saveCustomer(user);
+            }
             return "login";
         }
         else {

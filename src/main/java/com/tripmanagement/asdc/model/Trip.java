@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Date;
-
 
 @Entity
 @Table(name="Trip")
@@ -27,17 +25,8 @@ public class Trip {
     @Column(name = "destination")
     private String destination;
 
-    @Column(name = "location_id")
-    private int location_id;
-
     @Column(name = "vehicle_id")
     private int vehicle_id;
-
-    @Column(name = "vehicleowner_id")
-    private int vehicleowner_id;
-
-    @Column(name = "customer_id")
-    private int customer_id;
 
     @Column(name = "estimated_kms")
     private float estimated_kms;
@@ -45,25 +34,34 @@ public class Trip {
     @Column(name = "kms_travelled")
     private float kms_travelled;
 
-    @Column(name = "timestamp")
-    private String timestamp;
-
     @Column(name = "available_seats")
     private int available_seats;
 
+    @Column(name = "start_time")
+    private String start_time;
+
+    @Column(name = "end_time")
+    private String end_time;
+
+    @Column(name = "seats_taken")
+    private int seats_taken;
+
+    @Column(name = "cost")
+    private float cost;
+
     @Autowired
-    public Trip(int trip_id, String source, String destination, int location_id, int vehicle_id, int vehicleowner_id, int customer_id, float estimated_kms, float kms_travelled, String timestamp, int available_seats) {
+    public Trip(int trip_id, String source, String destination, int vehicle_id, float estimated_kms, float kms_travelled, String timestamp, int available_seats, String start_time, String end_time, int seats_taken, float cost) {
         this.trip_id = trip_id;
         this.source = source;
         this.destination = destination;
-        this.location_id = location_id;
         this.vehicle_id = vehicle_id;
-        this.vehicleowner_id = vehicleowner_id;
-        this.customer_id = customer_id;
         this.estimated_kms = estimated_kms;
         this.kms_travelled = kms_travelled;
-        this.timestamp = timestamp;
         this.available_seats = available_seats;
+        this.start_time=start_time;
+        this.end_time=end_time;
+        this.seats_taken=seats_taken;
+        this.cost=cost;
     }
 
     public Trip() {
@@ -93,36 +91,12 @@ public class Trip {
         this.destination = destination;
     }
 
-    public int getLocation_id() {
-        return location_id;
-    }
-
-    public void setLocation_id(int location_id) {
-        this.location_id = location_id;
-    }
-
     public int getVehicle_id() {
         return vehicle_id;
     }
 
     public void setVehicle_id(int vehicle_id) {
         this.vehicle_id = vehicle_id;
-    }
-
-    public int getVehicleowner_id() {
-        return vehicleowner_id;
-    }
-
-    public void setVehicleowner_id(int vehicleowner_id) {
-        this.vehicleowner_id = vehicleowner_id;
-    }
-
-    public int getCustomer_id() {
-        return customer_id;
-    }
-
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
     }
 
     public float getEstimated_kms() {
@@ -140,15 +114,6 @@ public class Trip {
     public void setKms_travelled(float kms_travelled) {
         this.kms_travelled = kms_travelled;
     }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public int getAvailable_seats() {
         return available_seats;
     }
@@ -157,14 +122,47 @@ public class Trip {
         this.available_seats = available_seats;
     }
 
-    @Override
-    public String toString() {
-        return "Trip [customer_id=" + customer_id + ", destination=" + destination + ", estimated_kms=" + estimated_kms
-                + ", kms_travelled=" + kms_travelled + ", location_id=" + location_id + ", source=" + source
-                + ", timestamp=" + timestamp + ", trip_id=" + trip_id + ", vehicle_id=" + vehicle_id
-                + ", vehicleowner_id=" + vehicleowner_id + ", available_seats=" + available_seats + "]";
+    public String getStart_time() {
+        return start_time;
     }
 
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
+    }
+
+    public int getSeats_taken() {
+        return seats_taken;
+    }
+
+    public void setSeats_taken(int seats_taken) {
+        this.seats_taken = seats_taken;
+    }
+
+    public float getCost() {
+        return cost;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Trip [available_seats=" + available_seats + ", cost=" + cost + ", destination=" + destination
+                + ", end_time=" + end_time + ", estimated_kms=" + estimated_kms + ", kms_travelled=" + kms_travelled
+                + ", seats_taken=" + seats_taken + ", source=" + source + ", start_time=" + start_time + ", trip_id="
+                + trip_id + ", vehicle_id=" + vehicle_id + "]";
+    }
+
+    
    
 
 }

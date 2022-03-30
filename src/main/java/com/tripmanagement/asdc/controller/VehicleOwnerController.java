@@ -36,16 +36,16 @@ public class VehicleOwnerController {
         System.out.println("getDestination: " + tripData.getDestination());
         System.out.println("getVehicle_id: " + tripData.getVehicle_id());
         System.out.println("getAvailableSeats: " + tripData.getAvailable_seats());
-        System.out.println("getTime: " + tripData.getTimestamp());
+        System.out.println("getTime: " + tripData.getStart_time());
         System.out.println("getDistance: " + tripData.getEstimated_kms());
-        System.out.println("vehicleOwnerId: " + tripData.getVehicleowner_id());
+        System.out.println("vehicleOwnerId: " + vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id());
 
 //        tripData.setTimestamp(new Date(System.currentTimeMillisillis()));
         // TODO: Datetime, create ride
 
         tripService.saveTrip(tripData);
 
-        VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(tripData.getVehicleowner_id());
+        VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id());
         model.addAttribute("vehicleOwner", vehicleOwner);
         model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
         return "owner-dashboard";

@@ -20,27 +20,27 @@ public class VehicleOwner {
     @Column(name="phone")
     private String phone;
 
-    @Column(name="address")
-    private String address;
-
     @Column(name="email")
     private String email;
 
     @Column(name="password")
     private String password;
 
+    @Column(name="available_credits")
+    private int available_credits;
+
     public VehicleOwner() {
 
     }
 
-    public VehicleOwner(int vehicleOwner_id, String vehicleowner_fname, String vehicleowner_lname, String phone, String address, String email, String password) {
+    public VehicleOwner(int vehicleOwner_id, String vehicleowner_fname, String vehicleowner_lname, String phone, String email, String password, int available_seats) {
         this.vehicleOwner_id = vehicleOwner_id;
         this.vehicleowner_fname = vehicleowner_fname;
         this.vehicleowner_lname = vehicleowner_lname;
         this.phone = phone;
-        this.address = address;
         this.email = email;
         this.password = password;
+        this.available_credits=available_seats;
     }
 
     public String getVehicleowner_fname() {
@@ -67,14 +67,6 @@ public class VehicleOwner {
         this.phone = phone;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -98,6 +90,14 @@ public class VehicleOwner {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public int getAvailable_credits() {
+        return available_credits;
+    }
+
+    public void setAvailable_credits(int available_credits) {
+        this.available_credits = available_credits;
+    }
 
     @Override
     public String toString() {
@@ -105,9 +105,8 @@ public class VehicleOwner {
                 ", vehicleowner_fname='" + vehicleowner_fname + '\'' +
                 ", vehicleowner_lname='" + vehicleowner_lname + '\'' +
                 ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
+                ", available_credits='" + available_credits + '\'' +
                 ", email='" + email + '\'' +
-                ", vehicle_id=" + vehicleOwner_id +
                 ", password='" + password + '\'' +
                 '}';
     }

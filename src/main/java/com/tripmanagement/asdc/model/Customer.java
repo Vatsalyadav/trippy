@@ -20,32 +20,29 @@ public class Customer {
     @Column(name="mobile_no")
     private String mobile_no;
 
-    @Column(name="address")
-    private String address;
-
     @Column(name="email")
     private String email;
 
-    @Column(name="owner_tag")
-    private String owner_tag;
-
     @Column(name="password")
     private String password;
+
+    @Column(name="available_credits")
+    private int available_credits;
+
 
     public Customer() {
 
     }
 
-    public Customer(int customer_id, String customer_fname, String customer_lname,String mobile_no, String address, String email, String owner_tag, String password)
+    public Customer(int customer_id, String customer_fname, String customer_lname,String mobile_no, String address, String email, String owner_tag, String password, int available_credits)
     {
        this.customer_id=customer_id;
        this.customer_fname=customer_fname;
        this.customer_lname=customer_lname;
        this.mobile_no=mobile_no;
-       this.address=address;
        this.email=email;
-       this.owner_tag=owner_tag;
        this.password=password;
+       this.available_credits=available_credits;
     }
 
     public int getCustomer_id() {
@@ -72,14 +69,6 @@ public class Customer {
         this.mobile_no = mobile_no;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getEmail(){
         return email;
     }
@@ -96,20 +85,21 @@ public class Customer {
         this.email=email;
     }
 
-    public String getOwner_tag() {
-        return owner_tag;
-    }
-
-    public void setOwner_tag(String owner_tag) {
-        this.owner_tag = owner_tag;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public int getAvailable_credits() {
+        return available_credits;
+    }
+
+    public void setAvailable_credits(int available_credits) {
+        this.available_credits = available_credits;
     }
 
     @Override
@@ -119,9 +109,8 @@ public class Customer {
                 ", customer_fname='" + customer_fname + '\'' +
                 ", customer_lname='" + customer_lname + '\'' +
                 ", mobile_no='" + mobile_no + '\'' +
-                ", address='" + address + '\'' +
+                ", available_seats='" + available_credits + '\'' +
                 ", email='" + email + '\'' +
-                ", owner_tag='" + owner_tag + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

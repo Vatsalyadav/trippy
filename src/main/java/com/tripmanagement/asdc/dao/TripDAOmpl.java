@@ -27,7 +27,7 @@ public class TripDAOmpl implements TripDAO {
 		return false;
 		try
 		{
-		String sql = "insert into trip values("+null+",'"+trip.getSource()+"','"+trip.getDestination()+"',"+trip.getEstimated_kms()+","+trip.getLocation_id()+","+trip.getVehicle_id()+","+trip.getVehicleowner_id()+","+trip.getCustomer_id()+",'"+trip.getTimestamp()+"',"+trip.getKms_travelled()+","+trip.getAvailable_seats()+");";
+		String sql = "insert into trip values("+null+",'"+trip.getSource()+"','"+trip.getDestination()+"',"+trip.getEstimated_kms()+","+trip.getVehicle_id()+","+trip.getKms_travelled()+","+trip.getAvailable_seats()+",'"+trip.getStart_time()+"','"+trip.getEnd_time()+"',"+trip.getSeats_taken()+","+trip.getCost()+");";
         jdbcTemplate.update(sql);
 		return true;
 		}
@@ -142,6 +142,21 @@ public class TripDAOmpl implements TripDAO {
 			logger.error("Error getting destinations",e);
 			return destinations;
 		}
+	}
+
+	@Override
+	public boolean updateAvailableSeats(int trip_id, int available_seats) {
+		try{
+			String sql = "update trip set available_seats="+available_seats+" where trip_id="+trip_id;
+			jdbcTemplate.update(sql);
+			return true;
+			}
+			catch(Exception e)
+			{
+				logger.error("Error updating fuel economy",e);
+				return false;
+	
+			}	
 	}
 
 	
