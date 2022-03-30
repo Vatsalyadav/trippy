@@ -42,7 +42,7 @@ public class VehicleController {
 //        return "owner-dashboard";
 //    }
 
-    @PostMapping("add-fuel-economy")
+    @PostMapping("/add-fuel-economy")
     public String addTripDetails(FuelEconomy fuelEconomy, Model model) {
         System.out.println("yolo 1 "+fuelEconomy.getFuel_consumed());
         System.out.println("yolo 2 "+fuelEconomy.getKms_travelled());
@@ -66,10 +66,10 @@ public class VehicleController {
         System.out.println(tripService.getAvailableTripsList("Halifax", "Lucknow").size());
         System.out.println(tripService.getPreviousTripsForVehicleOwner(5).size());
         System.out.println(tripService.getUpcomingTripsForVehicleOwner(5).size());
-        Booking booked_Rides = new Booking();
-        booked_Rides.setCustomer_id(3);
-        booked_Rides.setTrip_id(1);
-        //System.out.println(bookedRidesService.saveRide(booked_Rides));
+        Booking booking = new Booking();
+        booking.setCustomer_id(3);
+        booking.setTrip_id(1);
+        //System.out.println(bookedRidesService.saveRide(booking));
         System.out.println(bookedRidesService.getPreviousRidesForCustomer(3).size());
         System.out.println(bookedRidesService.getUpcomingRidesForCustomer(3).size());
 
