@@ -1,10 +1,10 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.Booked_Rides;
+import com.tripmanagement.asdc.model.Booking;
 import com.tripmanagement.asdc.model.Ride;
 import com.tripmanagement.asdc.model.Trip;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.service.BookedRidesService;
+import com.tripmanagement.asdc.service.BookingService;
 import com.tripmanagement.asdc.service.CustomerService;
 import com.tripmanagement.asdc.service.TripService;
 import com.tripmanagement.asdc.service.VehicleService;
@@ -30,22 +30,23 @@ public class CustomerController {
     CustomerService customerService;
 
     @Autowired
-    BookedRidesService bookedRidesService;
+    BookingService bookedRidesService;
 
     @GetMapping("/search-rides")
-    public String searchRides(Trip trip, Model model) {
+    public String searchRides(Trip trip, Model model) { //This should return customer
         // call service with rideData
         // TODO: time in rides to regex
         // add request param for source and dest
         System.out.println(model.toString());
         model.addAttribute("source", trip.getSource());
         model.addAttribute("destination", trip.getDestination());
-        model.addAttribute("customer", customerService.getCustomerById(trip.getCustomer_id()));
+        //model.addAttribute("customer", customerService.getCustomerById(trip.getCustomer_id()));
         model.addAttribute("listOfRides", tripService.getAvailableTripsList(trip.getSource(),trip.getDestination()));
-        model.addAttribute("previousRides", bookedRidesService.getPreviousRidesForCustomer(trip.getCustomer_id()));
-        model.addAttribute("upcomingRides", bookedRidesService.getUpcomingRidesForCustomer(trip.getCustomer_id()));
+        //model.addAttribute("previousRides", bookedRidesService.getPreviousRidesForCustomer(trip.getCustomer_id()));
+        //model.addAttribute("upcomingRides", bookedRidesService.getUpcomingRidesForCustomer(trip.getCustomer_id()));
         model.addAttribute("sourceList", tripService.getSources());
         model.addAttribute("destinationList", tripService.getDestinations());
+        
         return "customer-dashboard";
     }
 //

@@ -21,9 +21,8 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 	@Override
 	public boolean saveVehicleOwner(VehicleOwner vehicleOwner) {
 		try{
-        String sql = "insert into vehicleowner values("+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getAddress()+"','"+vehicleOwner.getEmail()+"',"+vehicleOwner.getVehicleOwner_id()+",'"+vehicleOwner.getPassword()+"');";
+        String sql = "insert into vehicleowner values("+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getEmail()+"','"+vehicleOwner.getPassword()+"',"+vehicleOwner.getAvailable_credits()+");";
         jdbcTemplate.update(sql);
-//		notificationService.sendEmail(vehicleOwner.getVehicleowner_fname()+StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
 			return true;
 	}
 		catch(Exception e)
@@ -65,7 +64,6 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 
 		}
 	}
-
 
 }
 

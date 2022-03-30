@@ -3,6 +3,8 @@ package com.tripmanagement.asdc.service;
 import com.tripmanagement.asdc.dao.VehicleOwnerDAO;
 import com.tripmanagement.asdc.model.User;
 import com.tripmanagement.asdc.model.VehicleOwner;
+import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,8 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 	@Autowired
 	private VehicleOwnerDAO vehicleOwnerDAO;
 	
+	@Autowired
+	private NotificationService notificationService;
 	
 	@Override
 	@Transactional
@@ -23,10 +27,14 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 		vehicleOwner.setVehicleowner_lname(user.getLast_name());
 		vehicleOwner.setEmail(user.getEmail());
 		vehicleOwner.setPassword(user.getPassword());
-		return vehicleOwnerDAO.saveVehicleOwner(vehicleOwner);
+		boolean isSuccess=vehicleOwnerDAO.saveVehicleOwner(vehicleOwner);
+		if(isSuccess)
+		notificationService.sendEmail(vehicleOwner.getVehicleowner_fname()+StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
+		return isSuccess;
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			return false;
 		}
 	}

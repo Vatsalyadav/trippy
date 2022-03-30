@@ -1,6 +1,6 @@
 package com.tripmanagement.asdc.dao;
 
-import com.tripmanagement.asdc.model.Booked_Rides;
+import com.tripmanagement.asdc.model.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,19 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class BookedRidesDAOImpl implements BookedRidesDAO {
+public class BookingDAOImpl implements BookingDAO {
 
 
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-	Logger logger = LoggerFactory.getLogger(BookedRidesDAOImpl.class);
+	Logger logger = LoggerFactory.getLogger(BookingDAOImpl.class);
 
 
 	@Override
-	public boolean saveRide(Booked_Rides booked_rides) {
+	public boolean saveRide(Booking booked_rides) {
 		try{
-		String sql = "insert into booked_rides values("+null+",'"+booked_rides.getSource()+"','"+booked_rides.getDestination()+"',"+booked_rides.getDistance()+booked_rides.getVehicle_id()+","+booked_rides.getVehicleowner_id()+","+booked_rides.getCustomer_id()+","+booked_rides.getTimestamp()+","+booked_rides.getCost()+","+booked_rides.getFuel_economy()+");";
+		String sql = "insert into booked_rides values("+null+","+booked_rides.getCustomer_id()+","+booked_rides.getTimestamp()+","+booked_rides.getCost()+","+booked_rides.getSeats_booked()+","+booked_rides.getTrip_id()+","+booked_rides.getIsPaid()+");";
         jdbcTemplate.update(sql);
 		return true;
 		}
@@ -36,11 +36,11 @@ public class BookedRidesDAOImpl implements BookedRidesDAO {
 	}
 
 	@Override
-	public List<Booked_Rides> getUpcomingRidesForCustomer(int customer_id, String timestamp) {
-		List<Booked_Rides> rides=new ArrayList<>();
+	public List<Booking> getUpcomingRidesForCustomer(int customer_id, String timestamp) {
+		List<Booking> rides=new ArrayList<>();
 		try{
 		rides= jdbcTemplate.queryForList("select * from booked_rides where customer_id="+customer_id,
-		Booked_Rides.class);
+		Booking.class);
 		return rides;
 		}
 		catch(Exception e)
@@ -52,11 +52,11 @@ public class BookedRidesDAOImpl implements BookedRidesDAO {
 	}
 
 	@Override
-	public List<Booked_Rides> getPreviousRidesForCustomer(int customer_id, String timestamp) {
-		List<Booked_Rides> rides=new ArrayList<>();
+	public List<Booking> getPreviousRidesForCustomer(int customer_id, String timestamp) {
+		List<Booking> rides=new ArrayList<>();
 		try{
 		rides= jdbcTemplate.queryForList("select * from booked_rides where customer_id="+customer_id,
-		Booked_Rides.class);
+		Booking.class);
 		return rides;
 		}
 		catch(Exception e)

@@ -13,6 +13,7 @@ import com.tripmanagement.asdc.model.Ride;
 import com.tripmanagement.asdc.model.Trip;
 import com.tripmanagement.asdc.model.Vehicle;
 import com.tripmanagement.asdc.model.VehicleOwner;
+import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,9 @@ public class TripServiceImpl implements TripService {
 
 	@Autowired
 	VehicleOwnerDAO vehicleOwnerDAO;
+
+	@Autowired
+	NotificationService notificationService;
 	
 	@Override
 	@Transactional
@@ -36,7 +40,10 @@ public class TripServiceImpl implements TripService {
 		//SimpleDateFormat dateTime=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		//trip.getTimestamp();
 		try{
-		return tripDAO.saveTrip(trip);
+		boolean isSuccess= tripDAO.saveTrip(trip);
+		if(isSuccess)
+				notificationService.sendEmail(StringMessages.RIDE_CREATED_SUCCESSFULLY,StringMessages.RIDE_CREATED,vehicleOwnerDAO.getVehicleOwnerById(vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id()).getEmail());
+		return isSuccess;
 		}
 		catch(Exception e)
 		{
@@ -92,7 +99,7 @@ public class TripServiceImpl implements TripService {
 		for(Trip trip:tripList)
 		{
 			Vehicle vehicle=vehicleDAO.getVehicleDetails(trip.getVehicle_id());
-			VehicleOwner vehicleOwner=vehicleOwnerDAO.getVehicleOwnerById(trip.getVehicleowner_id());
+			VehicleOwner vehicleOwner=vehicleOwnerDAO.getVehicleOwnerById(vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id());
 			Ride ride=new Ride(trip.getTrip_id(), vehicle.getVehicle_id(), vehicle.getNumber_plate(),
 					vehicle.getFuel_economy(), vehicleOwner.getVehicleowner_fname(), vehicle.getVehicleowner_id(),
 					vehicleOwner.getPhone(), calculateCost(vehicle,trip), trip.getAvailable_seats());

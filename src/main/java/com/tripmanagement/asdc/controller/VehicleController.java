@@ -1,9 +1,9 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.Booked_Rides;
+import com.tripmanagement.asdc.model.Booking;
 import com.tripmanagement.asdc.model.FuelEconomy;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.service.BookedRidesService;
+import com.tripmanagement.asdc.service.BookingService;
 import com.tripmanagement.asdc.service.TripService;
 import com.tripmanagement.asdc.service.VehicleOwnerService;
 import com.tripmanagement.asdc.service.VehicleService;
@@ -20,7 +20,7 @@ public class VehicleController {
     VehicleService vehicleService;
 
     @Autowired
-    BookedRidesService bookedRidesService;
+    BookingService bookedRidesService;
 
     @Autowired
     TripService tripService;
@@ -66,10 +66,9 @@ public class VehicleController {
         System.out.println(tripService.getAvailableTripsList("Halifax", "Lucknow").size());
         System.out.println(tripService.getPreviousTripsForVehicleOwner(5).size());
         System.out.println(tripService.getUpcomingTripsForVehicleOwner(5).size());
-        Booked_Rides booked_Rides = new Booked_Rides();
+        Booking booked_Rides = new Booking();
         booked_Rides.setCustomer_id(3);
-        booked_Rides.setSource("a");
-        booked_Rides.setDestination("b");
+        booked_Rides.setTrip_id(1);
         //System.out.println(bookedRidesService.saveRide(booked_Rides));
         System.out.println(bookedRidesService.getPreviousRidesForCustomer(3).size());
         System.out.println(bookedRidesService.getUpcomingRidesForCustomer(3).size());
