@@ -1,12 +1,17 @@
 package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.VehicleOwner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Repository;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Repository
 public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
@@ -39,9 +44,19 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 		if(email==null)
 		return null;
 		try{
-	   VehicleOwner carOwner=jdbcTemplate.queryForObject("select * from vehicleowner where email='"+email+"'",
-       BeanPropertyRowMapper.newInstance(VehicleOwner.class));
-	  return carOwner;
+			VehicleOwner vehicleOwner = jdbcTemplate.query("select * from vehicleowner where email='"+email+"'", new ResultSetExtractor<VehicleOwner>() {
+				@Override
+				public VehicleOwner extractData(ResultSet rs) throws SQLException,
+						DataAccessException {
+					if (rs.next()) {
+						VehicleOwner v = new VehicleOwner();
+						//TODO:set everything
+						v.setEmail(rs.getString("email"));
+						return v;
+					} else return null;
+				}
+			});
+	  return vehicleOwner;
 		}
 		catch(Exception e)
 		{
