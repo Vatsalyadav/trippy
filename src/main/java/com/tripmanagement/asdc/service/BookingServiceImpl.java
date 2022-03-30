@@ -30,14 +30,14 @@ public class BookingServiceImpl implements BookingService {
 	NotificationService notificationService;
 
 	@Override
-	public boolean saveRide(Booking booked_rides) {
+	public boolean saveRide(Booking booking) {
 		try{
-		Trip trip= tripDAO.getTripDetails(booked_rides.getTrip_id());
-		if(trip.getAvailable_seats()-booked_rides.getSeats_booked()>=0){
-		boolean isSuccess=bookedRidesDAO.saveRide(booked_rides);
+		Trip trip= tripDAO.getTripDetails(booking.getTrip_id());
+		if(trip.getAvailable_seats()-booking.getSeats_booked()>=0){
+		boolean isSuccess=bookedRidesDAO.saveRide(booking);
 		if(isSuccess){
-			notificationService.sendEmail(StringMessages.RIDE_BOOKED_SUCCESSFULLY,StringMessages.RIDE_BOOKED,customerDAO.getCustomerById(booked_rides.getCustomer_id()).getEmail());
-			tripDAO.updateAvailableSeats(trip.getTrip_id(), booked_rides.getSeats_booked());
+			notificationService.sendEmail(StringMessages.RIDE_BOOKED_SUCCESSFULLY,StringMessages.RIDE_BOOKED,customerDAO.getCustomerById(booking.getCustomer_id()).getEmail());
+			tripDAO.updateAvailableSeats(trip.getTrip_id(), booking.getSeats_booked());
 		}
 			return isSuccess;
 				}

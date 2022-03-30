@@ -7,7 +7,7 @@ import com.tripmanagement.asdc.model.Booking;
 
 public interface BookingService {
 
-	public boolean saveRide(Booking booked_rides);
+	public boolean saveRide(Booking booking);
 	public List<Booking> getUpcomingRidesForCustomer(int customer_id);
 	public List<Booking> getPreviousRidesForCustomer(int customer_id);
 

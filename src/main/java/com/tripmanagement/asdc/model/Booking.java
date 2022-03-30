@@ -113,7 +113,7 @@ public class Booking {
 
     @Override
     public String toString() {
-        return "Booked_Rides [booked_ride_id=" + booked_ride_id + ", cost=" + cost + ", customer_id=" + customer_id
+        return "Booking [booked_ride_id=" + booked_ride_id + ", cost=" + cost + ", customer_id=" + customer_id
                 + ", timestamp=" + timestamp + ", seats_booked=" + seats_booked
                 + ", trip_id=" + trip_id + ", isPaid=" + isPaid + "]";
     }

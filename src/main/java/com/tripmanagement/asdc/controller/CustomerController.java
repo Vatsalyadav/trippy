@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CustomerController {
@@ -32,21 +33,9 @@ public class CustomerController {
     @Autowired
     BookingService bookedRidesService;
 
-    @GetMapping("/search-rides")
-    public String searchRides(Trip trip, Model model) { //This should return customer
-        // call service with rideData
-        // TODO: time in rides to regex
-        // add request param for source and dest
-        System.out.println(model.toString());
-        model.addAttribute("source", trip.getSource());
-        model.addAttribute("destination", trip.getDestination());
-        //model.addAttribute("customer", customerService.getCustomerById(trip.getCustomer_id()));
+    @PostMapping("/search-rides")
+    public String searchRides(Trip trip, Model model) {
         model.addAttribute("listOfRides", tripService.getAvailableTripsList(trip.getSource(),trip.getDestination()));
-        //model.addAttribute("previousRides", bookedRidesService.getPreviousRidesForCustomer(trip.getCustomer_id()));
-        //model.addAttribute("upcomingRides", bookedRidesService.getUpcomingRidesForCustomer(trip.getCustomer_id()));
-        model.addAttribute("sourceList", tripService.getSources());
-        model.addAttribute("destinationList", tripService.getDestinations());
-        
         return "customer-dashboard";
     }
 //

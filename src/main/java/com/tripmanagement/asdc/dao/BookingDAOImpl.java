@@ -21,9 +21,9 @@ public class BookingDAOImpl implements BookingDAO {
 
 
 	@Override
-	public boolean saveRide(Booking booked_rides) {
+	public boolean saveRide(Booking booking) {
 		try{
-		String sql = "insert into booked_rides values("+null+","+booked_rides.getCustomer_id()+","+booked_rides.getTimestamp()+","+booked_rides.getCost()+","+booked_rides.getSeats_booked()+","+booked_rides.getTrip_id()+","+booked_rides.getIsPaid()+");";
+		String sql = "insert into booking values("+null+","+booking.getCustomer_id()+","+booking.getTimestamp()+","+booking.getCost()+","+booking.getSeats_booked()+","+booking.getTrip_id()+","+booking.getIsPaid()+");";
         jdbcTemplate.update(sql);
 		return true;
 		}
@@ -39,7 +39,7 @@ public class BookingDAOImpl implements BookingDAO {
 	public List<Booking> getUpcomingRidesForCustomer(int customer_id, String timestamp) {
 		List<Booking> rides=new ArrayList<>();
 		try{
-		rides= jdbcTemplate.queryForList("select * from booked_rides where customer_id="+customer_id,
+		rides= jdbcTemplate.queryForList("select * from booking where customer_id="+customer_id,
 		Booking.class);
 		return rides;
 		}
@@ -55,7 +55,7 @@ public class BookingDAOImpl implements BookingDAO {
 	public List<Booking> getPreviousRidesForCustomer(int customer_id, String timestamp) {
 		List<Booking> rides=new ArrayList<>();
 		try{
-		rides= jdbcTemplate.queryForList("select * from booked_rides where customer_id="+customer_id,
+		rides= jdbcTemplate.queryForList("select * from booking where customer_id="+customer_id,
 		Booking.class);
 		return rides;
 		}
