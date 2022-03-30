@@ -4,14 +4,14 @@ import com.tripmanagement.asdc.model.Customer;
 import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.stringsAndConstants.Constants;
 import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -104,14 +104,14 @@ public class RegistrationDAOImpl implements RegistrationDAO {
         if(email==null||email.isEmpty()||userType==null||userType.isEmpty())
         return false;
         try{
-        if (userType == Constants.USER_TYPE_CUSTOMER) {
+        if (userType.equals(Constants.USER_TYPE_CUSTOMER)) {
             Customer customer = jdbcTemplate.queryForObject("select * from customer where email='" + email + "'",
                     BeanPropertyRowMapper.newInstance(Customer.class));
             if (customer != null && !customer.getEmail().isEmpty())
                 return true;
             else
                 return false;
-        } else if (userType == Constants.USER_TYPE_VEHICLE_OWNER) {
+        } else if (userType.equals(Constants.USER_TYPE_VEHICLE_OWNER)) {
             VehicleOwner carOwner = jdbcTemplate.queryForObject("select * from vehicleowner where email='" + email + "'",
                     BeanPropertyRowMapper.newInstance(VehicleOwner.class));
             if (carOwner != null && !carOwner.getEmail().isEmpty())
