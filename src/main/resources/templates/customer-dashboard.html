@@ -19,7 +19,7 @@
     <a class="navbar-brand ps-3" href="@{owner-dashboard}">Trip Management</a>
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
 
-    <label class="text-light" th:text="${customer.customer_fname}"></label>
+    <label class="text-light" th:text="${session.customer.customer_fname}"></label>
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
@@ -34,9 +34,9 @@
     <main>
         <div class="container-fluid">
             <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
-                th:text="'Good Evenin ' + ${customer.customer_fname} + '!'"/>
+                th:text="'Good Evenin '"/>
             <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
-                th:text="'Good Evening ' + ${customer.customer_fname} + '!'"/>
+                th:text="'Good Evening ' + ${session.customer.customer_fname} + '!'"/>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-1"></div>
@@ -45,7 +45,7 @@
                             <li class="breadcrumb-item active">Search Rides</li>
                         </ol>
 
-                        <form th:action="@{/search-rides}" th:object="${trip}">
+                        <form th:action="@{/search-rides}" th:object="${trip}" method="post">
                             <div class="col-md-6">
                                 <label>Select Source</label>
                                 <!--                                <select class="form-control form-control-solid" name="source" id="selectsource">-->
@@ -55,7 +55,7 @@
                                 <!--                                </select>-->
 
                                 <select class="form-control" name="source" id="source">
-                                    <option th:each="source : ${sourceList}" th:value="${source}"
+                                    <option th:each="source : ${session.sourceList}" th:value="${source}"
                                             th:text="${source}"></option>
                                 </select>
                             </div>
@@ -66,7 +66,7 @@
                                 <select class="form-control form-control-solid" name="destination"
                                         id="selectdestination">
                                     <!--<option th:each="ride" option>@{source}</option>-->
-                                    <option th:each="destination : ${destinationList}" th:value="${destination}"
+                                    <option th:each="destination : ${session.destinationList}" th:value="${destination}"
                                             th:text="${destination}"></option>
                                 </select>
                             </div>
@@ -76,7 +76,7 @@
                             <input th:attr="name='location_id'" th:value="-1" type="hidden"/>
                             <input th:attr="name='vehicle_id'" th:value="-1" type="hidden"/>
                             <input th:attr="name='vehicleowner_id'" th:value="-1" type="hidden"/>
-                            <input th:attr="name='customer_id'" th:value="${customer.customer_id}" type="hidden"/>
+                            <input th:attr="name='customer_id'" th:value="${session.customer.customer_id}" type="hidden"/>
                             <input th:attr="name='estimated_kms'" th:value="-1" type="hidden"/>
                             <input th:attr="name='kms_travelled'" th:value="-1" type="hidden"/>
                             <input th:attr="name='timestamp'" th:value="'12:00'" type="hidden"/>
@@ -116,7 +116,7 @@
                             <li class="breadcrumb-item active">Upcoming Rides</li>
                         </ol>
 
-                        <div class="col-xl-3 col-md-6" th:each="upcomingRide: ${upcomingRides}">
+                        <div class="col-xl-3 col-md-6" th:each="upcomingRide: ${session.upcomingRides}">
                             <div class="card bg-primary text-white mb-4">
                                 <br/>
                                 <div class="card-body" style="padding:2px 6px">Source: <span
@@ -184,7 +184,7 @@
             <div class="d-flex align-items-center justify-content-between small">
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:
-                    <label class="form-check-label" th:text="${customer.customer_fname}"></label>
+                    <label class="form-check-label" th:text="${session.customer.customer_fname}"></label>
                 </div>
                 </div>
                 <div class="text-muted">Copyright &copy; Trip Management 2022</div>
