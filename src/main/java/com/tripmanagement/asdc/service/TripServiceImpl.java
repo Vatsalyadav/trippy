@@ -33,20 +33,17 @@ public class TripServiceImpl implements TripService {
 
 	@Autowired
 	NotificationService notificationService;
-	
+
 	@Override
 	@Transactional
 	public boolean saveTrip(Trip trip) {
-		//SimpleDateFormat dateTime=new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-		//trip.getTimestamp();
-		try{
-		boolean isSuccess= tripDAO.saveTrip(trip);
-		if(isSuccess)
-				notificationService.sendEmail(StringMessages.RIDE_CREATED_SUCCESSFULLY,StringMessages.RIDE_CREATED,vehicleOwnerDAO.getVehicleOwnerById(vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id()).getEmail());
-		return isSuccess;
-		}
-		catch(Exception e)
-		{
+		try {
+			trip.setCost(calculateCost(vehicleDAO.getVehicleDetails(trip.getVehicle_id()), trip));
+			boolean isSuccess = tripDAO.saveTrip(trip);
+			if (isSuccess)
+				notificationService.sendEmail(StringMessages.RIDE_CREATED_SUCCESSFULLY, StringMessages.RIDE_CREATED, vehicleOwnerDAO.getVehicleOwnerById(vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id()).getEmail());
+			return isSuccess;
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -117,15 +114,12 @@ public class TripServiceImpl implements TripService {
 	@Override
 	@Transactional
 	public float calculateCost(Vehicle vehicle, Trip trip) {
-		if(trip==null||vehicle==null||vehicle.getAvailable_seats()==0)
-		return 0;
-		else{
-		float cost=(float)(trip.getEstimated_kms()*vehicle.getFuel_economy()*(float)1.20)/vehicle.getAvailable_seats();
-		return cost;
+		if (trip == null || vehicle == null || vehicle.getAvailable_seats() == 0)
+			return 0;
+		else {
+			return 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * vehicle.getAvailable_seats()));
 		}
 	}
-
-
 
 	@Override
 	@Transactional
