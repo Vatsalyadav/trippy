@@ -46,7 +46,6 @@ public class CustomerDAOImpl implements CustomerDAO {
                 public Customer extractData(ResultSet rs) throws SQLException,
                         DataAccessException {
                     if (rs.next()) {
-                        //TODO: set everything
                         Customer cust = new Customer();
                         cust.setEmail(rs.getString("email"));
                         cust.setCustomer_fname(rs.getString("customer_fname"));

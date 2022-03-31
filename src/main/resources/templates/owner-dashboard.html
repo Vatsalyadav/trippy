@@ -57,23 +57,12 @@
         <div class="container-fluid">
             <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
                 th:text="'Good Evenin ' + ${session.vehicleOwner.vehicleowner_fname} + '!'"/>
-            <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
-                th:text="'Good Evening ' + ${session.vehicleOwner.vehicleowner_fname} + '!'"/>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-6">
-                        <ol class="breadcrumb mb-6">
-                            <li class="breadcrumb-item active" style="font-family: 'Alef';font-size: 24px;">Manage
-                                Vehicles
-                            </li>
-                        </ol>
                         <div class="col-xl-8 col-md-8" style="padding-left: 24px;">
-                            <!--                            <div class="card text-white mb-5">-->
-                            <!--                                <div class="card-body">Welcome</div>-->
-                            <!--                                <div class="card-footer d-flex align-items-center justify-content-between">-->
-                            <!--                                        <a class="small text-white stretched-link" onclick="alertEnterdetails()">Add details</a>-->
-                            <button class="btn btn-primary" data-bs-target="#exampleModal"
+                            <button class="btn btn-dark" data-bs-target="#exampleModal"
                                     data-bs-toggle="modal" type="button">Add New Car
                             </button>
 
@@ -127,7 +116,7 @@
 <!--                                                       name="fuel_consumed" type="text">-->
 
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control" id="fuel_economy" name="fuel_economy"
+                                                    <input type="number" class="form-control" id="fuel_consumed" name="fuel_consumed"
                                                            placeholder="Total consumed fuel" min="0" max="10000" required>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"> liters </span>
@@ -156,13 +145,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            <div class="small text-black"><i class="fas fa-angle-right"></i></div>
                         </div>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-6" th:each="vehicle: ${session.listOfVehicle}">
+                                <div class="col-md-6" th:each="vehicle: ${listOfVehicle}">
                                     <div class="containerCard">
                                         <div class="containerCard">
                                             <div class="row">
@@ -179,9 +166,9 @@
                                                                 <img th:src="@{/images/hatchback.png}">
                                                             </div>
                                                         </div>
-                                                        <h2 class="vehicleBrand" th:text="${vehicle.vehicle_name}"></h2>
+                                                        <h2 class="vehicleBrand" th:text="${vehicle.brand}"></h2>
                                                         <div class="contentBx">
-                                                            <h2 th:text="${vehicle.vehicle_name}"></h2>
+                                                            <h2 th:text="${vehicle.brand}+' '+${vehicle.vehicle_name}"></h2>
                                                             <div class="size" style="justify-content: center;">
                                                                 <h3 th:text="${vehicle.number_plate}"></h3>
                                                             </div>
@@ -256,18 +243,8 @@
                     </div>
 
                     <div class="col-md-5">
-                        <ol class="breadcrumb mb-6">
-                            <li class="breadcrumb-item active" style="font-family: 'Alef';font-size: 24px;">Manage
-                                Rides
-                            </li>
-                        </ol>
                         <div class="col-xl-8 col-md-8" style="padding-left: 24px;">
-
-                            <!--                            <div class="card bg-primary text-white mb-6">-->
-                            <!--                                <div class="card-body">Add New Ride</div>-->
-                            <!--                                <div class="card-footer d-flex align-items-center justify-content-between">-->
-                            <!--                                        <a class="small text-white stretched-link" onclick="alertEnterdetails()">Add details</a>-->
-                            <button class="btn btn-primary" data-bs-target="#exampleModalride"
+                            <button class="btn btn-dark" data-bs-target="#exampleModalride"
                                     data-bs-toggle="modal" type="button">Create New Ride
                             </button>
 
@@ -288,7 +265,7 @@
                                                     <select class="form-control" name="vehicle_id"
                                                             id="vehicle_id" required>
                                                         <option value="" selected>Select your Car</option>
-                                                        <option th:each="vehicle : ${session.listOfVehicle}"
+                                                        <option th:each="vehicle : ${listOfVehicle}"
                                                                 th:value="${vehicle.vehicle_id}"
                                                                 th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"></option>
                                                     </select>
@@ -304,15 +281,17 @@
 <!--                                                <input class="form-control" id="available_seats_trip"-->
 <!--                                                       name="available_seats" type="text" placeholder="Enter the available seats" required>-->
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control" id="available_seats_trip" name="available_seats_trip"
+                                                    <input type="number" class="form-control" id="available_seats_trip" name="available_seats"
                                                            placeholder="Enter the available seats" max="8" min="1" required>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"> seats </span>
                                                     </div>
                                                 </div>
                                                 <br/>
-                                                <label class="text-secondary">Time:</label><br/>
-                                                <input type="datetime-local" class="form-control" id="timestamp" name="timestamp" required><br/>
+                                                <label class="text-secondary">Start Time:</label><br/>
+                                                <input type="datetime-local" class="form-control" id="start_time" name="start_time" required><br/>
+                                                <label class="text-secondary">End Time:</label><br/>
+                                                <input type="datetime-local" class="form-control" id="end_time" name="end_time" required><br/>
                                                 <label class="text-secondary">Distance:</label><br/>
                                                 <div class="input-group">
                                                     <input type="number" class="form-control" id="estimated_km" name="estimated_kms"
@@ -321,17 +300,17 @@
                                                         <span class="input-group-text"> kms </span>
                                                     </div>
                                                 </div>
-                                                <br/>
-                                                <input th:attr="name='vehicleowner_id'"
+
+                                                <input th:attr="name='vehicle_owner_id'"
                                                        th:value="${session.vehicleOwner.vehicleOwner_id}"
                                                        type="hidden"/>
-                                                <input th:attr="name='trip_id'" th:value="-1" type="hidden"/>
-                                                <input th:attr="name='location_id'" th:value="-1"
-                                                       type="hidden"/>
-                                                <input th:attr="name='customer_id'" th:value="-1"
-                                                       type="hidden"/>
-                                                <input th:attr="name='kms_travelled'" th:value="-1"
-                                                       type="hidden"/>
+<!--                                                <input th:attr="name='trip_id'" th:value="-1" type="hidden"/>-->
+<!--                                                <input th:attr="name='location_id'" th:value="-1"-->
+<!--                                                       type="hidden"/>-->
+<!--                                                <input th:attr="name='customer_id'" th:value="-1"-->
+<!--                                                       type="hidden"/>-->
+<!--                                                <input th:attr="name='kms_travelled'" th:value="-1"-->
+<!--                                                       type="hidden"/>-->
                                                 <br/>
                                                 <input class="btn btn-secondary" type="submit"
                                                        value="Add Ride Details">
@@ -340,9 +319,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--                                </div>-->
-                            <!--                            </div>-->
-                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            <div class="small text-black"><i class="fas fa-angle-right"></i></div>
 
 
                         </div>
@@ -353,7 +330,7 @@
         </div>
     </main>
 
-    <footer class="py-4 bg-light mt-auto fixed-bottom" >
+    <footer class="bg-dark mt-auto fixed-bottom" >
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
                 <div class="sb-sidenav-footer">

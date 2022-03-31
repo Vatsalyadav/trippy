@@ -54,7 +54,7 @@ public class RegistrationController {
             if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER)) {
                 VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByEmail(user.getEmail());
                 httpSession.setAttribute("vehicleOwner", vehicleOwner);
-                httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+                model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
                 httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
                 httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
                 return "owner-dashboard";
@@ -66,6 +66,7 @@ public class RegistrationController {
                 httpSession.setAttribute("customer", customer);
 
                 model.addAttribute("listOfRides", new ArrayList<Ride>());
+                // TODO: Exception in getPreviousRidesForCustomer and getUpcomingRidesForCustomer
                 httpSession.setAttribute("previousRides", bookedRidesService.getPreviousRidesForCustomer(customer.getCustomer_id()));
                 httpSession.setAttribute("upcomingRides", bookedRidesService.getUpcomingRidesForCustomer(customer.getCustomer_id()));
                 httpSession.setAttribute("sourceList", tripService.getSources());
