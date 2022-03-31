@@ -1,10 +1,9 @@
 package com.tripmanagement.asdc.model;
 
-
 import javax.persistence.*;
 
 @Entity
-@Table(name="Trip")
+@Table(name = "Trip")
 public class Trip {
 
     @Id
@@ -36,8 +35,8 @@ public class Trip {
     @Column(name = "end_time")
     private String end_time;
 
-    @Column(name = "seats_taken")
-    private int seats_taken;
+    @Column(name = "seats_remaining")
+    private int seats_remaining;
 
     @Column(name = "cost")
     private float cost;
@@ -45,7 +44,9 @@ public class Trip {
     @Column(name = "vehicle_owner_id")
     private int vehicle_owner_id;
 
-    public Trip(int trip_id, String source, String destination, int vehicle_id, float estimated_kms, float kms_travelled, int available_seats, String start_time, String end_time, int seats_taken, float cost, int vehicle_owner_id) {
+    public Trip(int trip_id, String source, String destination, int vehicle_id, float estimated_kms,
+            float kms_travelled, int available_seats, String start_time, String end_time, int seats_remaining,
+            float cost, int vehicle_owner_id) {
         this.trip_id = trip_id;
         this.source = source;
         this.destination = destination;
@@ -55,7 +56,7 @@ public class Trip {
         this.available_seats = available_seats;
         this.start_time = start_time;
         this.end_time = end_time;
-        this.seats_taken = seats_taken;
+        this.seats_remaining = seats_remaining;
         this.cost = cost;
         this.vehicle_owner_id = vehicle_owner_id;
     }
@@ -110,6 +111,7 @@ public class Trip {
     public void setKms_travelled(float kms_travelled) {
         this.kms_travelled = kms_travelled;
     }
+
     public int getAvailable_seats() {
         return available_seats;
     }
@@ -134,12 +136,12 @@ public class Trip {
         this.end_time = end_time;
     }
 
-    public int getSeats_taken() {
-        return seats_taken;
+    public int getSeats_remaining() {
+        return seats_remaining;
     }
 
-    public void setSeats_taken(int seats_taken) {
-        this.seats_taken = seats_taken;
+    public void setSeats_remaining(int seats_remaining) {
+        this.seats_remaining = seats_remaining;
     }
 
     public float getCost() {
@@ -170,14 +172,9 @@ public class Trip {
                 ", available_seats=" + available_seats +
                 ", start_time='" + start_time + '\'' +
                 ", end_time='" + end_time + '\'' +
-                ", seats_taken=" + seats_taken +
+                ", seats_remaining=" + seats_remaining +
                 ", cost=" + cost +
                 ", vehicle_owner_id=" + vehicle_owner_id +
                 '}';
     }
 }
-
-
-
-
-

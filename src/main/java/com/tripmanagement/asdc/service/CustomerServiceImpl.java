@@ -3,6 +3,8 @@ package com.tripmanagement.asdc.service;
 import com.tripmanagement.asdc.dao.CustomerDAO;
 import com.tripmanagement.asdc.model.Customer;
 import com.tripmanagement.asdc.model.User;
+import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	private CustomerDAO customerDAO;
+
+	@Autowired
+	private NotificationService notificationService;
 
 	@Override
 	public boolean saveCustomer(User user) {
@@ -22,7 +27,10 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.setCustomer_lname(user.getLast_name());
 		customer.setEmail(user.getEmail());
 		customer.setPassword(user.getPassword());
-		return customerDAO.saveCustomer(customer);
+		boolean isSuccess= customerDAO.saveCustomer(customer);
+		if(isSuccess)
+		notificationService.sendEmail("Hey "+customer.getCustomer_fname()+StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,customer.getEmail());
+		return isSuccess;
 		}
 		catch(Exception e)
 		{

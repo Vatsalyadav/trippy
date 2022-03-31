@@ -24,10 +24,9 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean saveCustomer(Customer customer) {
         try{
-        String sql = "insert into customer values("+null+",'"+customer.getCustomer_fname()+"','"+customer.getCustomer_lname()+"','"+customer.getMobile_no()+"','"+customer.getEmail()+"','"+customer.getPassword()+"','"+customer.getAvailable_credits()+");";
+        String sql = "insert into customer values("+null+",'"+customer.getCustomer_fname()+"','"+customer.getCustomer_lname()+"','"+customer.getMobile_no()+"','"+customer.getEmail()+"','"+customer.getPassword()+"',"+customer.getAvailable_credits()+");";
         jdbcTemplate.update(sql);
         return true;
-        //notificationService.sendEmail(customer.getCustomer_fname()+ StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,customer.getEmail());
         }
         catch(Exception e)
         {
@@ -52,6 +51,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                         cust.setCustomer_lname(rs.getString("customer_lname"));
                         cust.setMobile_no(rs.getString("mobile_no"));
                         cust.setAvailable_credits(Integer.parseInt(rs.getString("available_credits")));
+                        cust.setCustomer_id(Integer.parseInt(rs.getString("customer_id")));
                         return cust;
                     } else return null;
                 }
