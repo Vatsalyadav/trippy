@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 
 
@@ -28,11 +30,13 @@ public class VehicleOwnerController {
     TripService tripService;
 
     @PostMapping("/create-ride")
-    public String createRide(Trip tripData, BindingResult result, Model model) {
+    public String createRide(Trip tripData, BindingResult result, Model model, HttpSession httpSession) {
         tripService.saveTrip(tripData);
         VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id());
         model.addAttribute("vehicleOwner", vehicleOwner);
         model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+        httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+        httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
         return "owner-dashboard";
     }
 
@@ -63,5 +67,12 @@ public class VehicleOwnerController {
         model.addAttribute("deleteVehicleStatus", deleteVehicleStatus);
         return "owner-dashboard";
     }
+
+    @RequestMapping(value = "/open-owner-credit")
+    public String openCredit( Model model) {
+
+        return "payment";
+    }
+
 
 }
