@@ -163,32 +163,42 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-6" th:each="vehicle: ${session.listOfVehicle}">
-                                    <div class="card bg-primary text-white mb-4">
-                                        <div class="card-body" style="padding:2px 18px"><span
-                                                th:text="${vehicle.vehicle_name}"></span></div>
-                                        <div class="card-body" style="padding:2px 18px"><span
-                                                th:text="${vehicle.number_plate}"></span></div>
-                                        <div class="card-body" style="padding:2px 18px">Car Type: <span
-                                                th:text="${vehicle.type}"></span></div>
-                                        <div class="card-body" style="padding:2px 18px">Fuel Economy: <span
-                                                th:text="${vehicle.fuel_economy}"></span></div>
-                                        <div class="card-body" style="padding:2px 18px">Kms travelled: <span
-                                                th:text="${vehicle.kms_driven}"></span></div>
-                                        <div class="card-body" style="padding:2px 18px">Fuel Consumed: <span
-                                                th:text="${vehicle.fuel_consumed}"></span></div>
-
-                                        <div class="card-footer d-flex align-items-center justify-content-between">
-                                            <!--                                    <a class="small text-white stretched-link"-->
-                                            <!--                                       th:onclick="javascript:alertShowdetails(\'' + ${vehicle}+ '\')">View Details</a>-->
-                                            <!--                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>-->
-
-                                            <button class="btn btn-primary" data-bs-target="#modalAddFuelEconomy"
-                                                    data-bs-toggle="modal" type="button">Add Trip Details
-                                            </button>
+                                    <div class="containerCard">
+                                        <div class="containerCard">
+                                            <div class="row">
+                                                <div class="cardCard col-md-6">
+                                                    <div th:classappend="${vehicle.fuel_economy_status}">
+                                                        <div th:switch="${vehicle.type}">
+                                                            <div th:case="'SUV'" class="imgBx">
+                                                                <img th:src="@{/images/suv.png}">
+                                                            </div>
+                                                            <div th:case="'Sedan'" class="imgBx">
+                                                                <img th:src="@{/images/sedan.png}">
+                                                            </div>
+                                                            <div th:case="*" class="imgBx">
+                                                                <img th:src="@{/images/hatchback.png}">
+                                                            </div>
+                                                        </div>
+                                                        <h2 class="vehicleBrand" th:text="${vehicle.vehicle_name}"></h2>
+                                                        <div class="contentBx">
+                                                            <h2 th:text="${vehicle.vehicle_name}"></h2>
+                                                            <div class="size" style="justify-content: center;">
+                                                                <h3 th:text="${vehicle.number_plate}"></h3>
+                                                            </div>
+                                                            <div class="size">
+                                                                <h3 th:text="'Kms Travelled: '+${vehicle.kms_driven}"></h3>
+                                                            </div>
+                                                            <div class="size">
+                                                                <h3 th:text="'Fuel Consumed: '+${vehicle.fuel_consumed}"></h3>
+                                                            </div>
+                                                            <div class="size">
+                                                                <h3 th:text="'Fuel Economy: '+${vehicle.fuel_economy}"></h3>
+                                                            </div>
+                                        <a data-bs-target="#modalAddFuelEconomy" data-bs-toggle="modal">Add trip</a>
                                             <!-- Modal -->
                                             <div aria-hidden="true" aria-labelledby="myLargeModalLabel"
                                                  class="modal fade" id="modalAddFuelEconomy" role="dialog"
-                                                 style="display: none;" tabindex="-1">
+                                                 style="display: none;top: 60px" tabindex="-1">
                                                 <div class="modal-dialog modal-lg" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -234,9 +244,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-
+                                    </div>
+                                    </div>
+                                    </div>
+</div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
