@@ -73,6 +73,8 @@ public class TripServiceImpl implements TripService {
 			for (Trip trip : allTrips) {
 				String start_time = trip.getStart_time().replace("T", " ");
 				String current_time = getCurrentTime();
+				trip.setStart_time(trip.getStart_time().replace("T", " "));
+				trip.setEnd_time(trip.getEnd_time().replace("T", " "));
 				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(start) < 0) {
@@ -138,6 +140,8 @@ public class TripServiceImpl implements TripService {
 			List<Trip> previousTrips = new ArrayList<>();
 			for (Trip trip : allTrips) {
 				String end_time = trip.getEnd_time().replace("T", " ");
+				trip.setStart_time(trip.getStart_time().replace("T", " "));
+				trip.setEnd_time(trip.getEnd_time().replace("T", " "));
 				String current_time = getCurrentTime();
 				Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(end_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);

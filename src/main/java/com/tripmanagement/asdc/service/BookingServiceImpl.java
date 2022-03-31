@@ -83,13 +83,13 @@ public class BookingServiceImpl implements BookingService {
 			List<Booking> upcomingRides = new ArrayList<>();
 			for (Booking ride : allRides) {
 				String start_time = ride.getTimestamp().replace("T", " ");
+				ride.setTimestamp(ride.getTimestamp().replace("T", " "));
 				String current_time = getCurrentTime();
 				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(start) < 0) {
 					upcomingRides.add(ride);
 				}
-
 			}
 			return upcomingRides;
 		} catch (Exception e) {
@@ -106,6 +106,7 @@ public class BookingServiceImpl implements BookingService {
 			for (Booking ride : allRides) {
 				String start_time = ride.getTimestamp().replace("T", " ");
 				String current_time = getCurrentTime();
+				ride.setTimestamp(ride.getTimestamp().replace("T", " "));
 				Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(end) > 0) {
