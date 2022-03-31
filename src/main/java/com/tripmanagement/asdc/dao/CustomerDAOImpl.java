@@ -78,5 +78,20 @@ public class CustomerDAOImpl implements CustomerDAO {
             return null;
         }
     }
+
+    @Override
+    public boolean updateAvaialableCredits(int customer_id, int available_credits) {
+        try{
+			String sql = "update customer set available_credits="+available_credits+" where customer_id="+customer_id;
+			jdbcTemplate.update(sql);
+			return true;
+			}
+			catch(Exception e)
+			{
+				logger.error("Error updating available credits in Customer",e);
+				return false;
+	
+			}
+    }
     
 }

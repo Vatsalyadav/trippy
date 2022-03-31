@@ -9,4 +9,6 @@ public interface BookingDAO {
 	public boolean saveRide(Booking booking);
 
 	public List<Booking> getAllRidesForCustomer(int customer_id);
+
+	public boolean updateIsPaid(int customer_id);
 }

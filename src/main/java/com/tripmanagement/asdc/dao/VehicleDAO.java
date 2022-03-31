@@ -9,7 +9,7 @@ public interface VehicleDAO {
 	public boolean addVehicle(Vehicle vehicle);
 	public Vehicle getVehicleDetails(int vehicle_id);
 	public List<Vehicle> getVehicles(int vehicleOwnerId);
-	public boolean updateFuelEconomy(int vehicle_id, float fuelEconomy);
+	public boolean updateVehicleFuelEconomy(Vehicle vehicle);
 	public boolean deleteVehicle(int vehicleId);
 	
 }

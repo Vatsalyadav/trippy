@@ -4,6 +4,7 @@ import com.tripmanagement.asdc.model.Booking;
 import com.tripmanagement.asdc.model.FuelEconomy;
 import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.service.BookingService;
+import com.tripmanagement.asdc.service.CustomerService;
 import com.tripmanagement.asdc.service.TripService;
 import com.tripmanagement.asdc.service.VehicleOwnerService;
 import com.tripmanagement.asdc.service.VehicleService;
@@ -27,6 +28,9 @@ public class VehicleController {
 
     @Autowired
     VehicleOwnerService vehicleOwnerService;
+
+    @Autowired
+    CustomerService customerService;
 //
 //    @PostMapping("/add-vehicle")
 //    public String addVehicle(Vehicle vehicle, Model model) {
@@ -62,18 +66,30 @@ public class VehicleController {
     @GetMapping("/test")
     public String testController(Model model) {
 //        System.out.println(vehicleService.saveFuelEconomy(6));
-        System.out.println(vehicleService.updateFuelEconomy(3, 6, 2));
-        System.out.println(tripService.getAvailableTripsList("Halifax", "Lucknow").size());
-        System.out.println(tripService.getPreviousTripsForVehicleOwner(5).size());
-        System.out.println(tripService.getUpcomingTripsForVehicleOwner(5).size());
-        Booking booking = new Booking();
-        booking.setCustomer_id(3);
-        booking.setTrip_id(1);
+        FuelEconomy economy=new FuelEconomy();
+        economy.setFuel_consumed(12f);
+        economy.setKms_travelled(1200f);
+        economy.setVehicle_id(2);
+        //System.out.println(vehicleService.updateFuelEconomy(economy));
+        //System.out.println(vehicleOwnerService.buyCredits(1, 50));
+        //System.out.println(customerService.buyCredits(4, 500));
+        Booking booking=new Booking();
+        booking.setBooked_ride_id(1);
+        booking.setCustomer_id(4);
+        booking.setCost(300);
+        booking.setTrip_id(3);
+        System.out.println(bookedRidesService.payforRide(booking));
+        //System.out.println(tripService.getAvailableTripsList("Halifax", "Lucknow").size());
+        //System.out.println(tripService.getPreviousTripsForVehicleOwner(5).size());
+        //System.out.println(tripService.getUpcomingTripsForVehicleOwner(5).size());
+        //Booking booking = new Booking();
+        //booking.setCustomer_id(3);
+        //booking.setTrip_id(1);
         //System.out.println(bookedRidesService.saveRide(booking));
-        System.out.println(bookedRidesService.getPreviousRidesForCustomer(3).size());
-        System.out.println(bookedRidesService.getUpcomingRidesForCustomer(3).size());
+        // System.out.println(bookedRidesService.getPreviousRidesForCustomer(3).size());
+        // System.out.println(bookedRidesService.getUpcomingRidesForCustomer(3).size());
 
-        model.addAttribute("sourceList", "sources");
+        // model.addAttribute("sourceList", "sources");
         System.out.println("I'm in test controller");
         return "test";
     }

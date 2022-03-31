@@ -11,5 +11,8 @@ public interface CustomerService {
 	public Customer getCustomerByEmail(String email);
 
 	public Customer getCustomerById(int id);
+
+	public boolean buyCredits(int customer_id, int credits);
+
 	
 }

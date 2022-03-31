@@ -49,4 +49,21 @@ public class BookingDAOImpl implements BookingDAO {
 		}
 	}
 
+	@Override
+	public boolean updateIsPaid(int customer_id) {
+		try{
+			String sql = "update booking set isPaid=1 where customer_id="+customer_id;
+			jdbcTemplate.update(sql);
+			return true;
+			}
+			catch(Exception e)
+			{
+				logger.error("Error updating isPaid",e);
+				return false;
+	
+			}
+	}
+
+	
+
 }

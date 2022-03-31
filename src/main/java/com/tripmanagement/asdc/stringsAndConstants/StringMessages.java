@@ -13,5 +13,6 @@ public interface StringMessages {
     public static String RIDE_BOOKED_SUCCESSFULLY="Ride created successfully for ";
     public static String RIDE_CREATED="Ride created successfully";
     public static String RIDE_BOOKED="Ride booked successfully";
+    public static String PLEASE_BUY_CREDITS = "Please buy credits first";
 
 }

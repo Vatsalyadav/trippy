@@ -1,5 +1,7 @@
 package com.tripmanagement.asdc.service;
 
+import javax.transaction.Transactional;
+
 import com.tripmanagement.asdc.dao.RegistrationDAO;
 import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ public class RegistrationServiceImpl implements RegistrationService{
     RegistrationDAO registrationDAO;
 
     @Override
+    @Transactional
     public String checkEmailPassword(String email, String password) {
         try{
         if(email==null||password==null||password.isEmpty()||email.isEmpty())
@@ -31,6 +34,7 @@ public class RegistrationServiceImpl implements RegistrationService{
     }
 
     @Override
+    @Transactional
     public boolean checkUserExistByEmail(String email)
     {
         if(email==null||email.isEmpty())
