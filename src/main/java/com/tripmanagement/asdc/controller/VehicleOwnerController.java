@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 
 
@@ -28,11 +29,13 @@ public class VehicleOwnerController {
     TripService tripService;
 
     @PostMapping("/create-ride")
-    public String createRide(Trip tripData, BindingResult result, Model model) {
+    public String createRide(Trip tripData, BindingResult result, Model model, HttpSession httpSession) {
         tripService.saveTrip(tripData);
         VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id());
         model.addAttribute("vehicleOwner", vehicleOwner);
         model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+        httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+        httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
         return "owner-dashboard";
     }
 

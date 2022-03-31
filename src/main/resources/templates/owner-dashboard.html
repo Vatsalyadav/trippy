@@ -145,7 +145,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                         <div class="container-fluid">
                             <div class="row">
@@ -319,10 +319,54 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="small text-black"><i class="fas fa-angle-right"></i></div>
+                            <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 
 
                         </div>
+                        <div class="container-fluid">
+                            <div style="height:200px">
+                                <label class="text-secondary" style="font-weight:bold; font-size:22px">Upcoming Rides</label>
+                                <div th:each="upcomingRide: ${session.upcomingRides}" style="padding-top: 4px;width: 600px;">
+<!--                                    <label class="text-secondary" th:text="${upcomingRide.source}+'  '+${upcomingRide.destination}"></label>-->
+                                    <div class="card-wrapper">
+                                        <div class="ride-card-left">
+                                        </div>
+                                        <div class="card-details">
+                                            <ride-h1 th:text="${upcomingRide.start_time}"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${upcomingRide.cost}+'$'"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${upcomingRide.source}+' to '+${upcomingRide.destination}"></ride-h1>
+                                        </div><!-- end card-details -->
+
+<!--                                        <div class="reveal-details">-->
+<!--                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="'3/'+${previousRide.available_seats}"></ride-h1>-->
+<!--                                        </div>-->
+<!--                                        <div class="reveal-details">-->
+<!--                                            <ride-h1>Book Seats:</ride-h1>-->
+<!--                                        </div>&lt;!&ndash; end reveal-details &ndash;&gt;-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-secondary" style="font-weight:bold; font-size:22px" >Previous Rides</label>
+                                <div th:each="previousRide: ${session.previousRides}" style="padding-top: 4px;width: 600px;">
+<!--                                    <label class="text-secondary" th:text="${previousRide.source}+'  '+${previousRide.destination}"></label>-->
+                                    <div class="card-wrapper">
+                                        <div class="ride-card-left">
+                                        </div>
+                                        <div class="card-details">
+                                            <ride-h1 th:text="${previousRide.start_time}"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${previousRide.cost}+'$'"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${previousRide.source}+' to '+${previousRide.destination}"></ride-h1>
+                                        </div><!-- end card-details -->
+
+<!--                                                                                <div class="reveal-details">-->
+<!--                                                                                    <ride-h1 style="font-size:14px;color:#616161;" th:text="'4/'+${previousRide.available_seats}"></ride-h1>-->
+<!--                                                                                </div>&lt;!&ndash; end reveal-details &ndash;&gt;-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
