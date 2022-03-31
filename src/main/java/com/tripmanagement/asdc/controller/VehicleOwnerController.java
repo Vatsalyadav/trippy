@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
@@ -66,5 +67,12 @@ public class VehicleOwnerController {
         model.addAttribute("deleteVehicleStatus", deleteVehicleStatus);
         return "owner-dashboard";
     }
+
+    @RequestMapping(value = "/open-owner-credit")
+    public String openCredit( Model model) {
+
+        return "payment";
+    }
+
 
 }
