@@ -116,7 +116,7 @@
 <!--                                                       name="fuel_consumed" type="text">-->
 
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control" id="fuel_economy" name="fuel_economy"
+                                                    <input type="number" class="form-control" id="fuel_consumed" name="fuel_consumed"
                                                            placeholder="Total consumed fuel" min="0" max="10000" required>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"> liters </span>
@@ -149,7 +149,7 @@
                         </div>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-6" th:each="vehicle: ${session.listOfVehicle}">
+                                <div class="col-md-6" th:each="vehicle: ${listOfVehicle}">
                                     <div class="containerCard">
                                         <div class="containerCard">
                                             <div class="row">
@@ -166,9 +166,9 @@
                                                                 <img th:src="@{/images/hatchback.png}">
                                                             </div>
                                                         </div>
-                                                        <h2 class="vehicleBrand" th:text="${vehicle.vehicle_name}"></h2>
+                                                        <h2 class="vehicleBrand" th:text="${vehicle.brand}"></h2>
                                                         <div class="contentBx">
-                                                            <h2 th:text="${vehicle.vehicle_name}"></h2>
+                                                            <h2 th:text="${vehicle.brand}+' '+${vehicle.vehicle_name}"></h2>
                                                             <div class="size" style="justify-content: center;">
                                                                 <h3 th:text="${vehicle.number_plate}"></h3>
                                                             </div>
@@ -265,7 +265,7 @@
                                                     <select class="form-control" name="vehicle_id"
                                                             id="vehicle_id" required>
                                                         <option value="" selected>Select your Car</option>
-                                                        <option th:each="vehicle : ${session.listOfVehicle}"
+                                                        <option th:each="vehicle : ${listOfVehicle}"
                                                                 th:value="${vehicle.vehicle_id}"
                                                                 th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"></option>
                                                     </select>
