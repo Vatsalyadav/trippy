@@ -41,7 +41,7 @@
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
     <button class="btn btn-outline-light" type="button" style="margin: 20px">Cars</button>
     <button class="btn btn-outline-light" type="button" style="margin-right: 30px">Rides</button>
-    <label class="text-light" th:text="${vehicleOwner.vehicleowner_fname}"></label>
+    <label class="text-light" th:text="${session.vehicleOwner.vehicleowner_fname}"></label>
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
@@ -56,9 +56,9 @@
     <main>
         <div class="container-fluid">
             <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
-                th:text="'Good Evenin ' + ${vehicleOwner.vehicleowner_fname} + '!'"/>
+                th:text="'Good Evenin ' + ${session.vehicleOwner.vehicleowner_fname} + '!'"/>
             <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
-                th:text="'Good Evening ' + ${vehicleOwner.vehicleowner_fname} + '!'"/>
+                th:text="'Good Evening ' + ${session.vehicleOwner.vehicleowner_fname} + '!'"/>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-1"></div>
@@ -147,7 +147,7 @@
                                                 </div>
                                                 <br/>
                                                 <input th:attr="name='vehicleowner_id'"
-                                                       th:value="${vehicleOwner.vehicleOwner_id}"
+                                                       th:value="${session.vehicleOwner.vehicleOwner_id}"
                                                        type="hidden"/>
                                                 <input class="btn btn-secondary" type="submit"
                                                        value="Add Car Details">
@@ -162,7 +162,7 @@
                         </div>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-6" th:each="vehicle: ${listOfVehicle}">
+                                <div class="col-md-6" th:each="vehicle: ${session.listOfVehicle}">
                                     <div class="card bg-primary text-white mb-4">
                                         <div class="card-body" style="padding:2px 18px"><span
                                                 th:text="${vehicle.vehicle_name}"></span></div>
@@ -276,7 +276,7 @@
                                                     <select class="form-control" name="vehicle_id"
                                                             id="vehicle_id" required>
                                                         <option value="" selected>Select your Car</option>
-                                                        <option th:each="vehicle : ${listOfVehicle}"
+                                                        <option th:each="vehicle : ${session.listOfVehicle}"
                                                                 th:value="${vehicle.vehicle_id}"
                                                                 th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"></option>
                                                     </select>
@@ -311,7 +311,7 @@
                                                 </div>
                                                 <br/>
                                                 <input th:attr="name='vehicleowner_id'"
-                                                       th:value="${vehicleOwner.vehicleOwner_id}"
+                                                       th:value="${session.vehicleOwner.vehicleOwner_id}"
                                                        type="hidden"/>
                                                 <input th:attr="name='trip_id'" th:value="-1" type="hidden"/>
                                                 <input th:attr="name='location_id'" th:value="-1"
@@ -341,12 +341,12 @@
         </div>
     </main>
 
-    <footer class="py-4 bg-light mt-auto">
+    <footer class="py-4 bg-light mt-auto fixed-bottom" >
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:
-                    <label class="form-check-label" th:text="${vehicleOwner.vehicleowner_fname}"></label>
+                    <label class="form-check-label" th:text="${session.vehicleOwner.vehicleowner_fname}"></label>
                 </div>
                 </div>
                 <div class="text-muted">Copyright &copy; Trip Management 2022</div>
