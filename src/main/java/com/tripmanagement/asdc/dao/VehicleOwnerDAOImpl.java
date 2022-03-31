@@ -40,7 +40,7 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 	}
 
 	@Override
-	public VehicleOwner getVehicleOwner(String email) {
+	public VehicleOwner getVehicleOwnerByEmail(String email) {
 		if(email==null)
 		return null;
 		try{
@@ -50,8 +50,12 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 						DataAccessException {
 					if (rs.next()) {
 						VehicleOwner v = new VehicleOwner();
-						//TODO:set everything
 						v.setEmail(rs.getString("email"));
+						v.setVehicleowner_fname(rs.getString("vehicleowner_fname"));
+						v.setVehicleowner_lname(rs.getString("vehicleowner_lname"));
+						v.setPhone(rs.getString("phone"));
+						v.setAvailable_credits(rs.getInt("available_credits"));
+						v.setVehicleOwner_id(rs.getInt("vehicleowner_id"));
 						return v;
 					} else return null;
 				}

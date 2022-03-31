@@ -52,7 +52,7 @@ public class RegistrationController {
         }
         else {
             if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER)) {
-                VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwner(user.getEmail());
+                VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByEmail(user.getEmail());
                 httpSession.setAttribute("vehicleOwner", vehicleOwner);
                 httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
                 httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));

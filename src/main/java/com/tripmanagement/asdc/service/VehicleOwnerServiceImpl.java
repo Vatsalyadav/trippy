@@ -41,14 +41,12 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 
 	@Override
 	@Transactional
-	public VehicleOwner getVehicleOwner(String email) {
-		if(email==null)
-		return null;
-		try{
-		return vehicleOwnerDAO.getVehicleOwner(email);
-		}
-		catch(Exception e)
-		{
+	public VehicleOwner getVehicleOwnerByEmail(String email) {
+		if (email == null)
+			return null;
+		try {
+			return vehicleOwnerDAO.getVehicleOwnerByEmail(email);
+		} catch (Exception e) {
 			return null;
 		}
 	}
