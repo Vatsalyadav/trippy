@@ -1,14 +1,7 @@
 package com.tripmanagement.asdc.model;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="Trip")
@@ -49,8 +42,10 @@ public class Trip {
     @Column(name = "cost")
     private float cost;
 
-    @Autowired
-    public Trip(int trip_id, String source, String destination, int vehicle_id, float estimated_kms, float kms_travelled, String timestamp, int available_seats, String start_time, String end_time, int seats_taken, float cost) {
+    @Column(name = "vehicle_owner_id")
+    private int vehicle_owner_id;
+
+    public Trip(int trip_id, String source, String destination, int vehicle_id, float estimated_kms, float kms_travelled, int available_seats, String start_time, String end_time, int seats_taken, float cost, int vehicle_owner_id) {
         this.trip_id = trip_id;
         this.source = source;
         this.destination = destination;
@@ -58,10 +53,11 @@ public class Trip {
         this.estimated_kms = estimated_kms;
         this.kms_travelled = kms_travelled;
         this.available_seats = available_seats;
-        this.start_time=start_time;
-        this.end_time=end_time;
-        this.seats_taken=seats_taken;
-        this.cost=cost;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.seats_taken = seats_taken;
+        this.cost = cost;
+        this.vehicle_owner_id = vehicle_owner_id;
     }
 
     public Trip() {
@@ -154,17 +150,31 @@ public class Trip {
         this.cost = cost;
     }
 
-    @Override
-    public String toString() {
-        return "Trip [available_seats=" + available_seats + ", cost=" + cost + ", destination=" + destination
-                + ", end_time=" + end_time + ", estimated_kms=" + estimated_kms + ", kms_travelled=" + kms_travelled
-                + ", seats_taken=" + seats_taken + ", source=" + source + ", start_time=" + start_time + ", trip_id="
-                + trip_id + ", vehicle_id=" + vehicle_id + "]";
+    public int getVehicle_owner_id() {
+        return vehicle_owner_id;
     }
 
-    
-   
+    public void setVehicle_owner_id(int vehicle_owner_id) {
+        this.vehicle_owner_id = vehicle_owner_id;
+    }
 
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "trip_id=" + trip_id +
+                ", source='" + source + '\'' +
+                ", destination='" + destination + '\'' +
+                ", vehicle_id=" + vehicle_id +
+                ", estimated_kms=" + estimated_kms +
+                ", kms_travelled=" + kms_travelled +
+                ", available_seats=" + available_seats +
+                ", start_time='" + start_time + '\'' +
+                ", end_time='" + end_time + '\'' +
+                ", seats_taken=" + seats_taken +
+                ", cost=" + cost +
+                ", vehicle_owner_id=" + vehicle_owner_id +
+                '}';
+    }
 }
 
 

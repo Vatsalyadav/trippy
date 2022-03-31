@@ -1,11 +1,11 @@
 package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.Booking;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +23,9 @@ public class BookingDAOImpl implements BookingDAO {
 	@Override
 	public boolean saveRide(Booking booking) {
 		try{
-		String sql = "insert into booking values("+null+","+booking.getCustomer_id()+","+booking.getTimestamp()+","+booking.getCost()+","+booking.getSeats_booked()+","+booking.getTrip_id()+","+booking.getIsPaid()+");";
+		String sql = "insert into booking values("+null+","+booking.getCustomer_id()+",'"+booking.getTimestamp()+"',"+booking.getCost()+","+booking.getSeats_booked()+","+booking.getTrip_id()+","+booking.getIsPaid()+");";
         jdbcTemplate.update(sql);
+		logger.debug("Ride saved successfully");
 		return true;
 		}
 		catch(Exception e)

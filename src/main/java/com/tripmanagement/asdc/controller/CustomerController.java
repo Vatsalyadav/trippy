@@ -1,22 +1,16 @@
 package com.tripmanagement.asdc.controller;
 
 import com.tripmanagement.asdc.model.Booking;
-import com.tripmanagement.asdc.model.Ride;
 import com.tripmanagement.asdc.model.Trip;
-import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.service.BookingService;
 import com.tripmanagement.asdc.service.CustomerService;
 import com.tripmanagement.asdc.service.TripService;
 import com.tripmanagement.asdc.service.VehicleService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CustomerController {
@@ -31,7 +25,7 @@ public class CustomerController {
     CustomerService customerService;
 
     @Autowired
-    BookingService bookedRidesService;
+    BookingService bookingService;
 
     @PostMapping("/search-rides")
     public String searchRides(Trip trip, Model model) {
@@ -52,12 +46,15 @@ public class CustomerController {
 //    }
 
     @PostMapping("/book-ride")
-    public String bookRide(BindingResult result, Model model) {
-        System.out.println(model);
-        Trip trip = (Trip) model.getAttribute("trip");
-        //Booked_Rides bookRide=new Booked_Rides(0,trip.getSource(), trip.getDestination() ,trip.getEstimated_kms(), trip.getVehicle_id(), trip.getVehicleowner_id(), trip.getCustomer_id(), trip.getTimestamp(), tripService.calculateCost(vehicleService.getVehicleDetails(trip.getVehicle_id()),trip), vehicleService.getVehicleDetails(trip.getVehicle_id()).getFuel_economy());
-        //bookedRidesService.saveRide(bookRide);
-        //tripService.saveTrip(tripData);
+    public String bookRide(Booking booking, BindingResult result, Model model) {
+//        Booking booking = new Booking();
+//        booking.setCustomer_id(4);
+//        booking.setTrip_id(3); // Halifax -> Lucknow
+        System.out.println("YOLO 1: "+booking.getCustomer_id());
+        System.out.println("YOLO 2: "+booking.getTrip_id());
+        booking.setSeats_booked(1);
+        System.out.println(bookingService.saveRide(booking));
+
         return "customer-dashboard";
     }
 

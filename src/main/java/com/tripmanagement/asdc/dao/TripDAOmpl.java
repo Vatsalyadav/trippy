@@ -1,6 +1,8 @@
 package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.Trip;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -8,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Repository
 public class TripDAOmpl implements TripDAO {
@@ -27,7 +27,7 @@ public class TripDAOmpl implements TripDAO {
 		return false;
 		try
 		{
-		String sql = "insert into trip values("+null+",'"+trip.getSource()+"','"+trip.getDestination()+"',"+trip.getEstimated_kms()+","+trip.getVehicle_id()+","+trip.getKms_travelled()+","+trip.getAvailable_seats()+",'"+trip.getStart_time()+"','"+trip.getEnd_time()+"',"+trip.getSeats_taken()+","+trip.getCost()+");";
+		String sql = "insert into trip values("+null+",'"+trip.getSource()+"','"+trip.getDestination()+"',"+trip.getEstimated_kms()+","+trip.getVehicle_id()+","+trip.getKms_travelled()+","+trip.getAvailable_seats()+",'"+trip.getStart_time()+"','"+trip.getEnd_time()+"',"+trip.getSeats_taken()+","+trip.getCost()+",'"+trip.getVehicle_owner_id()+"');";
         jdbcTemplate.update(sql);
 		return true;
 		}
@@ -42,9 +42,9 @@ public class TripDAOmpl implements TripDAO {
 	@Override
 	public Trip getTripDetails(int trip_id) {
 		try{
-		Trip trip=jdbcTemplate.queryForObject("select * from trip where trip_id="+trip_id,
-		BeanPropertyRowMapper.newInstance(Trip.class));
-	   return trip;
+
+			return jdbcTemplate.queryForObject("select * from trip where trip_id="+trip_id,
+					BeanPropertyRowMapper.newInstance(Trip.class));
 		}
 		catch(Exception e)
 		{
@@ -57,7 +57,7 @@ public class TripDAOmpl implements TripDAO {
 	public List<Trip> getUpcomingTripsForVehicleOwner(int vehicleOwnerId, String timestamp) {
 		List<Trip> trips=new ArrayList<>();
 		try{
-		trips= jdbcTemplate.query("select * from trip where vehicleOwner_id="+vehicleOwnerId,
+		trips= jdbcTemplate.query("select * from trip where vehicle_owner_id="+vehicleOwnerId,
 				BeanPropertyRowMapper.newInstance(Trip.class));
 		return trips;
 		}
@@ -105,7 +105,7 @@ public class TripDAOmpl implements TripDAO {
 	public List<Trip> getPreviousTripsForVehicleOwner(int vehicleOwnerId, String timestamp) {
 		List<Trip> trips=new ArrayList<>();
 		try{
-		trips= jdbcTemplate.query("select * from trip where vehicleOwner_id="+vehicleOwnerId,
+		trips= jdbcTemplate.query("select * from trip where vehicle_owner_id="+vehicleOwnerId,
 				BeanPropertyRowMapper.newInstance(Trip.class));
 		return trips;
 		}

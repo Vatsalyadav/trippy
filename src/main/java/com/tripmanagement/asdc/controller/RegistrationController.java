@@ -52,15 +52,11 @@ public class RegistrationController {
         }
         else {
             if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER)) {
-                VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwner(user.getEmail());
-                model.addAttribute("vehicleOwner", vehicleOwner);
-                model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
-                model.addAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
-                model.addAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
-//                httpSession.setAttribute("vehicleOwner", vehicleOwner);
-//                httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
-//                httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
-//                httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+                VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByEmail(user.getEmail());
+                httpSession.setAttribute("vehicleOwner", vehicleOwner);
+                httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+                httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+                httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
                 return "owner-dashboard";
             }
             else {
@@ -106,29 +102,17 @@ public class RegistrationController {
 
     @PostMapping("/register-user")
     public String registerUser(User user, BindingResult result, Model model) {
-        System.out.println("Name: "+ user.getFirst_name());
-        System.out.println("Last Name: "+ user.getLast_name());
-        System.out.println("User Type: "+ user.getUserType());
-        System.out.println("Email: "+ user.getEmail());
-        System.out.println("Password: "+ user.getPassword());
-
         if(!registrationService.checkUserExistByEmail(user.getEmail())) {
             if (user.getUserType().equals("Vehicle Owner"))
-            {
                 vehicleOwnerService.saveVehicleOwner(user);
-            }
             else
-            {
                 customerService.saveCustomer(user);
-            }
             return "login";
         }
         else {
             model.addAttribute("error_message", StringMessages.USER_ALREADY_EXIST);
             return "register";
         }
-
     }
-
 
 }
