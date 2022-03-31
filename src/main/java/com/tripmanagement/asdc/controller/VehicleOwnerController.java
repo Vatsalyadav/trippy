@@ -1,6 +1,5 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.Ride;
 import com.tripmanagement.asdc.model.Trip;
 import com.tripmanagement.asdc.model.Vehicle;
 import com.tripmanagement.asdc.model.VehicleOwner;
@@ -30,21 +29,7 @@ public class VehicleOwnerController {
 
     @PostMapping("/create-ride")
     public String createRide(Trip tripData, BindingResult result, Model model) {
-//        Boolean addVehicleStatus = vehicleService.addVehicle(vehicle);
-//        model.addAttribute("addVehicleStatus", addVehicleStatus);
-        System.out.println("getSource: " + tripData.getSource());
-        System.out.println("getDestination: " + tripData.getDestination());
-        System.out.println("getVehicle_id: " + tripData.getVehicle_id());
-        System.out.println("getAvailableSeats: " + tripData.getAvailable_seats());
-        System.out.println("getTime: " + tripData.getStart_time());
-        System.out.println("getDistance: " + tripData.getEstimated_kms());
-        System.out.println("vehicleOwnerId: " + vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id());
-
-//        tripData.setTimestamp(new Date(System.currentTimeMillisillis()));
-        // TODO: Datetime, create ride
-
         tripService.saveTrip(tripData);
-
         VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id());
         model.addAttribute("vehicleOwner", vehicleOwner);
         model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
