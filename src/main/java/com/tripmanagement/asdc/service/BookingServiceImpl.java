@@ -11,9 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -26,7 +29,7 @@ public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	CustomerDAO customerDAO;
-	
+
 	@Autowired
 	NotificationService notificationService;
 
@@ -37,16 +40,19 @@ public class BookingServiceImpl implements BookingService {
 		try {
 			logger.debug("Inside saveRide method of BookingServiceImpl");
 			Trip trip = tripDAO.getTripDetails(booking.getTrip_id());
-			if (trip.getAvailable_seats() - booking.getSeats_booked() >= 0) {
+			if ((trip.getSeats_remaining()) - booking.getSeats_booked() >= 0) {
 				booking.setCost(trip.getCost());
 				booking.setTimestamp(String.valueOf(System.currentTimeMillis()));
 				booking.setIsPaid(0);
-				logger.debug("There are available seats in the vehicle, attempting to book "+booking.getSeats_booked()+" seats now");
+				logger.debug("There are available seats in the vehicle, attempting to book " + booking.getSeats_booked()
+						+ " seats now");
 				boolean isSuccess = bookedRidesDAO.saveRide(booking);
 				if (isSuccess) {
 					logger.debug("Successfully booked seats");
-					notificationService.sendEmail(StringMessages.RIDE_BOOKED_SUCCESSFULLY, StringMessages.RIDE_BOOKED, customerDAO.getCustomerById(booking.getCustomer_id()).getEmail());
-					tripDAO.updateAvailableSeats(trip.getTrip_id(), booking.getSeats_booked());
+					notificationService.sendEmail(StringMessages.RIDE_BOOKED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), StringMessages.RIDE_BOOKED,
+							customerDAO.getCustomerById(booking.getCustomer_id()).getEmail());
+					tripDAO.updateAvailableSeats(trip.getTrip_id(),
+							trip.getSeats_remaining() - booking.getSeats_booked());
 					logger.debug("Successfully sent notification");
 				}
 				return isSuccess;
@@ -61,30 +67,53 @@ public class BookingServiceImpl implements BookingService {
 
 	@Override
 	public List<Booking> getUpcomingRidesForCustomer(int customer_id) {
-		try{
-		return bookedRidesDAO.getUpcomingRidesForCustomer(customer_id, getCurrentTime().toString());
-		}
-		catch(Exception e)
-		{
+		try {
+			List<Booking> allRides = bookedRidesDAO.getAllRidesForCustomer(customer_id);
+			List<Booking> upcomingRides = new ArrayList<>();
+			for (Booking ride : allRides) {
+				String start_time = ride.getTimestamp().replace("T", " ");
+				String current_time = getCurrentTime();
+				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
+				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
+				if (current.compareTo(start) < 0) {
+					upcomingRides.add(ride);
+				}
+
+			}
+			return upcomingRides;
+		} catch (Exception e) {
 			return new ArrayList<Booking>();
 		}
 	}
 
 	@Override
 	public List<Booking> getPreviousRidesForCustomer(int customer_id) {
-		try{
-		return bookedRidesDAO.getPreviousRidesForCustomer(customer_id, getCurrentTime().toString());
-		}
-		catch(Exception e)
-		{
+		try {
+			List<Booking> allRides = bookedRidesDAO.getAllRidesForCustomer(customer_id);
+			List<Booking> previousRides = new ArrayList<>();
+			for (Booking ride : allRides) {
+				String start_time = ride.getTimestamp().replace("T", " ");
+				String current_time = getCurrentTime();
+				Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
+				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
+				if (current.compareTo(end) > 0) {
+					previousRides.add(ride);
+				}
+
+			}
+			return previousRides;
+		} catch (Exception e) {
 			return new ArrayList<Booking>();
 		}
 
-}
-public Date getCurrentTime()
-	{
-		long millis = System.currentTimeMillis(); 
-    	Date currentDateTime = new Date(millis);
-		return currentDateTime;
 	}
+
+	public String getCurrentTime() {
+		long millis = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date resultdate = new Date(millis);
+		sdf.setTimeZone(TimeZone.getTimeZone("America/Halifax"));
+		return sdf.format(resultdate);
+	}
+
 }

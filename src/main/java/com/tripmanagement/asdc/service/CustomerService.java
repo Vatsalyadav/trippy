@@ -11,11 +11,5 @@ public interface CustomerService {
 	public Customer getCustomerByEmail(String email);
 
 	public Customer getCustomerById(int id);
-
-	//public void deleteCustomer(int theId);
-
-//	public List<Ride> searchRides(Ride rideData);
-
-
 	
 }

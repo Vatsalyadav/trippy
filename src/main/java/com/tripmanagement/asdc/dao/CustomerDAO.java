@@ -10,7 +10,6 @@ public interface CustomerDAO {
 
 	public Customer getCustomerByEmail(String email);
 
-    //public void deleteCustomer(int theId);
 
     
 }
