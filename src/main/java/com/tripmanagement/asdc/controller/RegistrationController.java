@@ -1,16 +1,21 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.UserLogin;
+import com.tripmanagement.asdc.model.Customer;
+import com.tripmanagement.asdc.model.Ride;
+import com.tripmanagement.asdc.model.User;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.service.RegistrationService;
-import com.tripmanagement.asdc.service.VehicleOwnerService;
-import com.tripmanagement.stringsAndConstants.StringMessages;
+import com.tripmanagement.asdc.service.*;
+import com.tripmanagement.asdc.stringsAndConstants.Constants;
+import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @Controller
 public class RegistrationController {
@@ -21,19 +26,52 @@ public class RegistrationController {
     @Autowired
     VehicleOwnerService vehicleOwnerService;
 
+    @Autowired
+    CustomerService customerService;
+
+    @Autowired
+    VehicleService vehicleService;
+
+    @Autowired
+    TripService tripService;
+
+    @Autowired
+    BookingService bookedRidesService;
+
     @RequestMapping("/")
     public String basePage() {
         return "login";
     }
 
-    @RequestMapping("/login")
-    public String userLogin(UserLogin userLogin, Model model) {
-        String message = registrationService.checkEmailPassword(userLogin.getEmail(), userLogin.getPassword());
-        if (message.equalsIgnoreCase(StringMessages.SUCCESS))
-            return "dashboard";
-        else {
-            model.addAttribute("error_message", message);
+    @PostMapping("/dashboard")
+    public String userLogin(User user, HttpSession httpSession, Model model) {
+        String message = registrationService.checkEmailPassword(user.getEmail(), user.getPassword());
+        if (message.equalsIgnoreCase(StringMessages.INCORRECT_AUTH)){
+            httpSession.setAttribute("error_message", message);
             return "login";
+        }
+        else {
+            if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER)) {
+                VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByEmail(user.getEmail());
+                httpSession.setAttribute("vehicleOwner", vehicleOwner);
+                httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+                httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+                httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+                return "owner-dashboard";
+            }
+            else {
+                Customer customer = customerService.getCustomerByEmail(user.getEmail());
+                httpSession.setAttribute("source", "");
+                httpSession.setAttribute("destination", "");
+                httpSession.setAttribute("customer", customer);
+
+                model.addAttribute("listOfRides", new ArrayList<Ride>());
+                httpSession.setAttribute("previousRides", bookedRidesService.getPreviousRidesForCustomer(customer.getCustomer_id()));
+                httpSession.setAttribute("upcomingRides", bookedRidesService.getUpcomingRidesForCustomer(customer.getCustomer_id()));
+                httpSession.setAttribute("sourceList", tripService.getSources());
+                httpSession.setAttribute("destinationList", tripService.getDestinations());
+                return "customer-dashboard";
+            }
         }
     }
 
@@ -46,7 +84,7 @@ public class RegistrationController {
     }
 
     /*
-     * Will return Forget Password Page
+     * Will return Registration Page
      * */
     @RequestMapping("/register-user")
     public String registerUser() {
@@ -62,38 +100,19 @@ public class RegistrationController {
         return "dashboard";
     }
 
-    @PostMapping("/register-vehicle-owner")
-    public String registerVehicleOwner(VehicleOwner vehicleOwner, BindingResult result, Model model) {
-        // TODO: Link with Vehicle service
-        // service.checkEmailExists(vehicleOwner.email)
-        // service.registerVehicleOwner(vehicleOwner)
-        System.out.println("Name: "+ vehicleOwner.getVehicleowner_fname());
-        System.out.println("Last Name: "+ vehicleOwner.getVehicleowner_lname());
-        System.out.println("Phone Number: "+ vehicleOwner.getPhone());
-        System.out.println("Email: "+ vehicleOwner.getEmail());
-        System.out.println("Password: "+ vehicleOwner.getPassword());
-
-        if(!registrationService.checkUserExistByEmail(vehicleOwner.getEmail())) {
-            vehicleOwnerService.saveVehicleOwner(vehicleOwner);
+    @PostMapping("/register-user")
+    public String registerUser(User user, BindingResult result, Model model) {
+        if(!registrationService.checkUserExistByEmail(user.getEmail())) {
+            if (user.getUserType().equals("Vehicle Owner"))
+                vehicleOwnerService.saveVehicleOwner(user);
+            else
+                customerService.saveCustomer(user);
             return "login";
         }
         else {
             model.addAttribute("error_message", StringMessages.USER_ALREADY_EXIST);
             return "register";
         }
-
-    }
-
-    @PostMapping("/add-customer")
-    public String registerCustomer(VehicleOwner vehicleOwner, BindingResult result, Model model) {
-        // TODO: Link with service
-        System.out.println("Name: "+ vehicleOwner.getVehicleowner_fname());
-        System.out.println("Last Name: "+ vehicleOwner.getVehicleowner_lname());
-        System.out.println("Phone Number: "+ vehicleOwner.getPhone());
-        System.out.println("Email: "+ vehicleOwner.getEmail());
-        System.out.println("Password: "+ vehicleOwner.getPassword());
-
-        return "login";
     }
 
 }

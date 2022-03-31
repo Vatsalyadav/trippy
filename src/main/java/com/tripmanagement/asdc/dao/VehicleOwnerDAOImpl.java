@@ -1,12 +1,17 @@
 package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.VehicleOwner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Repository
 public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
@@ -15,30 +20,70 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+	Logger logger = LoggerFactory.getLogger(VehicleOwnerDAOImpl.class);
+
 
 	@Override
-	public void saveVehicleOwner(VehicleOwner vehicleOwner) {
-
-        String sql = "insert into vehicleowner values("+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getAddress()+"','"+vehicleOwner.getEmail()+"',"+vehicleOwner.getVehicle_id()+",'"+vehicleOwner.getPassword()+"');";
+	public boolean saveVehicleOwner(VehicleOwner vehicleOwner) {
+		try{
+        String sql = "insert into vehicleowner values("+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getEmail()+"','"+vehicleOwner.getPassword()+"',"+vehicleOwner.getAvailable_credits()+");";
         jdbcTemplate.update(sql);
-		//notificationService.sendEmail(vehicleOwner.getVehicleowner_fname()+StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
+			return true;
+	}
+		catch(Exception e)
+		{
+			logger.error("Error saving vehicleOwner",e);
+			return false;
 
+		}
 		
 	}
 
 	@Override
-	public VehicleOwner getVehicleOwner(int theId) {
-	   VehicleOwner carOwner=jdbcTemplate.queryForObject("select * from vehicleowner where vehicleowner_id="+theId,
-       BeanPropertyRowMapper.newInstance(VehicleOwner.class));
-	  return carOwner;
+	public VehicleOwner getVehicleOwnerByEmail(String email) {
+		if(email==null)
+		return null;
+		try{
+			VehicleOwner vehicleOwner = jdbcTemplate.query("select * from vehicleowner where email='"+email+"'", new ResultSetExtractor<VehicleOwner>() {
+				@Override
+				public VehicleOwner extractData(ResultSet rs) throws SQLException,
+						DataAccessException {
+					if (rs.next()) {
+						VehicleOwner v = new VehicleOwner();
+						v.setEmail(rs.getString("email"));
+						v.setVehicleowner_fname(rs.getString("vehicleowner_fname"));
+						v.setVehicleowner_lname(rs.getString("vehicleowner_lname"));
+						v.setPhone(rs.getString("phone"));
+						v.setAvailable_credits(rs.getInt("available_credits"));
+						v.setVehicleOwner_id(rs.getInt("vehicleowner_id"));
+						return v;
+					} else return null;
+				}
+			});
+	  return vehicleOwner;
+		}
+		catch(Exception e)
+		{
+			logger.error("Error getting vehicleOwner by email ",e);
+			return null;
+
+		}
 	}
 
 	@Override
-	public List<VehicleOwner> getVehicleOwners() {
-		List<VehicleOwner> vehicleOwners=jdbcTemplate.queryForList("select * from vehicleowner",
-		VehicleOwner.class);
-		return vehicleOwners;
+	public VehicleOwner getVehicleOwnerById(int vehicleOwnerId) {
+		try{
+		return jdbcTemplate.queryForObject("select * from vehicleowner where vehicleOwner_id="+vehicleOwnerId,
+				BeanPropertyRowMapper.newInstance(VehicleOwner.class));
+		}
+		catch(Exception e)
+		{
+			logger.error("Error getting vehicleOwner by id ",e);
+			return null;
+
+		}
 	}
+
 }
 
 

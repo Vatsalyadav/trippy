@@ -10,24 +10,33 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegistrationServiceImpl implements RegistrationService{
 
-    
+
     @Autowired
-    RegistrationDAO RegistrationDAO;
-    
+    RegistrationDAO registrationDAO;
+
     @Override
     public String checkEmailPassword(String email, String password) {
-        if(!RegistrationDAO.checkEmailExists(email))
-        return StringMessages.NO_USER_FOUND;
-        else if(!RegistrationDAO.checkEmailPassword(email, password))
-        return StringMessages.INCORRECT_AUTH;
-        else return StringMessages.SUCCESS;
+        try{
+        if(email==null||password==null||password.isEmpty()||email.isEmpty())
+            return StringMessages.INCORRECT_AUTH;
+        else if (!registrationDAO.checkUserExistByEmail(email))
+            return StringMessages.NO_USER_FOUND;
+        else
+            return registrationDAO.checkEmailPassword(email, password);
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
     }
 
     @Override
     public boolean checkUserExistByEmail(String email)
     {
-        return RegistrationDAO.checkEmailExists(email);
+        if(email==null||email.isEmpty())
+        return false;
+        else
+        return registrationDAO.checkUserExistByEmail(email);
     }
 
-    
 }
