@@ -65,9 +65,9 @@ public class VehicleDAOImpl implements VehicleDAO {
 	}
 
 	@Override
-	public boolean updateFuelEconomy(int vehicle_id, float fuelEconomy) {
+	public boolean updateVehicleFuelEconomy(Vehicle vehicle) {
 		try{
-		String sql = "update vehicle set fuel_economy="+fuelEconomy+" where vehicle_id="+vehicle_id;
+		String sql = "update vehicle set fuel_economy="+vehicle.getFuel_economy()+",kms_driven="+vehicle.getKms_driven()+",fuel_consumed="+vehicle.getFuel_consumed()+",fuel_economy_status='"+vehicle.getFuel_economy_status()+"' where vehicle_id="+vehicle.getVehicle_id();
         jdbcTemplate.update(sql);
 		return true;
 		}

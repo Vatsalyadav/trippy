@@ -63,6 +63,19 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 		}
 	}
 
+	@Override
+	@Transactional
+	public boolean buyCredits(int vehicleOwnerId, int credits) {
+		try{
+			VehicleOwner vehicleOwner=vehicleOwnerDAO.getVehicleOwnerById(vehicleOwnerId);
+			return vehicleOwnerDAO.updateAvaialableCredits(vehicleOwnerId, vehicleOwner.getAvailable_credits()+credits);
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+	}
+
 }
 
 

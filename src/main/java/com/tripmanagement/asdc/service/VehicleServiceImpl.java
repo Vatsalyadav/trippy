@@ -69,15 +69,16 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	@Transactional
-	public boolean updateFuelEconomy(int vehicle_id, float kms_driven, float fuel_consumed) {
+	public boolean updateFuelEconomy(FuelEconomy fuelEconomy) {
 		try{
-		float fuelEco=setFuel_economy(kms_driven, fuel_consumed);
-		vehicleDAO.updateFuelEconomy(vehicle_id, fuelEco);
-		FuelEconomy fuelEconomy = new FuelEconomy();
-		fuelEconomy.setFuel_consumed(fuel_consumed);
-		fuelEconomy.setKms_travelled(kms_driven);
+		float fuelEco=setFuel_economy(fuelEconomy.getKms_travelled(), fuelEconomy.getKms_travelled());
 		fuelEconomy.setFuel_economy(fuelEco);
-		fuelEconomy.setVehicle_id(vehicle_id);
+		Vehicle vehicle=vehicleDAO.getVehicleDetails(fuelEconomy.getVehicle_id());
+		vehicle.setFuel_consumed(vehicle.getFuel_consumed()+fuelEconomy.getFuel_consumed());
+		vehicle.setFuel_economy(vehicle.getFuel_economy()+fuelEconomy.getFuel_economy());
+		vehicle.setKms_driven(vehicle.getKms_driven()+fuelEconomy.getKms_travelled());
+		vehicle.setFuel_economy_status(getFuelEconomyStatus(vehicle.getFuel_economy()));
+		vehicleDAO.updateVehicleFuelEconomy(vehicle);
 		saveFuelEconomy(fuelEconomy);
 		return true;
 		}

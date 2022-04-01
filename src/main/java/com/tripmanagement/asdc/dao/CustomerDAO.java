@@ -10,6 +10,8 @@ public interface CustomerDAO {
 
 	public Customer getCustomerByEmail(String email);
 
+	public boolean updateAvaialableCredits(int customer_id, int available_credits);
+
 
     
 }

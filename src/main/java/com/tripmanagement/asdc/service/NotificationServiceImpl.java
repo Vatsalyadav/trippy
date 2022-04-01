@@ -11,9 +11,7 @@ public class NotificationServiceImpl implements NotificationService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-	// @Bean
 	public void sendEmail(String message, String subject, String email) {
-		// JavaMailSender javaMailSender=new JavaMailSenderImpl();
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom("tripmanagementasdc@gmail.com");
 		msg.setTo(email);

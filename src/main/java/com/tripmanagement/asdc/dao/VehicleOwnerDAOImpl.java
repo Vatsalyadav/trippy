@@ -84,6 +84,21 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 		}
 	}
 
+	@Override
+    public boolean updateAvaialableCredits(int vehicleOwnerId, int available_credits) {
+        try{
+			String sql = "update vehicleowner set available_credits="+available_credits+" where vehicleowner_id="+vehicleOwnerId;
+			jdbcTemplate.update(sql);
+			return true;
+			}
+			catch(Exception e)
+			{
+				logger.error("Error updating available credits in VehicleOwner",e);
+				return false;
+	
+			}
+    }
+
 }
 
 
