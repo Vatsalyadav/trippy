@@ -143,9 +143,9 @@ public class TripServiceImpl implements TripService {
 				trip.setStart_time(trip.getStart_time().replace("T", " "));
 				trip.setEnd_time(trip.getEnd_time().replace("T", " "));
 				String current_time = getCurrentTime();
-				Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(end_time);
+				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
-				if (current.compareTo(end) > 0) {
+				if (current.compareTo(start) > 0) {
 					previousTrips.add(trip);
 				}
 
