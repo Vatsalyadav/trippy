@@ -54,7 +54,7 @@ public class RegistrationController {
             if (message.equalsIgnoreCase(Constants.USER_TYPE_VEHICLE_OWNER)) {
                 VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByEmail(user.getEmail());
                 httpSession.setAttribute("vehicleOwner", vehicleOwner);
-                model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+                httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
                 httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
                 httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
                 return "owner-dashboard";
