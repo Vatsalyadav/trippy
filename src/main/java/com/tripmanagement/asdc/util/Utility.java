@@ -12,7 +12,7 @@ public class Utility {
     public static String convertDate(String datetime) throws ParseException
 	{
 		datetime = datetime.replace("T", " ");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd, HH:mm");
         Date date=new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(datetime);
 		return  sdf.format(date);
 	}
