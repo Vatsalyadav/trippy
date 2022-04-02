@@ -41,7 +41,8 @@ public class TripDAOmpl implements TripDAO {
 	public Trip getTripDetails(int trip_id) {
 		try {
 
-			return jdbcTemplate.queryForObject("select * from trip where trip_id=" + trip_id,
+			String query = "select * from trip where trip_id=" + trip_id;
+			return jdbcTemplate.queryForObject(query,
 					BeanPropertyRowMapper.newInstance(Trip.class));
 		} catch (Exception e) {
 			logger.error("Error getting trip details", e);
@@ -52,7 +53,7 @@ public class TripDAOmpl implements TripDAO {
 	@Override
 	public boolean deleteTrip(int trip_id) {
 		try {
-			String sql = "delete from Trip where trip_id=" + trip_id;
+			String sql = "delete from trip where trip_id=" + trip_id;
 			jdbcTemplate.update(sql);
 			return true;
 		} catch (Exception e) {
@@ -83,7 +84,8 @@ public class TripDAOmpl implements TripDAO {
 	public List<Trip> getAllTripsForVehicleOwner(int vehicleOwnerId) {
 		List<Trip> trips = new ArrayList<>();
 		try {
-			trips = jdbcTemplate.query("select * from trip where vehicle_owner_id=" + vehicleOwnerId,
+			String selectQuery = "select * from trip where vehicle_owner_id=" + vehicleOwnerId;
+			trips = jdbcTemplate.query(selectQuery,
 					BeanPropertyRowMapper.newInstance(Trip.class));
 			return trips;
 		} catch (Exception e) {
