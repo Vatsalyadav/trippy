@@ -20,12 +20,16 @@ public class RegistrationServiceImpl implements RegistrationService{
     @Transactional
     public String checkEmailPassword(String email, String password) {
         try{
-        if(email==null||password==null||password.isEmpty()||email.isEmpty())
-            return StringMessages.INCORRECT_AUTH;
-        else if (!registrationDAO.checkUserExistByEmail(email))
-            return StringMessages.NO_USER_FOUND;
-        else
-            return registrationDAO.checkEmailPassword(email, password);
+            if (password == null || email == null) {
+                return StringMessages.INCORRECT_AUTH;
+            } else if (password.isEmpty() || email.isEmpty()) {
+                return StringMessages.INCORRECT_AUTH;
+            } else {
+                if (!registrationDAO.checkUserExistByEmail(email))
+                    return StringMessages.NO_USER_FOUND;
+                else
+                    return registrationDAO.checkEmailPassword(email, password);
+            }
         }
         catch(Exception e)
         {
