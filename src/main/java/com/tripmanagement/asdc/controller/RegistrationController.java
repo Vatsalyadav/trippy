@@ -6,7 +6,8 @@ import com.tripmanagement.asdc.model.User;
 import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.service.*;
 import com.tripmanagement.asdc.stringsAndConstants.Constants;
-import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
+import com.tripmanagement.asdc.stringsAndConstants.ControllerStringMessages;
+import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,7 +47,7 @@ public class RegistrationController {
     @PostMapping("/dashboard")
     public String userLogin(User user, HttpSession httpSession, Model model) {
         String message = registrationService.checkEmailPassword(user.getEmail(), user.getPassword());
-        if (message.equalsIgnoreCase(StringMessages.INCORRECT_AUTH)){
+        if (message.equalsIgnoreCase(ControllerStringMessages.INCORRECT_AUTH)){
             httpSession.setAttribute("error_message", message);
             return "login";
         }
@@ -103,7 +104,7 @@ public class RegistrationController {
             return "login";
         }
         else {
-            model.addAttribute("error_message", StringMessages.USER_ALREADY_EXIST);
+            model.addAttribute("error_message", ServiceStringMessages.USER_ALREADY_EXIST);
             return "register";
         }
     }

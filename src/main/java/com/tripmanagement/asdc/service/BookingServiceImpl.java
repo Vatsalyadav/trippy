@@ -3,15 +3,13 @@ package com.tripmanagement.asdc.service;
 import com.tripmanagement.asdc.dao.BookingDAO;
 import com.tripmanagement.asdc.dao.CustomerDAO;
 import com.tripmanagement.asdc.dao.TripDAO;
-import com.tripmanagement.asdc.dao.VehicleDAO;
 import com.tripmanagement.asdc.dao.VehicleOwnerDAO;
 import com.tripmanagement.asdc.model.Booking;
 import com.tripmanagement.asdc.model.Customer;
 import com.tripmanagement.asdc.model.Trip;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
 import com.tripmanagement.asdc.util.Utility;
-
+import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import javax.transaction.Transactional;
 
@@ -60,7 +59,7 @@ public class BookingServiceImpl implements BookingService {
 				boolean isSuccess = bookedRidesDAO.saveRide(booking);
 				if (isSuccess) {
 					logger.info("Successfully booked seats");
-					notificationService.sendEmail(StringMessages.RIDE_BOOKED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), StringMessages.RIDE_BOOKED,
+					notificationService.sendEmail(ServiceStringMessages.RIDE_BOOKED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), ServiceStringMessages.RIDE_BOOKED,
 							customerDAO.getCustomerById(booking.getCustomer_id()).getEmail());
 					tripDAO.updateAvailableSeats(trip.getTrip_id(),
 							trip.getSeats_remaining() - booking.getSeats_booked());
@@ -139,15 +138,15 @@ public class BookingServiceImpl implements BookingService {
 			VehicleOwner vehicleOwner=vehicleOwnerDAO.getVehicleOwnerById(tripDAO.getTripDetails(booking.getTrip_id()).getVehicle_owner_id());
 			vehicleOwnerDAO.updateAvaialableCredits(vehicleOwner.getVehicleOwner_id(), vehicleOwner.getAvailable_credits()+cost_credits);
 			customerDAO.updateAvaialableCredits(customer.getCustomer_id(), customer.getAvailable_credits()-cost_credits);
-			return StringMessages.SUCCESS;
+			return ServiceStringMessages.SUCCESS;
 		}
 		else
 		{
-			return StringMessages.PLEASE_BUY_CREDITS;
+			return ServiceStringMessages.PLEASE_BUY_CREDITS;
 		}
 	}
 
 
-	
+
 
 }

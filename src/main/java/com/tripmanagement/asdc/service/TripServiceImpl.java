@@ -14,8 +14,8 @@ import com.tripmanagement.asdc.model.Ride;
 import com.tripmanagement.asdc.model.Trip;
 import com.tripmanagement.asdc.model.Vehicle;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
 import com.tripmanagement.asdc.util.Utility;
+import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class TripServiceImpl implements TripService {
 			trip.setSeats_remaining(trip.getAvailable_seats());
 			boolean isSuccess = tripDAO.saveTrip(trip);
 			if (isSuccess)
-				notificationService.sendEmail(StringMessages.RIDE_CREATED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), StringMessages.RIDE_CREATED,
+				notificationService.sendEmail(ServiceStringMessages.RIDE_CREATED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), ServiceStringMessages.RIDE_CREATED,
 						vehicleOwnerDAO
 								.getVehicleOwnerById(
 										vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id())
@@ -137,9 +137,11 @@ public class TripServiceImpl implements TripService {
 	@Override
 	@Transactional
 	public float calculateCost(Vehicle vehicle, Trip trip) {
-		if (trip == null || vehicle == null || vehicle.getAvailable_seats() == 0)
+		if (vehicle == null || trip == null) {
 			return 0;
-		else {
+		} else if (vehicle.getAvailable_seats() == 0) {
+			return 0;
+		} else {
 			return 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * vehicle.getAvailable_seats()));
 		}
 	}

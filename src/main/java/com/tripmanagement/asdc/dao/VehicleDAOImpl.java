@@ -36,7 +36,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 	@Override
 	public Vehicle getVehicleDetails(int vehicle_id) {
 		try{
-		Vehicle vehicle=jdbcTemplate.queryForObject("select * from vehicle where vehicle_id="+vehicle_id,
+			Vehicle vehicle=jdbcTemplate.queryForObject("select * from vehicle where vehicle_id="+vehicle_id,
 		BeanPropertyRowMapper.newInstance(Vehicle.class));
 	   return vehicle;
 		}
@@ -52,7 +52,8 @@ public class VehicleDAOImpl implements VehicleDAO {
 	public List<Vehicle> getVehicles(int vehicleOwnerId) {
 		List<Vehicle> vehicles=new ArrayList<>();
 		try{
-		vehicles= jdbcTemplate.query("select * from vehicle where vehicleOwner_id="+vehicleOwnerId,
+			String selectVehicleQuery = "select * from vehicle where vehicleOwner_id=" + vehicleOwnerId;
+			vehicles= jdbcTemplate.query(selectVehicleQuery,
 				BeanPropertyRowMapper.newInstance(Vehicle.class));
 		return vehicles;
 		}
