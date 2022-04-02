@@ -12018,14 +12018,14 @@ cardBody{
   overflow: hidden !important;
   padding-left:8px !important;
   padding-top: 8px !important;
-  width: 60% !important;
+  width: 100% !important;
   transition: max-height 500ms ease-in-out !important;
 }
 
 .card-wrapper:hover {
                  box-shadow: 0 0 8px #d3d3d3 !important;
                  cursor: pointer !important;
-                 max-height: 80px !important;
+                 max-height: 94px !important;
                }
 
 .card-details,
