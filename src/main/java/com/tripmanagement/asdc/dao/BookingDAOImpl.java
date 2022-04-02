@@ -39,7 +39,8 @@ public class BookingDAOImpl implements BookingDAO {
 	public List<Booking> getAllRidesForCustomer(int customer_id) {
 		List<Booking> rides = new ArrayList<>();
 		try {
-			rides = jdbcTemplate.query("select * from booking where customer_id=" + customer_id,
+			String selectBookingQuery = "select * from booking where customer_id=" + customer_id;
+			rides = jdbcTemplate.query(selectBookingQuery,
 			BeanPropertyRowMapper.newInstance(Booking.class));
 			return rides;
 		} catch (Exception e) {
