@@ -40,6 +40,7 @@ public class TripServiceImpl implements TripService {
 	public boolean saveTrip(Trip trip) {
 		try {
 			trip.setCost(calculateCost(vehicleDAO.getVehicleDetails(trip.getVehicle_id()), trip));
+			trip.setSeats_remaining(trip.getAvailable_seats());
 			boolean isSuccess = tripDAO.saveTrip(trip);
 			if (isSuccess)
 				notificationService.sendEmail(StringMessages.RIDE_CREATED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), StringMessages.RIDE_CREATED,
