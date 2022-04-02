@@ -92,14 +92,6 @@ public class RegistrationController {
         return "register";
     }
 
-    /*
-     * Will open dashboard depending upon user type
-     * */
-    @RequestMapping("/dashboard")
-    public String dashboard() {
-        // TODO: open dashboard depending upon user type
-        return "dashboard";
-    }
 
     @PostMapping("/register-user")
     public String registerUser(User user, BindingResult result, Model model) {
