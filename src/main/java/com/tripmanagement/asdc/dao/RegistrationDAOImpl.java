@@ -55,8 +55,11 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 
     @Override
     public String checkEmailPassword(String email, String password) {
-        if(email==null||password==null||password.isEmpty()||email.isEmpty())
+        if (password == null || email == null) {
             return StringMessages.INCORRECT_AUTH;
+        } else if ( password.isEmpty() || email.isEmpty()) {
+            return StringMessages.INCORRECT_AUTH;
+        }
         try{
         String fetchCustomer = "select * from customer where email='" + email + "' and password='" + password + "'";
         String fetchVehicleOwner = "select * from vehicleowner where email='" + email + "' and password='" + password + "'";
