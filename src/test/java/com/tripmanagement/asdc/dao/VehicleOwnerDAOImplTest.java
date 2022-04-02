@@ -15,27 +15,26 @@ class VehicleOwnerDAOImplTest {
     VehicleOwnerDAO vehicleOwnerDAO;
     @Test
     void testsaveVehicleOwner() {
-//        "+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getAddress()+"','"+vehicleOwner.getEmail()+"',"+vehicleOwner.getVehicleOwner_id()+",'"+vehicleOwner.getPassword()+"');";
         VehicleOwner vehicleOwner = new VehicleOwner();
         vehicleOwner.setVehicleowner_fname("test");
         vehicleOwner.setVehicleowner_lname("case");
         vehicleOwner.setEmail("test@email.test");
         vehicleOwner.setPassword("123456");
         vehicleOwner.setVehicleOwner_id(1111111);
-       // vehicleOwner.setAddress("testcase street");
+
         vehicleOwner.setPhone("1234567890");
         assertTrue(vehicleOwnerDAO.saveVehicleOwner(vehicleOwner));
     }
     @Test
     void testsaveVehicleOwnerIllegalname() {
-//        "+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getAddress()+"','"+vehicleOwner.getEmail()+"',"+vehicleOwner.getVehicleOwner_id()+",'"+vehicleOwner.getPassword()+"');";
+
         VehicleOwner vehicleOwner = new VehicleOwner();
         vehicleOwner.setVehicleowner_fname("test\'");
         vehicleOwner.setVehicleowner_lname("case");
         vehicleOwner.setEmail("test@email.test");
         vehicleOwner.setPassword("123456");
         vehicleOwner.setVehicleOwner_id(1111111);
-       // vehicleOwner.setAddress("testcase street");
+
         vehicleOwner.setPhone("1234567890");
         assertFalse(vehicleOwnerDAO.saveVehicleOwner(vehicleOwner));
     }
