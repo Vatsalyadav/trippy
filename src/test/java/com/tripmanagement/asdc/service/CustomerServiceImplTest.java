@@ -36,8 +36,6 @@ class CustomerServiceImplTest {
         user.setPassword("123456");
         user.setUserType("CUSTOMER");
 
-       // if(customerService.getCustomerByEmail("abc@gmail.com")==null)
-
             assertTrue(customerService.saveCustomer(user));
     }
     @Test
@@ -49,9 +47,6 @@ class CustomerServiceImplTest {
         user.setEmail("test@case.com");
         user.setPassword("123456");
         user.setUserType("CUSTOMER");
-
-        //if(customerService.getCustomerByEmail("abc@gmail.com")==null)
-
             assertFalse(customerService.saveCustomer(user));
     }
 
