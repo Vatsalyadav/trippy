@@ -3,7 +3,7 @@ package com.tripmanagement.asdc.dao;
 import com.tripmanagement.asdc.model.Customer;
 import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.stringsAndConstants.Constants;
-import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
+import com.tripmanagement.asdc.stringsAndConstants.DAOStringMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +58,9 @@ public class RegistrationDAOImpl implements RegistrationDAO {
     @Override
     public String checkEmailPassword(String email, String password) {
         if (password == null || email == null) {
-            return StringMessages.INCORRECT_AUTH;
+            return DAOStringMessages.INCORRECT_AUTH;
         } else if ( password.isEmpty() || email.isEmpty()) {
-            return StringMessages.INCORRECT_AUTH;
+            return DAOStringMessages.INCORRECT_AUTH;
         }
         try{
         String fetchCustomer = "select * from customer where email='" + email + "' and password='" + password + "'";
@@ -94,7 +94,7 @@ public class RegistrationDAOImpl implements RegistrationDAO {
         else if (customer != null && !customer.getEmail().isEmpty())
             return Constants.USER_TYPE_CUSTOMER;
         else
-            return StringMessages.INCORRECT_AUTH;
+            return DAOStringMessages.INCORRECT_AUTH;
     }
     catch(Exception e)
     {
