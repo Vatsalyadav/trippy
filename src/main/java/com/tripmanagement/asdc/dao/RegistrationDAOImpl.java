@@ -106,18 +106,23 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 
     @Override
     public boolean checkEmailExists(String email, String userType) {
-        if(email==null||email.isEmpty()||userType==null||userType.isEmpty())
-        return false;
+        if (email == null||userType == null) {
+            return false;
+        } else if (email.isEmpty() || userType.isEmpty()) {
+            return false;
+        }
         try{
         if (userType.equals(Constants.USER_TYPE_CUSTOMER)) {
-            Customer customer = jdbcTemplate.queryForObject("select * from customer where email='" + email + "'",
+            String selectCustomerQuery = "select * from customer where email='" + email + "'";
+            Customer customer = jdbcTemplate.queryForObject(selectCustomerQuery,
                     BeanPropertyRowMapper.newInstance(Customer.class));
             if (customer != null && !customer.getEmail().isEmpty())
                 return true;
             else
                 return false;
         } else if (userType.equals(Constants.USER_TYPE_VEHICLE_OWNER)) {
-            VehicleOwner carOwner = jdbcTemplate.queryForObject("select * from vehicleowner where email='" + email + "'",
+            String selectCarOwnerQuery = "select * from vehicleowner where email='" + email + "'";
+            VehicleOwner carOwner = jdbcTemplate.queryForObject(selectCarOwnerQuery,
                     BeanPropertyRowMapper.newInstance(VehicleOwner.class));
             if (carOwner != null && !carOwner.getEmail().isEmpty())
                 return true;
