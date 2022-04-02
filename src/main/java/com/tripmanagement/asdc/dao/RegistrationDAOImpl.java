@@ -28,12 +28,14 @@ public class RegistrationDAOImpl implements RegistrationDAO {
     @Override
     public boolean checkUserExistByEmail(String email) {
         try{
-        int emailCount = jdbcTemplate.queryForObject("select count(*) from vehicleowner where email='" + email + "'"
+            String selectQuery = "select count(*) from vehicleowner where email='" + email + "'";
+            int emailCount = jdbcTemplate.queryForObject(selectQuery
                 , Integer.class);
         System.out.println(emailCount);
         if (emailCount <= 0)
         {
-            emailCount = jdbcTemplate.queryForObject("select count(*) from customer where email='" + email + "'"
+            String selectQuery2 = "select count(*) from customer where email='" + email + "'";
+            emailCount = jdbcTemplate.queryForObject(selectQuery2
                 , Integer.class);
             if(emailCount<=0)
             {
