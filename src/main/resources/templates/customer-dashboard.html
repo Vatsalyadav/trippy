@@ -35,8 +35,7 @@
         <div class="container-fluid">
             <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
                 th:text="'Good Evenin '"/>
-            <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
-                th:text="'Hey ' + ${session.customer.customer_fname} + '!'"/>
+
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-1"></div>
@@ -81,23 +80,52 @@
                             <input class="btn btn-secondary" type="submit" value="Search Ride">
                         </form>
 
-                        <div class="page-wrapper" th:action="@{/book-ride}" th:object="${booking}" th:each="ride: ${listOfRides}"
-                             th:method="post">
+                        <div class="page-wrapper"  th:each="ride: ${listOfRides}">
+                            <form th:action="@{/book-ride}" th:object="${booking}" method="post">
                             <!-- FIRST CARD -->
 <!--                            <div class="">-->
-                            <div class="card-wrapper">
+                            <div class="card-wrapper" style="width: 400px !important;">
                                 <div class="ride-card-left">
                                 </div>
                                 <div class="card-details">
-                                    <ride-h1>May 31 - 3:00 AM</ride-h1>
-                                    <ride-h1 style="font-size:14px;color:#616161;">42$</ride-h1>
-                                    <ride-h1 style="font-size:14px;color:#616161;">Somerset  - Killam</ride-h1>
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <ride-h1 th:text="${ride.trip.start_time}"></ride-h1>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ride-h1 th:text="${ride.cost}+'$'" style="font-size:14px;color:#616161; padding-left:0px"></ride-h1>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${ride.trip.source}+' - '+${ride.trip.destination}"></ride-h1>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ride-h1 style="font-size:14px;color:#616161; padding-left:0px" th:text="'Seats: '+${ride.trip.seats_remaining}"></ride-h1>
+                                        </div>
+                                    </div>
                                 </div><!-- end card-details -->
 
-                                <div class="reveal-details">
-                                    <ride-h1>Book Seats:</ride-h1>
-                                </div><!-- end reveal-details -->
-                            </div><!-- end card-wrapper -->
+                                <div class="reveal-details" style="padding-top: 4px;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ride-h1>Book Seats:</ride-h1>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="number" class="form-control" id="booked_seats" name="seats_booked" min="1" th:max="${ride.trip.seats_remaining}" required="" style="margin: 0px !important;padding: 2px !important;">
+                                        </div>
+                                        <input th:attr="name='trip_id'" th:value="${ride.trip.trip_id}" type="hidden"/>
+                                        <input th:attr="name='customer_id'" th:value="${session.customer.customer_id}" type="hidden"/>
+                                        <div class="col-md-4">
+                                            <input class="btn btn-dark" type="submit" value="Book Ride" style="margin: 0px !important;padding: 2px !important;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end reveal-details -->
+                            </div>
+                            </form><!-- end card-wrapper -->
 <!--                            </div>-->
 
                             <!--                            <div class="card bg-warning text-white mb-4">-->
