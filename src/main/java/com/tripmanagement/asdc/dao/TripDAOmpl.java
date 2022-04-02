@@ -68,8 +68,9 @@ public class TripDAOmpl implements TripDAO {
 		if (source == null || destination == null)
 			return null;
 		try {
+			String selectQuery = "select * from trip where source='" + source + "' and destination='" + destination + "'";
 			trips = jdbcTemplate.query(
-					"select * from trip where source='" + source + "' and destination='" + destination + "'",
+					selectQuery,
 					BeanPropertyRowMapper.newInstance(Trip.class));
 			return trips;
 		} catch (Exception e) {
@@ -95,7 +96,8 @@ public class TripDAOmpl implements TripDAO {
 	public List<String> getSources() {
 		List<String> sources = new ArrayList<>();
 		try {
-			sources = jdbcTemplate.queryForList("select distinct source from trip", String.class);
+			String selectQuery = "select distinct source from trip";
+			sources = jdbcTemplate.queryForList(selectQuery, String.class);
 			return sources;
 		} catch (Exception e) {
 			logger.error("Error getting sources", e);
@@ -107,7 +109,8 @@ public class TripDAOmpl implements TripDAO {
 	public List<String> getDestinations() {
 		List<String> destinations = new ArrayList<>();
 		try {
-			destinations = jdbcTemplate.queryForList("select distinct destination from trip", String.class);
+			String selectQuery = "select distinct destination from trip";
+			destinations = jdbcTemplate.queryForList(selectQuery, String.class);
 			return destinations;
 		} catch (Exception e) {
 			logger.error("Error getting destinations", e);
