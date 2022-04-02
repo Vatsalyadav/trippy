@@ -1,12 +1,17 @@
 package com.tripmanagement.asdc.service;
 
+import com.tripmanagement.asdc.dao.RegistrationDAO;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 class RegistrationServiceImplTest {
@@ -14,14 +19,24 @@ class RegistrationServiceImplTest {
     @Autowired
     RegistrationService registrationService;
 
+    @InjectMocks
+    RegistrationServiceImpl registrationServiceImpl;
+
+    @Mock
+    RegistrationDAO registrationDAO;
+
     @Test
     void testCheckUserExistByEmailnull() {
+
         assertFalse(registrationService.checkUserExistByEmail(null));
     }
 
     @Test
     void testCheckUserExistByWrongEmail() {
-        assertFalse(registrationService.checkUserExistByEmail("test1@test1.test1"));
+        String email="test1@test1.test1";
+        when(registrationDAO.checkUserExistByEmail(email)).thenReturn(true);
+
+        assertTrue(registrationServiceImpl.checkUserExistByEmail("test1@test1.test1"));
     }
 
     @Test
@@ -31,7 +46,7 @@ class RegistrationServiceImplTest {
 
     @Test
     void testCheckWrongEmailPassword() {
-        assertEquals(registrationService.checkEmailPassword("test1@test1.test", "test"),"Incorrect email or password");
+        assertEquals(registrationService.checkEmailPassword("test1@test1.test", "test"),"User does not exist");
     }
 
     @Test
