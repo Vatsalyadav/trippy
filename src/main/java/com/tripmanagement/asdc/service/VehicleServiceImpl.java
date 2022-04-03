@@ -114,9 +114,9 @@ public class VehicleServiceImpl implements VehicleService {
 	}
 
 	private String getFuelEconomyStatus(float fuelEconomy) {
-		if (fuelEconomy > 13)
+		if (fuelEconomy > 13) //Magic Numbers for Fuel Economy RAG visual indicators (Upper limit)
 			return FuelEconomyStatus.GOOD.name();
-		else if (fuelEconomy < 8)
+		else if (fuelEconomy < 8) //Magic Numbers for Fuel Economy RAG visual indicators (Lower limit)
 			return FuelEconomyStatus.BAD.name();
 		else return FuelEconomyStatus.AVERAGE.name();
 	}
