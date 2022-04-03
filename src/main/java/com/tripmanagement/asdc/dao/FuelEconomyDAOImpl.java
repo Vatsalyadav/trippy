@@ -19,6 +19,8 @@ public class FuelEconomyDAOImpl implements FuelEconomyDAO {
 
 	@Override
 	public boolean saveFuelEconomy(FuelEconomy fuel_economy) {
+		if(fuel_economy==null)
+		return false;
 		try{
 			String sql = "insert into fuel_economy values("+null+","+fuel_economy.getTrip_id()+","+fuel_economy.getKms_travelled()+","+fuel_economy.getFuel_consumed()+","+fuel_economy.getFuel_economy()+",'"+fuel_economy.getTimestamp()+"',"+fuel_economy.getVehicle_id()+");";
 			jdbcTemplate.update(sql);

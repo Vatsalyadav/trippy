@@ -25,6 +25,8 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 
 	@Override
 	public boolean saveVehicleOwner(VehicleOwner vehicleOwner) {
+		if(vehicleOwner==null||vehicleOwner.getEmail()==null)
+		return false;
 		try{
         String sql = "insert into vehicleowner values("+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getEmail()+"','"+vehicleOwner.getPassword()+"',"+vehicleOwner.getAvailable_credits()+");";
         jdbcTemplate.update(sql);
@@ -41,7 +43,7 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 
 	@Override
 	public VehicleOwner getVehicleOwnerByEmail(String email) {
-		if(email==null)
+		if(email==null||email.isEmpty())
 		return null;
 		try{
 			String selectvehicleOwnerQuery = "select * from vehicleowner where email='" + email + "'";
