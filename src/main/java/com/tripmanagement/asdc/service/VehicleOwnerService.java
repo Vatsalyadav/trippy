@@ -13,4 +13,7 @@ public interface VehicleOwnerService {
 
 	public VehicleOwner getVehicleOwnerByOwnerId(int vehicleOwnerId);
 
+	public boolean buyCredits(int vehicleOwnerId, int credits);
+
+
 }

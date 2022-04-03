@@ -1,6 +1,5 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.Ride;
 import com.tripmanagement.asdc.model.Trip;
 import com.tripmanagement.asdc.model.Vehicle;
 import com.tripmanagement.asdc.model.VehicleOwner;
@@ -12,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
 
 
@@ -29,25 +30,13 @@ public class VehicleOwnerController {
     TripService tripService;
 
     @PostMapping("/create-ride")
-    public String createRide(Trip tripData, BindingResult result, Model model) {
-//        Boolean addVehicleStatus = vehicleService.addVehicle(vehicle);
-//        model.addAttribute("addVehicleStatus", addVehicleStatus);
-        System.out.println("getSource: " + tripData.getSource());
-        System.out.println("getDestination: " + tripData.getDestination());
-        System.out.println("getVehicle_id: " + tripData.getVehicle_id());
-        System.out.println("getAvailableSeats: " + tripData.getAvailable_seats());
-        System.out.println("getTime: " + tripData.getStart_time());
-        System.out.println("getDistance: " + tripData.getEstimated_kms());
-        System.out.println("vehicleOwnerId: " + vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id());
-
-//        tripData.setTimestamp(new Date(System.currentTimeMillisillis()));
-        // TODO: Datetime, create ride
-
+    public String createRide(Trip tripData, BindingResult result, Model model, HttpSession httpSession) {
         tripService.saveTrip(tripData);
-
         VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id());
         model.addAttribute("vehicleOwner", vehicleOwner);
         model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+        httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+        httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
         return "owner-dashboard";
     }
 
@@ -76,6 +65,23 @@ public class VehicleOwnerController {
     public String deleteVehicle(Vehicle vehicle, Model model) {
         Boolean deleteVehicleStatus = vehicleService.deleteVehicle(vehicle.getVehicle_id());
         model.addAttribute("deleteVehicleStatus", deleteVehicleStatus);
+        return "owner-dashboard";
+    }
+
+    @RequestMapping(value = "/open-owner-credit")
+    public String openCredit( Model model) {
+
+        return "payment";
+    }
+
+    @RequestMapping("/ride-history")
+    public String showRideHistory(HttpSession session, Model model){
+        return "ride-history";
+    }
+
+
+    @RequestMapping("/owner-dashboard")
+    public String showOwnerDashboard(HttpSession session, Model model){
         return "owner-dashboard";
     }
 

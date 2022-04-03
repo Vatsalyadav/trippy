@@ -44,7 +44,8 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 		if(email==null)
 		return null;
 		try{
-			VehicleOwner vehicleOwner = jdbcTemplate.query("select * from vehicleowner where email='"+email+"'", new ResultSetExtractor<VehicleOwner>() {
+			String selectvehicleOwnerQuery = "select * from vehicleowner where email='" + email + "'";
+			VehicleOwner vehicleOwner = jdbcTemplate.query(selectvehicleOwnerQuery, new ResultSetExtractor<VehicleOwner>() {
 				@Override
 				public VehicleOwner extractData(ResultSet rs) throws SQLException,
 						DataAccessException {
@@ -73,7 +74,8 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 	@Override
 	public VehicleOwner getVehicleOwnerById(int vehicleOwnerId) {
 		try{
-		return jdbcTemplate.queryForObject("select * from vehicleowner where vehicleOwner_id="+vehicleOwnerId,
+			String selectVehicleOwnerQuery = "select * from vehicleowner where vehicleOwner_id=" + vehicleOwnerId;
+			return jdbcTemplate.queryForObject(selectVehicleOwnerQuery,
 				BeanPropertyRowMapper.newInstance(VehicleOwner.class));
 		}
 		catch(Exception e)
@@ -83,6 +85,21 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 
 		}
 	}
+
+	@Override
+    public boolean updateAvaialableCredits(int vehicleOwnerId, int available_credits) {
+        try{
+			String sql = "update vehicleowner set available_credits="+available_credits+" where vehicleowner_id="+vehicleOwnerId;
+			jdbcTemplate.update(sql);
+			return true;
+			}
+			catch(Exception e)
+			{
+				logger.error("Error updating available credits in VehicleOwner",e);
+				return false;
+	
+			}
+    }
 
 }
 

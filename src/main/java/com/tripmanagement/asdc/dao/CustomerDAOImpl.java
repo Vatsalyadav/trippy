@@ -24,10 +24,9 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean saveCustomer(Customer customer) {
         try{
-        String sql = "insert into customer values("+null+",'"+customer.getCustomer_fname()+"','"+customer.getCustomer_lname()+"','"+customer.getMobile_no()+"','"+customer.getEmail()+"','"+customer.getPassword()+"','"+customer.getAvailable_credits()+");";
+        String sql = "insert into customer values("+null+",'"+customer.getCustomer_fname()+"','"+customer.getCustomer_lname()+"','"+customer.getMobile_no()+"','"+customer.getEmail()+"','"+customer.getPassword()+"',"+customer.getAvailable_credits()+");";
         jdbcTemplate.update(sql);
         return true;
-        //notificationService.sendEmail(customer.getCustomer_fname()+ StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,customer.getEmail());
         }
         catch(Exception e)
         {
@@ -41,18 +40,19 @@ public class CustomerDAOImpl implements CustomerDAO {
         if(email==null||email.isEmpty())
         return null;
         try{
-            Customer customer = jdbcTemplate.query("select * from customer where email='"+email+"'", new ResultSetExtractor<Customer>() {
+            String s = "select * from customer where email='" + email + "'";
+            Customer customer = jdbcTemplate.query(s, new ResultSetExtractor<Customer>() {
                 @Override
                 public Customer extractData(ResultSet rs) throws SQLException,
                         DataAccessException {
                     if (rs.next()) {
-                        //TODO: set everything
                         Customer cust = new Customer();
                         cust.setEmail(rs.getString("email"));
                         cust.setCustomer_fname(rs.getString("customer_fname"));
                         cust.setCustomer_lname(rs.getString("customer_lname"));
                         cust.setMobile_no(rs.getString("mobile_no"));
                         cust.setAvailable_credits(Integer.parseInt(rs.getString("available_credits")));
+                        cust.setCustomer_id(Integer.parseInt(rs.getString("customer_id")));
                         return cust;
                     } else return null;
                 }
@@ -69,7 +69,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public Customer getCustomerById(int id) {
         try{
-        Customer customer=jdbcTemplate.queryForObject("select * from customer where customer_id="+id,
+            String query="select * from customer where customer_id="+id;
+        Customer customer=jdbcTemplate.queryForObject(query,
         BeanPropertyRowMapper.newInstance(Customer.class));
         return customer;
         }
@@ -78,6 +79,21 @@ public class CustomerDAOImpl implements CustomerDAO {
             logger.error("Error getting customer by Id",e);
             return null;
         }
+    }
+
+    @Override
+    public boolean updateAvaialableCredits(int customer_id, int available_credits) {
+        try{
+			String sql = "update customer set available_credits="+available_credits+" where customer_id="+customer_id;
+			jdbcTemplate.update(sql);
+			return true;
+			}
+			catch(Exception e)
+			{
+				logger.error("Error updating available credits in Customer",e);
+				return false;
+	
+			}
     }
     
 }

@@ -12,10 +12,7 @@ public interface CustomerService {
 
 	public Customer getCustomerById(int id);
 
-	//public void deleteCustomer(int theId);
-
-//	public List<Ride> searchRides(Ride rideData);
-
+	public boolean buyCredits(int customer_id, int credits);
 
 	
 }

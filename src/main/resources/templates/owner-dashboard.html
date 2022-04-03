@@ -37,10 +37,11 @@
 </head>
 <body class="sb-nav-toggled">
 <nav class="sb-topnav navbar shadow fixed-top navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand ps-3" href="@{owner-dashboard}">Trip Management</a>
+    <a class="navbar-brand ps-3" th:onclick="|window.location.href='/owner-dashboard'|">Trip Management</a>
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
-    <button class="btn btn-outline-light" type="button" style="margin: 20px">Cars</button>
-    <button class="btn btn-outline-light" type="button" style="margin-right: 30px">Rides</button>
+    <button class="btn btn-outline-light" type="button" style="margin: 20px" th:onclick="|window.location.href='/show-all-vehicles'|">Cars</button>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 20px" th:onclick="|window.location.href='/ride-history'|">Rides</button>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/open-credit'|">Credit</button>
     <label class="text-light" th:text="${session.vehicleOwner.vehicleowner_fname}"></label>
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
@@ -57,23 +58,11 @@
         <div class="container-fluid">
             <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
                 th:text="'Good Evenin ' + ${session.vehicleOwner.vehicleowner_fname} + '!'"/>
-            <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
-                th:text="'Good Evening ' + ${session.vehicleOwner.vehicleowner_fname} + '!'"/>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-6">
-                        <ol class="breadcrumb mb-6">
-                            <li class="breadcrumb-item active" style="font-family: 'Alef';font-size: 24px;">Manage
-                                Vehicles
-                            </li>
-                        </ol>
+                    <div class="col-md-8">
                         <div class="col-xl-8 col-md-8" style="padding-left: 24px;">
-                            <!--                            <div class="card text-white mb-5">-->
-                            <!--                                <div class="card-body">Welcome</div>-->
-                            <!--                                <div class="card-footer d-flex align-items-center justify-content-between">-->
-                            <!--                                        <a class="small text-white stretched-link" onclick="alertEnterdetails()">Add details</a>-->
-                            <button class="btn btn-primary" data-bs-target="#exampleModal"
+                            <button class="btn btn-dark" data-bs-target="#exampleModal"
                                     data-bs-toggle="modal" type="button">Add New Car
                             </button>
 
@@ -127,7 +116,7 @@
 <!--                                                       name="fuel_consumed" type="text">-->
 
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control" id="fuel_economy" name="fuel_economy"
+                                                    <input type="number" class="form-control" id="fuel_consumed" name="fuel_consumed"
                                                            placeholder="Total consumed fuel" min="0" max="10000" required>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"> liters </span>
@@ -156,13 +145,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--                                </div>-->
-                            <!--                            </div>-->
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                         </div>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-6" th:each="vehicle: ${session.listOfVehicle}">
+                                <div class="col-md-4" th:each="vehicle,iterStat: ${session.listOfVehicle}" th:if="${iterStat.index}<3">
                                     <div class="containerCard">
                                         <div class="containerCard">
                                             <div class="row">
@@ -179,9 +166,9 @@
                                                                 <img th:src="@{/images/hatchback.png}">
                                                             </div>
                                                         </div>
-                                                        <h2 class="vehicleBrand" th:text="${vehicle.vehicle_name}"></h2>
+                                                        <h2 class="vehicleBrand" th:text="${vehicle.brand}"></h2>
                                                         <div class="contentBx">
-                                                            <h2 th:text="${vehicle.vehicle_name}"></h2>
+                                                            <h2 th:text="${vehicle.brand}+' '+${vehicle.vehicle_name}"></h2>
                                                             <div class="size" style="justify-content: center;">
                                                                 <h3 th:text="${vehicle.number_plate}"></h3>
                                                             </div>
@@ -255,19 +242,9 @@
                         </div>
                     </div>
 
-                    <div class="col-md-5">
-                        <ol class="breadcrumb mb-6">
-                            <li class="breadcrumb-item active" style="font-family: 'Alef';font-size: 24px;">Manage
-                                Rides
-                            </li>
-                        </ol>
+                    <div class="col-md-4">
                         <div class="col-xl-8 col-md-8" style="padding-left: 24px;">
-
-                            <!--                            <div class="card bg-primary text-white mb-6">-->
-                            <!--                                <div class="card-body">Add New Ride</div>-->
-                            <!--                                <div class="card-footer d-flex align-items-center justify-content-between">-->
-                            <!--                                        <a class="small text-white stretched-link" onclick="alertEnterdetails()">Add details</a>-->
-                            <button class="btn btn-primary" data-bs-target="#exampleModalride"
+                            <button class="btn btn-dark" data-bs-target="#exampleModalride"
                                     data-bs-toggle="modal" type="button">Create New Ride
                             </button>
 
@@ -288,7 +265,7 @@
                                                     <select class="form-control" name="vehicle_id"
                                                             id="vehicle_id" required>
                                                         <option value="" selected>Select your Car</option>
-                                                        <option th:each="vehicle : ${session.listOfVehicle}"
+                                                        <option th:each="vehicle : ${listOfVehicle}"
                                                                 th:value="${vehicle.vehicle_id}"
                                                                 th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"></option>
                                                     </select>
@@ -304,15 +281,17 @@
 <!--                                                <input class="form-control" id="available_seats_trip"-->
 <!--                                                       name="available_seats" type="text" placeholder="Enter the available seats" required>-->
                                                 <div class="input-group">
-                                                    <input type="number" class="form-control" id="available_seats_trip" name="available_seats_trip"
+                                                    <input type="number" class="form-control" id="available_seats_trip" name="available_seats"
                                                            placeholder="Enter the available seats" max="8" min="1" required>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"> seats </span>
                                                     </div>
                                                 </div>
                                                 <br/>
-                                                <label class="text-secondary">Time:</label><br/>
-                                                <input type="datetime-local" class="form-control" id="timestamp" name="timestamp" required><br/>
+                                                <label class="text-secondary">Start Time:</label><br/>
+                                                <input type="datetime-local" class="form-control" id="start_time" name="start_time" required><br/>
+                                                <label class="text-secondary">End Time:</label><br/>
+                                                <input type="datetime-local" class="form-control" id="end_time" name="end_time" required><br/>
                                                 <label class="text-secondary">Distance:</label><br/>
                                                 <div class="input-group">
                                                     <input type="number" class="form-control" id="estimated_km" name="estimated_kms"
@@ -321,17 +300,17 @@
                                                         <span class="input-group-text"> kms </span>
                                                     </div>
                                                 </div>
-                                                <br/>
-                                                <input th:attr="name='vehicleowner_id'"
+
+                                                <input th:attr="name='vehicle_owner_id'"
                                                        th:value="${session.vehicleOwner.vehicleOwner_id}"
                                                        type="hidden"/>
-                                                <input th:attr="name='trip_id'" th:value="-1" type="hidden"/>
-                                                <input th:attr="name='location_id'" th:value="-1"
-                                                       type="hidden"/>
-                                                <input th:attr="name='customer_id'" th:value="-1"
-                                                       type="hidden"/>
-                                                <input th:attr="name='kms_travelled'" th:value="-1"
-                                                       type="hidden"/>
+<!--                                                <input th:attr="name='trip_id'" th:value="-1" type="hidden"/>-->
+<!--                                                <input th:attr="name='location_id'" th:value="-1"-->
+<!--                                                       type="hidden"/>-->
+<!--                                                <input th:attr="name='customer_id'" th:value="-1"-->
+<!--                                                       type="hidden"/>-->
+<!--                                                <input th:attr="name='kms_travelled'" th:value="-1"-->
+<!--                                                       type="hidden"/>-->
                                                 <br/>
                                                 <input class="btn btn-secondary" type="submit"
                                                        value="Add Ride Details">
@@ -340,12 +319,57 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--                                </div>-->
-                            <!--                            </div>-->
                             <div class="small text-white"><i class="fas fa-angle-right"></i></div>
 
 
                         </div>
+                        <div class="container-fluid">
+                            <div style="height:220px">
+                                <label class="text-secondary" style="font-weight:bold; font-size:22px">Upcoming Rides</label>
+                                <div th:each="upcomingRide, iterStat: ${session.upcomingRides}" th:if="${iterStat.index}<3" style="padding-top: 4px;width: 350px;">
+<!--                                    <label class="text-secondary" th:text="${upcomingRide.source}+'  '+${upcomingRide.destination}"></label>-->
+                                    <div class="card-wrapper">
+                                        <div class="ride-card-left">
+                                        </div>
+                                        <div class="card-details">
+                                            <ride-h1 th:text="${upcomingRide.start_time}"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${upcomingRide.cost}+'$'"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${upcomingRide.source}+' to '+${upcomingRide.destination}"></ride-h1>
+                                        </div><!-- end card-details -->
+
+<!--                                        <div class="reveal-details">-->
+<!--                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="'3/'+${previousRide.available_seats}"></ride-h1>-->
+<!--                                        </div>-->
+<!--                                        <div class="reveal-details">-->
+<!--                                            <ride-h1>Book Seats:</ride-h1>-->
+<!--                                        </div>&lt;!&ndash; end reveal-details &ndash;&gt;-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-secondary" style="font-weight:bold; font-size:22px" >Previous Rides</label>
+                                <div th:each="previousRide,iterStat: ${session.previousRides}" th:if="${iterStat.index}<4" style="padding-top: 4px;width: 350px;">
+<!--                                    <label class="text-secondary" th:text="${previousRide.source}+'  '+${previousRide.destination}"></label>-->
+                                    <div class="card-wrapper">
+                                        <div class="ride-card-left">
+                                        </div>
+                                        <div class="card-details">
+                                            <ride-h1 th:text="${previousRide.start_time}"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${previousRide.cost}+'$'"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${previousRide.source}+' to '+${previousRide.destination}"></ride-h1>
+                                        </div><!-- end card-details -->
+
+<!--                                                                                <div class="reveal-details">-->
+<!--                                                                                    <ride-h1 style="font-size:14px;color:#616161;" th:text="'4/'+${previousRide.available_seats}"></ride-h1>-->
+<!--                                                                                </div>&lt;!&ndash; end reveal-details &ndash;&gt;-->
+                                    </div>
+                                </div>
+                                <br>
+                                <button class="btn btn-dark" th:onclick="|window.location.href='/ride-history'|" type="button">Show All Rides
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
@@ -353,7 +377,7 @@
         </div>
     </main>
 
-    <footer class="py-4 bg-light mt-auto fixed-bottom" >
+    <footer class="bg-dark mt-auto fixed-bottom" >
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
                 <div class="sb-sidenav-footer">

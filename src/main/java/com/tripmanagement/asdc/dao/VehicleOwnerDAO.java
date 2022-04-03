@@ -10,4 +10,7 @@ public interface VehicleOwnerDAO {
 
 	public VehicleOwner getVehicleOwnerById(int vehicleOwnerId);
 
+	public boolean updateAvaialableCredits(int vehicleOwnerId, int available_credits);
+
+
 }
