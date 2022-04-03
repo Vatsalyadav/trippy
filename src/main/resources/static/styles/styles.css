@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 /*!
 * Start Bootstrap - SB Admin v7.0.4 (https://startbootstrap.com/template/sb-admin)
 * Copyright 2013-2021 Start Bootstrap
@@ -11699,3 +11700,355 @@ body {
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
 }
+
+*{
+  font-family: 'Poppins', sans-serif;
+}
+
+cardBody{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #131313;
+}
+
+.containerCard{
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.containerCard .cardCard{
+  position: relative;
+  width: 280px;
+  height: 390px;
+  background: #bbdefb;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.containerCard .cardCard:before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: circle(150px at 80% 20%);
+  transition: 0.5s ease-in-out;
+}
+
+.containerCard .cardCard .GOOD:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #8bc34a;
+    clip-path: circle(130px at 80% 20%);
+    transition: 0.5s ease-in-out;
+}
+
+.containerCard .cardCard .AVERAGE:before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffe082;
+  clip-path: circle(130px at 80% 20%);
+  transition: 0.5s ease-in-out;
+}
+
+.containerCard .cardCard .BAD:before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ef5350;
+  clip-path: circle(130px at 80% 20%);
+  transition: 0.5s ease-in-out;
+}
+
+
+.containerCard .cardCard:hover:before{
+  clip-path: circle(300px at 80% -20%);
+}
+
+.containerCard .cardCard:after{
+  content: '';
+  position: absolute;
+  top: 50%;
+  font-size: 8em;
+  font-weight: 800;
+  font-style: italic;
+  color: #9e9e9e
+}
+
+.containerCard .cardCard .imgBx{
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 220px;
+  transition: 0.5s;
+  left: 10%;
+}
+
+.containerCard .cardCard:hover .imgBx{
+  top: 0%;
+  transform: translateY(0%);
+
+}
+
+.containerCard .cardCard .imgBx img{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 270px;
+}
+
+.containerCard .cardCard .contentBx{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  transition: 1s;
+  padding-top: 10px;
+  left: 0;
+}
+
+.containerCard .cardCard:hover .contentBx{
+  height: 210px;
+}
+
+.containerCard .cardCard .contentBx h2{
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #212121;
+  margin: 0;
+}
+
+.containerCard .cardCard .contentBx .size, .containerCard .cardCard .contentBx .color {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 20px;
+  transition: 0.5s;opacity: 0;
+  visibility: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.containerCard .cardCard:hover .contentBx .size{
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.5s;
+}
+
+.containerCard .cardCard:hover .contentBx .color{
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.6s;
+}
+
+.containerCard .cardCard .contentBx .size h3, .containerCard .cardCard .contentBx .color h3{
+  color: #212121;
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.containerCard .cardCard .contentBx .size span{
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  line-height: 26px;
+  font-size: 14px;
+  display: inline-block;
+  color: #111;
+  background: #fff;
+  margin: 0 5px;
+  transition: 0.5s;
+  color: #111;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.containerCard .cardCard .contentBx .size span:hover{
+  background: #9bdc28;
+}
+
+.containerCard .cardCard .contentBx .color span{
+  width: 20px;
+  height: 20px;
+  background: #ff0;
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.containerCard .cardCard .contentBx .color span:nth-child(2){
+  background: #9bdc28;
+}
+
+.containerCard .cardCard .contentBx .color span:nth-child(3){
+  background: #03a9f4;
+}
+
+.containerCard .cardCard .contentBx .color span:nth-child(4){
+  background: #e91e63;
+}
+
+.containerCard .cardCard .contentBx a{
+  display: inline-block;
+  padding: 10px 20px;
+  background: #fff;
+  border-radius: 4px;
+  margin-top: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #111;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 0.5s;
+  margin-top: 0;
+}
+
+.containerCard .cardCard:hover .contentBx a{
+  opacity: 1;
+  transform: translateY(0px);
+  transition-delay: 0.75s;
+
+}
+
+.vehicleBrand{
+  content: '';
+  position: absolute !important;
+  top: 50%;
+  font-size: 8em;
+  font-weight: 800 !important;
+  font-style: italic;
+  color: #e1f5fe;
+  left: 0%;
+  opacity: 60%;
+}
+
+
+/*product info */
+
+/*ride-h1 {
+  color: #ff6d39;
+  font-family: "muli";
+  font-weight: bold;
+  font-size: 22px;
+  margin-top:6px;
+  display: inline-block;
+}
+*/
+.ride-time i {
+  color: #ffffff;
+  transition: 0.3s all ease;
+  margin: 0px 12px;
+}
+
+/*main card*/
+
+/*.ride-card-left {
+  content: "";
+  height: 100px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  background-color: #ff6d39;
+  margin-left: 100px;
+  border-radius: 50% 50% 50% 10%;
+  position: absolute;
+  z-index: 5;
+}*/
+
+.ride-card-right {
+  content: "";
+  height: 100px;
+  width: 465px;
+  background-color: #2a2f40;
+  z-index: 3;
+  margin-left: 100px;
+  border-radius: 10px;
+}
+
+.ride-info {
+  position: absolute;
+  margin-left: 150px;
+  height: 394px;
+  width: 305px;
+  z-index: 10;
+}
+
+.cost-right {
+  margin-left: 150px;
+}
+
+
+.search-body {
+  background: #eee !important;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+.page-wrapper {
+  display: flex !important;
+  -webkit-display: flex !important;
+  flex-direction: column !important;
+  padding-top: 8px;
+}
+
+
+.card-wrapper {
+  background: #ffe0b2 !important;
+  border-radius: 6px !important;
+  max-height: 60px !important;
+  overflow: hidden !important;
+  padding-left:8px !important;
+  padding-top: 8px !important;
+  width: 100% !important;
+  transition: max-height 500ms ease-in-out !important;
+}
+
+.card-wrapper:hover {
+                 box-shadow: 0 0 8px #d3d3d3 !important;
+                 cursor: pointer !important;
+                 max-height: 94px !important;
+               }
+
+.card-details,
+.reveal-details {
+  font-weight: 300 !important;
+}
+
+
+.ride-card-left {
+  content: "";
+  height: 45px;
+  width: 45px;
+  background-color: #ff6d39;
+  border-radius: 50% 50% 50% 10%;
+  position: absolute;
+
+}
+
+ride-h1 {
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  display: inline-block;
+  padding-left:60px;
+}
+

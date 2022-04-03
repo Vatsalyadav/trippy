@@ -1,74 +1,88 @@
 package com.tripmanagement.asdc.controller;
 
+import com.tripmanagement.asdc.model.Trip;
+import com.tripmanagement.asdc.model.Vehicle;
 import com.tripmanagement.asdc.model.VehicleOwner;
+import com.tripmanagement.asdc.service.TripService;
 import com.tripmanagement.asdc.service.VehicleOwnerService;
-
+import com.tripmanagement.asdc.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+import java.sql.Date;
 
 
 @Controller
 public class VehicleOwnerController {
+
     @Autowired
-    VehicleOwnerService carOwnerService;
+    VehicleService vehicleService;
 
-    @GetMapping("/vehicleOwner")
-    public String vehicleOwner(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "VehicleOwner";
+    @Autowired
+    VehicleOwnerService vehicleOwnerService;
+
+    @Autowired
+    TripService tripService;
+
+    @PostMapping("/create-ride")
+    public String createRide(Trip tripData, BindingResult result, Model model, HttpSession httpSession) {
+        tripService.saveTrip(tripData);
+        VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(vehicleService.getVehicleDetails(tripData.getVehicle_id()).getVehicleowner_id());
+        model.addAttribute("vehicleOwner", vehicleOwner);
+        model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+        httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+        httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+        return "owner-dashboard";
     }
 
-    @GetMapping("/getVehicleOwner")
-    public String getVehicleOwner(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        VehicleOwner carOwner=carOwnerService.getVehicleOwner(1);
-        model.addAttribute("vehicleowner_id", carOwner.getVehicle_id());
-        model.addAttribute("vehicleowner_name", carOwner.getVehicleowner_fname());
-        model.addAttribute("address", carOwner.getAddress());
-        model.addAttribute("email", carOwner.getEmail());
-        model.addAttribute("phone", carOwner.getPhone());
-        model.addAttribute("vehicle_id", carOwner.getVehicle_id());
-        return "VehicleOwner";
+
+    @PostMapping("/add-vehicle")
+    public String addVehicle(Vehicle vehicle, Model model) {
+        System.out.println("getVehicle_name: " + vehicle.getVehicle_name());
+        System.out.println("getNumber_plate: " + vehicle.getNumber_plate());
+        System.out.println("getType: " + vehicle.getType());
+        System.out.println("getKms_driven: " + vehicle.getKms_driven());
+        System.out.println("getAvailable_seats: " + vehicle.getAvailable_seats());
+        System.out.println("getFuel_consumed: " + vehicle.getFuel_consumed());
+        System.out.println("vehicleOwner_id: " + vehicle.getVehicleowner_id());
+        System.out.println("brand: " + vehicle.getBrand());
+        if (vehicleService.addVehicle(vehicle))
+            model.addAttribute("addVehicleStatus", "Vehicle added successfully");
+        else
+            model.addAttribute("addVehicleStatus", "Vehicle adding failed");
+        VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(vehicle.getVehicleowner_id());
+        model.addAttribute("vehicleOwner", vehicleOwner);
+        model.addAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+        return "owner-dashboard";
     }
 
-    @PostMapping("/adduser")
-    public String addUser(VehicleOwner vehicleOwner, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "add-user";
-        }
-        VehicleOwner carOwner=carOwnerService.getVehicleOwner(1);
-        model.addAttribute("vehicleowner_id", carOwner.getVehicle_id());
-        model.addAttribute("vehicleowner_name", carOwner.getVehicleowner_fname());
-        model.addAttribute("address", carOwner.getAddress());
-        model.addAttribute("email", vehicleOwner.getEmail());
-        model.addAttribute("phone", vehicleOwner.getPhone());
-        model.addAttribute("vehicle_id", carOwner.getVehicle_id());
-
-        return "VehicleOwner";
+    @PostMapping("/delete-vehicle")
+    public String deleteVehicle(Vehicle vehicle, Model model) {
+        Boolean deleteVehicleStatus = vehicleService.deleteVehicle(vehicle.getVehicle_id());
+        model.addAttribute("deleteVehicleStatus", deleteVehicleStatus);
+        return "owner-dashboard";
     }
 
-    /*
-    @RequestMapping(value = "/saveVehicleOwner", method = RequestMethod.GET)
-    public String saveCarOwner(@ModelAttribute("vehicleOwner") VehicleOwner formData, BindingResult 
-    result) {
-        System.out.println(formData.toString());
-       carOwnerService.saveCarOwner(formData);
-        return "vehicleOwner";
+    @RequestMapping(value = "/open-owner-credit")
+    public String openCredit( Model model) {
+
+        return "payment";
     }
 
-    //show the aaddNewOwnerdd employee form and also pass an empty backing bean object to store the form field values
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView show() {
-		return new ModelAndView("addOwner", "owner", new CarOwner());
-	}
-    //Get the form field vaues which are populated using the backing bean and store it in db
-	@RequestMapping(value = "/addNewOwner", method = RequestMethod.POST)
-	public void processRequest(@ModelAttribute("owner") CarOwner carOwner) {
-		carOwnerService.saveCarOwner(carOwner);
-		
-	}*/
+    @RequestMapping("/ride-history")
+    public String showRideHistory(HttpSession session, Model model){
+        return "ride-history";
+    }
+
+
+    @RequestMapping("/owner-dashboard")
+    public String showOwnerDashboard(HttpSession session, Model model){
+        return "owner-dashboard";
+    }
+
 }

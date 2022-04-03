@@ -1,17 +1,18 @@
 package com.tripmanagement.asdc.service;
 
 import com.tripmanagement.asdc.model.Customer;
-
-import java.util.List;
+import com.tripmanagement.asdc.model.User;
 
 public interface CustomerService {
 
-	public List<Customer> getCustomers();
 
-	public void saveCustomer(Customer customer);
+	public boolean saveCustomer(User user);
 
-	public Customer getCustomer(int theId);
+	public Customer getCustomerByEmail(String email);
 
-	//public void deleteCustomer(int theId);
+	public Customer getCustomerById(int id);
+
+	public boolean buyCredits(int customer_id, int credits);
+
 	
 }

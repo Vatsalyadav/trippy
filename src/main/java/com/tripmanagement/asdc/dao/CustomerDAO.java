@@ -1,18 +1,17 @@
 package com.tripmanagement.asdc.dao;
 
-import java.util.List;
-
 import com.tripmanagement.asdc.model.Customer;
 
 public interface CustomerDAO {
 
-    public List<Customer> getCustomers();
+	public boolean saveCustomer(Customer customer);
 
-	public void saveCustomer(Customer customer);
+	public Customer getCustomerById(int theId);
 
-	public Customer getCustomer(int theId);
+	public Customer getCustomerByEmail(String email);
 
-    	//public void deleteCustomer(int theId);
+	public boolean updateAvaialableCredits(int customer_id, int available_credits);
+
 
     
 }
