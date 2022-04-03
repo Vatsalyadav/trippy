@@ -34,7 +34,6 @@
             format: 'DD/MM/YYYY h:mm A'
         });
     </script>
-    <script type="text/javascript"> function preventBack() {window.history.forward();} setTimeout("preventBack()", 0); window.onunload = function () {null};</script>
 </head>
 <body class="sb-nav-toggled">
 <nav class="sb-topnav navbar shadow fixed-top navbar-expand navbar-dark bg-dark">
@@ -241,6 +240,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div style="text-align: center;">
+                        <button class="btn btn-light" th:onclick="|window.location.href='/show-all-vehicles'|" type="button">Show All Cars
+                        </button>
+                        </div>
                     </div>
 
                     <div class="col-md-4">
@@ -351,7 +354,7 @@
                                 <label class="text-secondary" style="font-weight:bold; font-size:22px" >Previous Rides</label>
                                 <div th:each="previousRide,iterStat: ${session.previousRides}" th:if="${iterStat.index}<4" style="padding-top: 4px;width: 350px;">
 <!--                                    <label class="text-secondary" th:text="${previousRide.source}+'  '+${previousRide.destination}"></label>-->
-                                    <div class="card-wrapper">
+                                    <div class="card-wrapper" style="background: #dce775 !important;">
                                         <div class="ride-card-left">
                                         </div>
                                         <div class="card-details">
