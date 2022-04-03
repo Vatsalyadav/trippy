@@ -110,7 +110,7 @@ public class VehicleServiceImpl implements VehicleService {
 		if ((int) fuel_consumed != 0) {
 			fuelEconomy = kms_driven / fuel_consumed;
 		}
-		return (float) Math.round(fuelEconomy * 100.0) / 100.0f;
+		return (float) Math.round(fuelEconomy * 100.0) / 100.0f; //Magic Number for rounding off Fuel Economy Value
 	}
 
 	private String getFuelEconomyStatus(float fuelEconomy) {

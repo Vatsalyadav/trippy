@@ -158,7 +158,7 @@ public class TripServiceImpl implements TripService {
 		} else if (vehicle.getAvailable_seats() == 0) {
 			return 0;
 		} else {
-			return 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * vehicle.getAvailable_seats()));
+			return 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * vehicle.getAvailable_seats())); //Magic number that was predetermined by stakeholders to ensure that the vehicle owner reaps profit
 		}
 	}
 
