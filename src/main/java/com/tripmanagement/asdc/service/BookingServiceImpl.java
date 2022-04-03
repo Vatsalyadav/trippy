@@ -79,19 +79,20 @@ public class BookingServiceImpl implements BookingService {
 	@Transactional
 	public List<Booking> getUpcomingRidesForCustomer(int customer_id) {
 		try {
-			List<Booking> allRides = bookedRidesDAO.getAllRidesForCustomer(customer_id);
-			List<Booking> upcomingRides = new ArrayList<>();
-			for (Booking ride : allRides) {
-				String start_time = ride.getTimestamp().replace("T", " ");
-				ride.setTimestamp(Utility.convertDate(ride.getTimestamp()));
+			List<Booking> bookingList = bookedRidesDAO.getAllRidesForCustomer(customer_id);
+			List<Booking> upcomingBookings = new ArrayList<>();
+			for (Booking booking : bookingList) {
+				String start_time = booking.getTimestamp().replace("T", " ");
+				booking.setTimestamp(Utility.convertDate(booking.getTimestamp()));
+				booking.setTrip(tripDAO.getTripDetails(booking.getTrip_id()));
 				String current_time = Utility.getCurrentTime();
 				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(start) < 0) {
-					upcomingRides.add(ride);
+					upcomingBookings.add(booking);
 				}
 			}
-			return upcomingRides;
+			return upcomingBookings;
 		} catch (Exception e) {
 			return new ArrayList<Booking>();
 		}
@@ -107,6 +108,7 @@ public class BookingServiceImpl implements BookingService {
 				String start_time = ride.getTimestamp().replace("T", " ");
 				String current_time = Utility.getCurrentTime();
 				ride.setTimestamp(Utility.convertDate(ride.getTimestamp()));
+				ride.setTrip(tripDAO.getTripDetails(ride.getTrip_id()));
 				Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(end) > 0) {

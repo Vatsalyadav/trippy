@@ -112,6 +112,8 @@ public class TripServiceImpl implements TripService {
 				Vehicle vehicle = vehicleDAO.getVehicleDetails(trip.getVehicle_id());
 				VehicleOwner vehicleOwner = vehicleOwnerDAO
 						.getVehicleOwnerById(vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id());
+				String start_time = trip.getEnd_time().replace("T", " ");
+				//Float value
 				trip.setStart_time(Utility.convertDate(trip.getStart_time()));
 				trip.setEnd_time(Utility.convertDate(trip.getEnd_time()));
 				Ride ride = new Ride(trip, vehicle.getVehicle_id(), vehicle.getNumber_plate(),
@@ -120,7 +122,7 @@ public class TripServiceImpl implements TripService {
 				if(trip.getSeats_remaining()>0)
 				{
 				String current_time = Utility.getCurrentTime();
-				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(trip.getStart_time());
+				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(start) < 0) {
 					rideList.add(ride);

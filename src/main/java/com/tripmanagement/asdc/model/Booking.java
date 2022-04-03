@@ -1,13 +1,7 @@
 package com.tripmanagement.asdc.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import javax.persistence.*;
 
 
 @Entity
@@ -23,7 +17,7 @@ public class Booking {
     @Column(name = "customer_id")
     private int customer_id;
 
-    
+
     @Column(name = "timestamp")
     private String timestamp;
 
@@ -39,16 +33,18 @@ public class Booking {
     @Column(name = "isPaid")
     private int isPaid;
 
-    
-    public Booking(int booked_ride_id, int customer_id, String timestamp, float cost, float fuel_economy, int seats_booked, int trip_id, int isPaid) {
+    @Transient
+    private Trip trip;
+
+    public Booking(int booked_ride_id, int customer_id, String timestamp, float cost, int seats_booked, int trip_id, int isPaid, Trip trip) {
         this.booked_ride_id = booked_ride_id;
         this.customer_id = customer_id;
         this.timestamp = timestamp;
         this.cost = cost;
-        this.seats_booked=seats_booked;
-        this.trip_id=trip_id;
-        this.isPaid=isPaid;
-        
+        this.seats_booked = seats_booked;
+        this.trip_id = trip_id;
+        this.isPaid = isPaid;
+        this.trip = trip;
     }
 
     public Booking() {
@@ -111,16 +107,20 @@ public class Booking {
         this.isPaid = isPaid;
     }
 
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
+    }
+
     @Override
     public String toString() {
         return "Booking [booked_ride_id=" + booked_ride_id + ", cost=" + cost + ", customer_id=" + customer_id
                 + ", timestamp=" + timestamp + ", seats_booked=" + seats_booked
                 + ", trip_id=" + trip_id + ", isPaid=" + isPaid + "]";
     }
-
-    
-
-   
 
 }
 
