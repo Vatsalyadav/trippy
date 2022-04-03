@@ -22,7 +22,10 @@ public class FuelEconomyDAOImpl implements FuelEconomyDAO {
 		if(fuel_economy==null)
 		return false;
 		try{
-			String sql = "insert into fuel_economy values("+null+","+fuel_economy.getTrip_id()+","+fuel_economy.getKms_travelled()+","+fuel_economy.getFuel_consumed()+","+fuel_economy.getFuel_economy()+",'"+fuel_economy.getTimestamp()+"',"+fuel_economy.getVehicle_id()+");";
+			String innerSubQuery = fuel_economy.getTrip_id() + "," + fuel_economy.getKms_travelled() + "," + fuel_economy.getFuel_consumed();
+			String subQuery1 = "" + null + "," + innerSubQuery + ",";
+			String subQuery2 = fuel_economy.getFuel_economy() + ",'" + fuel_economy.getTimestamp() + "'," + fuel_economy.getVehicle_id() + ");";
+			String sql = "insert into fuel_economy values(" + subQuery1 + subQuery2;
 			jdbcTemplate.update(sql);
 				return true;
 		}

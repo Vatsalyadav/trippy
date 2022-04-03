@@ -24,9 +24,11 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public boolean saveCustomer(Customer customer) {
         try{
-            String innersubQuery = ",'" + customer.getCustomer_fname() + "','" + customer.getCustomer_lname() + "','";
-            String subQuery1 = innersubQuery + customer.getMobile_no() + "','";
-            String subQuery2 = customer.getEmail() + "','" + customer.getPassword() + "'," + customer.getAvailable_credits() + ");";
+            String name = customer.getCustomer_fname() + "','" + customer.getCustomer_lname();
+            String innerSubQuery = ",'" + name + "','";
+            String subQuery1 = innerSubQuery + customer.getMobile_no() + "','";
+            String emailPassword = customer.getEmail() + "','" + customer.getPassword();
+            String subQuery2 = emailPassword + "'," + customer.getAvailable_credits() + ");";
             String sql = "insert into customer values(" + null + subQuery1 + subQuery2;
         jdbcTemplate.update(sql);
         return true;
