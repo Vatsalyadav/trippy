@@ -11,7 +11,10 @@ public class NotificationServiceImpl implements NotificationService {
 	@Autowired
 	private JavaMailSender javaMailSender;
 
-	public void sendEmail(String message, String subject, String email) {
+	public boolean sendEmail(String message, String subject, String email) {
+		if(email==null||subject==null||message==null)
+		return false;
+		try{
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom("tripmanagementasdc@gmail.com");
 		msg.setTo(email);
@@ -20,6 +23,11 @@ public class NotificationServiceImpl implements NotificationService {
 		msg.setText(message);
 
 		javaMailSender.send(msg);
-
+		return true;
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
 	}
 }

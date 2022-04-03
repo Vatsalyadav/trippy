@@ -21,7 +21,7 @@ public class TripDAOmpl implements TripDAO {
 
 	@Override
 	public boolean saveTrip(Trip trip) {
-		if (trip == null)
+		if (trip == null||trip.getSource()==null)
 			return false;
 		try {
 			String sql = "insert into trip values(" + null + ",'" + trip.getSource() + "','" + trip.getDestination()
