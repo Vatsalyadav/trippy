@@ -30,6 +30,7 @@ build:
       - develop
       - merge_requests
       - main
+      - test
 
 # test stage will compile the code and run all the unit tests present in the
 # test folder.
