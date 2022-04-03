@@ -37,10 +37,10 @@
 </head>
 <body class="sb-nav-toggled">
 <nav class="sb-topnav navbar shadow fixed-top navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand ps-3" href="@{owner-dashboard}">Trip Management</a>
+    <a class="navbar-brand ps-3" th:onclick="|window.location.href='/owner-dashboard'|">Trip Management</a>
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
-    <button class="btn btn-outline-light" type="button" style="margin: 20px">Cars</button>
-    <button class="btn btn-outline-light" type="button" style="margin-right: 20px">Rides</button>
+    <button class="btn btn-outline-light" type="button" style="margin: 20px" th:onclick="|window.location.href='/show-all-vehicles'|">Cars</button>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 20px" th:onclick="|window.location.href='/ride-history'|">Rides</button>
     <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/open-credit'|">Credit</button>
     <label class="text-light" th:text="${session.vehicleOwner.vehicleowner_fname}"></label>
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -60,8 +60,7 @@
                 th:text="'Good Evenin ' + ${session.vehicleOwner.vehicleowner_fname} + '!'"/>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="col-xl-8 col-md-8" style="padding-left: 24px;">
                             <button class="btn btn-dark" data-bs-target="#exampleModal"
                                     data-bs-toggle="modal" type="button">Add New Car
@@ -150,7 +149,7 @@
                         </div>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-md-6" th:each="vehicle: ${listOfVehicle}">
+                                <div class="col-md-4" th:each="vehicle,iterStat: ${session.listOfVehicle}" th:if="${iterStat.index}<3">
                                     <div class="containerCard">
                                         <div class="containerCard">
                                             <div class="row">
@@ -243,7 +242,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="col-xl-8 col-md-8" style="padding-left: 24px;">
                             <button class="btn btn-dark" data-bs-target="#exampleModalride"
                                     data-bs-toggle="modal" type="button">Create New Ride
@@ -266,7 +265,7 @@
                                                     <select class="form-control" name="vehicle_id"
                                                             id="vehicle_id" required>
                                                         <option value="" selected>Select your Car</option>
-                                                        <option th:each="vehicle : ${listOfVehicle}"
+                                                        <option th:each="vehicle : ${session.listOfVehicle}"
                                                                 th:value="${vehicle.vehicle_id}"
                                                                 th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"></option>
                                                     </select>
@@ -325,9 +324,9 @@
 
                         </div>
                         <div class="container-fluid">
-                            <div style="height:200px">
+                            <div style="height:220px">
                                 <label class="text-secondary" style="font-weight:bold; font-size:22px">Upcoming Rides</label>
-                                <div th:each="upcomingRide, iterStat: ${session.upcomingRides}" th:if="${iterStat.index}<4" style="padding-top: 4px;width: 600px;">
+                                <div th:each="upcomingRide, iterStat: ${session.upcomingRides}" th:if="${iterStat.index}<3" style="padding-top: 4px;width: 350px;">
 <!--                                    <label class="text-secondary" th:text="${upcomingRide.source}+'  '+${upcomingRide.destination}"></label>-->
                                     <div class="card-wrapper">
                                         <div class="ride-card-left">
@@ -349,7 +348,7 @@
                             </div>
                             <div>
                                 <label class="text-secondary" style="font-weight:bold; font-size:22px" >Previous Rides</label>
-                                <div th:each="previousRide,iterStat: ${session.previousRides}" th:if="${iterStat.index}<4" style="padding-top: 4px;width: 600px;">
+                                <div th:each="previousRide,iterStat: ${session.previousRides}" th:if="${iterStat.index}<4" style="padding-top: 4px;width: 350px;">
 <!--                                    <label class="text-secondary" th:text="${previousRide.source}+'  '+${previousRide.destination}"></label>-->
                                     <div class="card-wrapper">
                                         <div class="ride-card-left">
@@ -365,7 +364,8 @@
 <!--                                                                                </div>&lt;!&ndash; end reveal-details &ndash;&gt;-->
                                     </div>
                                 </div>
-                                <button class="btn btn-dark" type="button">Show Ride History
+                                <br>
+                                <button class="btn btn-dark" th:onclick="|window.location.href='/ride-history'|" type="button">Show All Rides
                                 </button>
                             </div>
                         </div>

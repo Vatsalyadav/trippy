@@ -1,6 +1,8 @@
 package com.tripmanagement.asdc.dao;
 
 import com.tripmanagement.asdc.model.Customer;
+import com.tripmanagement.asdc.stringsAndConstants.DAOStringMessages;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public boolean saveCustomer(Customer customer) {
+        if(customer==null||customer.getCustomer_fname().isEmpty())
+			return false;
         try{
         String sql = "insert into customer values("+null+",'"+customer.getCustomer_fname()+"','"+customer.getCustomer_lname()+"','"+customer.getMobile_no()+"','"+customer.getEmail()+"','"+customer.getPassword()+"',"+customer.getAvailable_credits()+");";
         jdbcTemplate.update(sql);
@@ -40,7 +44,8 @@ public class CustomerDAOImpl implements CustomerDAO {
         if(email==null||email.isEmpty())
         return null;
         try{
-            Customer customer = jdbcTemplate.query("select * from customer where email='"+email+"'", new ResultSetExtractor<Customer>() {
+            String s = "select * from customer where email='" + email + "'";
+            Customer customer = jdbcTemplate.query(s, new ResultSetExtractor<Customer>() {
                 @Override
                 public Customer extractData(ResultSet rs) throws SQLException,
                         DataAccessException {
@@ -68,7 +73,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public Customer getCustomerById(int id) {
         try{
-        Customer customer=jdbcTemplate.queryForObject("select * from customer where customer_id="+id,
+            String query="select * from customer where customer_id="+id;
+        Customer customer=jdbcTemplate.queryForObject(query,
         BeanPropertyRowMapper.newInstance(Customer.class));
         return customer;
         }

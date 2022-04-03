@@ -35,33 +35,29 @@
         <div class="container-fluid">
             <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
                 th:text="'Good Evenin '"/>
-            <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
-                th:text="'Hey ' + ${session.customer.customer_fname} + '!'"/>
+
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-5">
+                        <label class="text-secondary" style="font-weight:bold; font-size:22px">Search Rides</label>
                         <form th:action="@{/search-rides}" th:object="${trip}" method="post">
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <label>Select Source</label>
-                                <!--                                <select class="form-control form-control-solid" name="source" id="selectsource">-->
-                                <!--                                    &lt;!&ndash;<option th:each="ride" option>@{source}</option>&ndash;&gt;-->
-                                <!--                                    <option value="5">5</option>-->
-                                <!--                                    <option value="3">3</option>-->
-                                <!--                                </select>-->
-
-                                <select class="form-control" name="source" id="source">
+                                <select class="form-control" name="source" id="source" required>
+                                    <option value="" selected>Select your source</option>
                                     <option th:each="source : ${session.sourceList}" th:value="${source}"
                                             th:text="${source}"></option>
                                 </select>
                             </div>
                             <br/>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <label for="selectdestination">Select Destination</label>
                                 <select class="form-control form-control-solid" name="destination"
-                                        id="selectdestination">
+                                        id="selectdestination" required>
                                     <!--<option th:each="ride" option>@{source}</option>-->
+                                    <option value="" selected>Select your destination</option>
                                     <option th:each="destination : ${session.destinationList}" th:value="${destination}"
                                             th:text="${destination}"></option>
                                 </select>
@@ -78,74 +74,109 @@
                             <input th:attr="name='timestamp'" th:value="'12:00'" type="hidden"/>
                             <input th:attr="name='available_seats'" th:value="-1" type="hidden"/>
 
-                            <input class="btn btn-secondary" type="submit" value="Search Ride">
+                            <input class="btn btn-dark" type="submit" value="Search Ride">
                         </form>
 
-                        <div class="page-wrapper" th:action="@{/book-ride}" th:object="${booking}" th:each="ride: ${listOfRides}"
-                             th:method="post">
+                        <div class="page-wrapper"  th:each="ride: ${listOfRides}">
+                            <form th:action="@{/book-ride}" th:object="${booking}" method="post">
                             <!-- FIRST CARD -->
 <!--                            <div class="">-->
-                            <div class="card-wrapper">
+                            <div class="card-wrapper" style="width: 400px !important;">
                                 <div class="ride-card-left">
                                 </div>
                                 <div class="card-details">
-                                    <ride-h1>May 31 - 3:00 AM</ride-h1>
-                                    <ride-h1 style="font-size:14px;color:#616161;">42$</ride-h1>
-                                    <ride-h1 style="font-size:14px;color:#616161;">Somerset  - Killam</ride-h1>
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <ride-h1 th:text="${ride.trip.start_time}"></ride-h1>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ride-h1 th:text="${ride.cost}+'$'" style="font-size:14px;color:#616161; padding-left:0px"></ride-h1>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${ride.trip.source}+' - '+${ride.trip.destination}"></ride-h1>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ride-h1 style="font-size:14px;color:#616161; padding-left:0px" th:text="'Seats: '+${ride.trip.seats_remaining}"></ride-h1>
+                                        </div>
+                                    </div>
                                 </div><!-- end card-details -->
 
-                                <div class="reveal-details">
-                                    <ride-h1>Book Seats:</ride-h1>
-                                </div><!-- end reveal-details -->
-                            </div><!-- end card-wrapper -->
-<!--                            </div>-->
+                                <div class="reveal-details" style="padding-top: 4px;">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ride-h1>Book Seats:</ride-h1>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="number" class="form-control" id="booked_seats" name="seats_booked" min="1" th:max="${ride.trip.seats_remaining}" required="" style="margin: 0px !important;padding: 2px !important;">
+                                        </div>
+                                        <input th:attr="name='trip_id'" th:value="${ride.trip.trip_id}" type="hidden"/>
+                                        <input th:attr="name='customer_id'" th:value="${session.customer.customer_id}" type="hidden"/>
+                                        <div class="col-md-4">
+                                            <input class="btn btn-dark" type="submit" value="Book Ride" style="margin: 0px !important;padding: 2px !important;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end reveal-details -->
+                            </div>
+                            </form><!-- end card-wrapper -->
 
-                            <!--                            <div class="card bg-warning text-white mb-4">-->
-<!--                                <br/>-->
-<!--                                &lt;!&ndash;                                <div class="card-body" style="padding:2px 6px"><span th:text="${ride.numberPlate}"></span></div>&ndash;&gt;-->
-<!--                                <div class="card-body" style="padding:2px 6px"><span-->
-<!--                                        th:text="${ride.numberPlate}"></span></div>-->
-<!--                                <div class="card-body" style="padding:2px 6px">Source: <span th:text="${source}"></span>-->
-<!--                                </div>-->
-<!--                                <div class="card-body" style="padding:2px 6px">Destination: <span-->
-<!--                                        th:text="${destination}"></span></div>-->
-<!--                                <div class="card-body" style="padding:2px 6px">Available Seats: <span-->
-<!--                                        th:text="${ride.availableSeats}"></span></div>-->
-<!--                                <div class="card-body" hidden style="padding:2px 6px">-->
-<!--                                    <input th:attr="name='trip_id'" th:value="${trip_id}" type="hidden"/> </div>-->
-<!--                                <div class="card-body" hidden style="padding:2px 6px">-->
-<!--                                    <input th:attr="name='customer_id'" th:value="${session.customer.customer_id}" type="hidden"/> </div>-->
-
-
-<!--                                &lt;!&ndash;                                <div class="card-footer d-flex align-items-center justify-content-between">&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                    <a class="small text-white stretched-link" th:onclick="javascript:alertShowdetails(\'' + ${vehicle}+ '\')">View Details</a>&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>&ndash;&gt;-->
-<!--                                &lt;!&ndash;                                </div>&ndash;&gt;-->
-<!--                            </div>-->
-<!--                            <div class="card-footer d-flex align-items-center justify-content-between">-->
-<!--                                <input class="btn btn-secondary" type="submit" value="Book Ride">-->
-<!--                            </div>-->
                         </div>
 
                     </div>
 
                     <div class="col-md-5">
-                        <ol class="breadcrumb mb-6">
-                            <li class="breadcrumb-item active">Upcoming Rides</li>
-                        </ol>
+                        <div class="container-fluid">
+                            <div style="height:220px">
+                                <label class="text-secondary" style="font-weight:bold; font-size:22px">Upcoming Rides</label>
+                                <div th:each="upcomingRide, iterStat: ${session.upcomingRides}" th:if="${iterStat.index}<3" style="padding-top: 4px;width: 350px;">
+                                    <!--                                    <label class="text-secondary" th:text="${upcomingRide.source}+'  '+${upcomingRide.destination}"></label>-->
+                                    <div class="card-wrapper">
+                                        <div class="ride-card-left">
+                                        </div>
+                                        <div class="card-details">
+                                            <ride-h1 th:text="${upcomingRide.timestamp}"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${upcomingRide.cost}+'$'"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${upcomingRide.trip.source}+' to '+${upcomingRide.trip.destination}"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="'Seats: '+${upcomingRide.seats_booked}"></ride-h1>
+                                        </div><!-- end card-details -->
 
-<!--                        <div class="col-xl-3 col-md-6" th:each="upcomingRide: ${session.upcomingRides}">-->
-<!--                            <div class="card bg-primary text-white mb-4">-->
-<!--                                <br/>-->
-<!--                                <div class="card-body" style="padding:2px 6px">Source: <span-->
-<!--                                        th:text="${upcomingRide.source}"></span></div>-->
-<!--                                <div class="card-body" style="padding:2px 6px">Destination: <span-->
-<!--                                        th:text="${upcomingRide.destination}"></span></div>-->
-<!--                                <div class="card-body" style="padding:2px 6px">Time: <span-->
-<!--                                        th:text="${upcomingRide.timestamp}"></span></div>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                                        <!--                                        <div class="reveal-details">-->
+                                        <!--                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="'3/'+${previousRide.available_seats}"></ride-h1>-->
+                                        <!--                                        </div>-->
+                                        <!--                                        <div class="reveal-details">-->
+                                        <!--                                            <ride-h1>Book Seats:</ride-h1>-->
+                                        <!--                                        </div>&lt;!&ndash; end reveal-details &ndash;&gt;-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-secondary" style="font-weight:bold; font-size:22px" >Previous Rides</label>
+                                <div th:each="previousRide,iterStat: ${session.previousRides}" th:if="${iterStat.index}<4" style="padding-top: 4px;width: 350px;">
+                                    <!--                                    <label class="text-secondary" th:text="${previousRide.source}+'  '+${previousRide.destination}"></label>-->
+                                    <div class="card-wrapper">
+                                        <div class="ride-card-left">
+                                        </div>
+                                        <div class="card-details">
+                                            <ride-h1 th:text="${previousRide.timestamp}"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${previousRide.cost}+'$'"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="${previousRide.trip.source}+' to '+${previousRide.trip.destination}"></ride-h1>
+                                            <ride-h1 style="font-size:14px;color:#616161;" th:text="'Seats: '+${previousRide.seats_booked}"></ride-h1>
+                                        </div><!-- end card-details -->
 
+                                        <!--                                                                                <div class="reveal-details">-->
+                                        <!--                                                                                    <ride-h1 style="font-size:14px;color:#616161;" th:text="'4/'+${previousRide.available_seats}"></ride-h1>-->
+                                        <!--                                                                                </div>&lt;!&ndash; end reveal-details &ndash;&gt;-->
+                                    </div>
+                                </div>
+                                <br>
+                                <button class="btn btn-dark" th:onclick="|window.location.href='/ride-history'|" type="button">Show All Rides
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

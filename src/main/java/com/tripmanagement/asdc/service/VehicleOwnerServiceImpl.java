@@ -3,7 +3,7 @@ package com.tripmanagement.asdc.service;
 import com.tripmanagement.asdc.dao.VehicleOwnerDAO;
 import com.tripmanagement.asdc.model.User;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
+import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,8 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 	@Override
 	@Transactional
 	public boolean saveVehicleOwner(User user) {
+		if(user==null||user.getEmail()==null)
+		return false;
 		try{
 		VehicleOwner vehicleOwner = new VehicleOwner();
 		vehicleOwner.setVehicleowner_fname(user.getFirst_name());
@@ -29,7 +31,7 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 		vehicleOwner.setPassword(user.getPassword());
 		boolean isSuccess=vehicleOwnerDAO.saveVehicleOwner(vehicleOwner);
 		if(isSuccess)
-		notificationService.sendEmail(vehicleOwner.getVehicleowner_fname()+StringMessages.USER_REGISTERED_SUCCESSFULLY,StringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
+		notificationService.sendEmail(vehicleOwner.getVehicleowner_fname()+ServiceStringMessages.USER_REGISTERED_SUCCESSFULLY, ServiceStringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
 		return isSuccess;
 		}
 		catch(Exception e)

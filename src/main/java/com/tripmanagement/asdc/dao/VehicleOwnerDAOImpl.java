@@ -25,6 +25,8 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 
 	@Override
 	public boolean saveVehicleOwner(VehicleOwner vehicleOwner) {
+		if(vehicleOwner==null||vehicleOwner.getEmail()==null)
+		return false;
 		try{
         String sql = "insert into vehicleowner values("+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getEmail()+"','"+vehicleOwner.getPassword()+"',"+vehicleOwner.getAvailable_credits()+");";
         jdbcTemplate.update(sql);
@@ -41,10 +43,11 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 
 	@Override
 	public VehicleOwner getVehicleOwnerByEmail(String email) {
-		if(email==null)
+		if(email==null||email.isEmpty())
 		return null;
 		try{
-			VehicleOwner vehicleOwner = jdbcTemplate.query("select * from vehicleowner where email='"+email+"'", new ResultSetExtractor<VehicleOwner>() {
+			String selectvehicleOwnerQuery = "select * from vehicleowner where email='" + email + "'";
+			VehicleOwner vehicleOwner = jdbcTemplate.query(selectvehicleOwnerQuery, new ResultSetExtractor<VehicleOwner>() {
 				@Override
 				public VehicleOwner extractData(ResultSet rs) throws SQLException,
 						DataAccessException {
@@ -73,7 +76,8 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 	@Override
 	public VehicleOwner getVehicleOwnerById(int vehicleOwnerId) {
 		try{
-		return jdbcTemplate.queryForObject("select * from vehicleowner where vehicleOwner_id="+vehicleOwnerId,
+			String selectVehicleOwnerQuery = "select * from vehicleowner where vehicleOwner_id=" + vehicleOwnerId;
+			return jdbcTemplate.queryForObject(selectVehicleOwnerQuery,
 				BeanPropertyRowMapper.newInstance(VehicleOwner.class));
 		}
 		catch(Exception e)

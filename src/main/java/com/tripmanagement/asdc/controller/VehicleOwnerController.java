@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
 
 
 @Controller
@@ -74,5 +73,15 @@ public class VehicleOwnerController {
         return "payment";
     }
 
+    @RequestMapping("/ride-history")
+    public String showRideHistory(HttpSession session, Model model){
+        return "ride-history";
+    }
+
+
+    @RequestMapping("/owner-dashboard")
+    public String showOwnerDashboard(HttpSession session, Model model){
+        return "owner-dashboard";
+    }
 
 }

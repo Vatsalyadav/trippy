@@ -21,6 +21,8 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 	@Override
 	public boolean addVehicle(Vehicle vehicle) {
+		if(vehicle==null||vehicle.getVehicle_name()==null)
+		return false;
 		try {
 			String sql = "insert into vehicle values(" + null + "," + vehicle.getVehicleowner_id() + ",'" + vehicle.getNumber_plate() + "','" + vehicle.getVehicle_name() + "','" + vehicle.getType() + "'," + vehicle.getTrips() + "," + vehicle.getKms_driven() + "," + vehicle.getAvailable_seats() + "," + vehicle.getFuel_economy() + "," + vehicle.getFuel_consumed()+ ",'"+vehicle.getBrand() +"','"+vehicle.getFuel_economy_status() + "');";
 			jdbcTemplate.update(sql);
@@ -36,7 +38,7 @@ public class VehicleDAOImpl implements VehicleDAO {
 	@Override
 	public Vehicle getVehicleDetails(int vehicle_id) {
 		try{
-		Vehicle vehicle=jdbcTemplate.queryForObject("select * from vehicle where vehicle_id="+vehicle_id,
+			Vehicle vehicle=jdbcTemplate.queryForObject("select * from vehicle where vehicle_id="+vehicle_id,
 		BeanPropertyRowMapper.newInstance(Vehicle.class));
 	   return vehicle;
 		}
@@ -52,7 +54,8 @@ public class VehicleDAOImpl implements VehicleDAO {
 	public List<Vehicle> getVehicles(int vehicleOwnerId) {
 		List<Vehicle> vehicles=new ArrayList<>();
 		try{
-		vehicles= jdbcTemplate.query("select * from vehicle where vehicleOwner_id="+vehicleOwnerId,
+			String selectVehicleQuery = "select * from vehicle where vehicleOwner_id=" + vehicleOwnerId;
+			vehicles= jdbcTemplate.query(selectVehicleQuery,
 				BeanPropertyRowMapper.newInstance(Vehicle.class));
 		return vehicles;
 		}
@@ -66,6 +69,8 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 	@Override
 	public boolean updateVehicleFuelEconomy(Vehicle vehicle) {
+		if(vehicle==null||vehicle.getVehicle_name()==null)
+		return false;
 		try{
 		String sql = "update vehicle set fuel_economy="+vehicle.getFuel_economy()+",kms_driven="+vehicle.getKms_driven()+",fuel_consumed="+vehicle.getFuel_consumed()+",fuel_economy_status='"+vehicle.getFuel_economy_status()+"' where vehicle_id="+vehicle.getVehicle_id();
         jdbcTemplate.update(sql);

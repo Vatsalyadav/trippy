@@ -9,9 +9,10 @@ import com.tripmanagement.asdc.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class CustomerController {
@@ -30,6 +31,7 @@ public class CustomerController {
 
     @PostMapping("/search-rides")
     public String searchRides(Trip trip, Model model) {
+        System.out.println("Available rides: "+tripService.getAvailableTripsList(trip.getSource(),trip.getDestination()).size());
         model.addAttribute("listOfRides", tripService.getAvailableTripsList(trip.getSource(),trip.getDestination()));
         return "customer-dashboard";
     }
@@ -47,21 +49,15 @@ public class CustomerController {
 //    }
 
     @PostMapping("/book-ride")
-    public String bookRide(Booking booking, BindingResult result, Model model) {
-//        Booking booking = new Booking();
-//        booking.setCustomer_id(4);
-//        booking.setTrip_id(3); // Halifax -> Lucknow
-        System.out.println("YOLO 1: "+booking.getCustomer_id());
-        System.out.println("YOLO 2: "+booking.getTrip_id());
-        booking.setSeats_booked(1);
-        System.out.println(bookingService.saveRide(booking));
-
+    public String bookRide(Booking booking, HttpSession session, Model model) {
+        bookingService.saveRide(booking);
+        session.setAttribute("upcomingRides", bookingService.getUpcomingRidesForCustomer(booking.getCustomer_id()));
+        System.out.println("up: "+bookingService.getUpcomingRidesForCustomer(booking.getCustomer_id()).size());
         return "customer-dashboard";
     }
 
     @RequestMapping(value = "/open-credit")
     public String openCredit( Model model) {
-
         return "payment";
     }
 

@@ -1,7 +1,7 @@
 package com.tripmanagement.asdc.model;
 
 public class Ride {
-    private int trip_id;
+    private Trip trip;
     private int vehicle_id;
     private String numberPlate;
     private float fuel_economy;
@@ -11,9 +11,9 @@ public class Ride {
     private float cost;
     private int availableSeats;
 
-    public Ride(int trip_id, int vehicle_id, String numberPlate, float fuel_economy,
+    public Ride(Trip trip, int vehicle_id, String numberPlate, float fuel_economy,
                 String vehicleOwnerName, int vehicleOwnerId, String phone, float cost, int availableSeats) {
-        this.trip_id = trip_id;
+        this.trip = trip;
         this.vehicle_id = vehicle_id;
         this.numberPlate = numberPlate;
         this.fuel_economy = fuel_economy;
@@ -48,12 +48,12 @@ public class Ride {
         this.availableSeats = availableSeats;
     }
 
-    public int getTrip_id() {
-        return trip_id;
+    public Trip getTrip() {
+        return trip;
     }
 
-    public void setTrip_id(int trip_id) {
-        this.trip_id = trip_id;
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 
     public int getVehicle_id() {
@@ -86,8 +86,7 @@ public class Ride {
     public void setCost(float cost) {
         this.cost = cost;
     }
-    
 
-
-    
+    public Ride() {
+    }
 }

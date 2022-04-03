@@ -3,7 +3,7 @@ package com.tripmanagement.asdc.service;
 import javax.transaction.Transactional;
 
 import com.tripmanagement.asdc.dao.RegistrationDAO;
-import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
+import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +20,16 @@ public class RegistrationServiceImpl implements RegistrationService{
     @Transactional
     public String checkEmailPassword(String email, String password) {
         try{
-        if(email==null||password==null||password.isEmpty()||email.isEmpty())
-            return StringMessages.INCORRECT_AUTH;
-        else if (!registrationDAO.checkUserExistByEmail(email))
-            return StringMessages.NO_USER_FOUND;
-        else
-            return registrationDAO.checkEmailPassword(email, password);
+            if (password == null || email == null) {
+                return ServiceStringMessages.INCORRECT_AUTH;
+            } else if (password.isEmpty() || email.isEmpty()) {
+                return ServiceStringMessages.INCORRECT_AUTH;
+            } else {
+                if (!registrationDAO.checkUserExistByEmail(email))
+                    return ServiceStringMessages.NO_USER_FOUND;
+                else
+                    return registrationDAO.checkEmailPassword(email, password);
+            }
         }
         catch(Exception e)
         {
