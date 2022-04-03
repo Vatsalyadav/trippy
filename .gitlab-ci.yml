@@ -53,6 +53,7 @@ test:
       - develop
       - merge_requests
       - main
+      - test
 
 code_quality:
   stage: code_quality
