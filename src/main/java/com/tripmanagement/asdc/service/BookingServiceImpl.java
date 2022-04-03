@@ -47,6 +47,8 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	@Transactional
 	public boolean saveRide(Booking booking) {
+		if(booking==null||booking.getTimestamp().isEmpty())
+			return false;
 		try {
 			logger.info("Inside saveRide method of BookingServiceImpl");
 			Trip trip = tripDAO.getTripDetails(booking.getTrip_id());
@@ -132,6 +134,8 @@ public class BookingServiceImpl implements BookingService {
 	@Override
 	@Transactional
 	public String payforRide(Booking booking) {
+		if(booking==null||booking.getTimestamp().isEmpty())
+			return ServiceStringMessages.FAILURE;
 		Customer customer=customerDAO.getCustomerById(booking.getCustomer_id());
 		int cost_credits=(int) Math.ceil(booking.getCost());
 		if(customer.getAvailable_credits()>= cost_credits)

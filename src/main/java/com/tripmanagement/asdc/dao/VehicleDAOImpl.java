@@ -21,6 +21,8 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 	@Override
 	public boolean addVehicle(Vehicle vehicle) {
+		if(vehicle==null||vehicle.getVehicle_name()==null)
+		return false;
 		try {
 			String sql = "insert into vehicle values(" + null + "," + vehicle.getVehicleowner_id() + ",'" + vehicle.getNumber_plate() + "','" + vehicle.getVehicle_name() + "','" + vehicle.getType() + "'," + vehicle.getTrips() + "," + vehicle.getKms_driven() + "," + vehicle.getAvailable_seats() + "," + vehicle.getFuel_economy() + "," + vehicle.getFuel_consumed()+ ",'"+vehicle.getBrand() +"','"+vehicle.getFuel_economy_status() + "');";
 			jdbcTemplate.update(sql);
@@ -67,6 +69,8 @@ public class VehicleDAOImpl implements VehicleDAO {
 
 	@Override
 	public boolean updateVehicleFuelEconomy(Vehicle vehicle) {
+		if(vehicle==null||vehicle.getVehicle_name()==null)
+		return false;
 		try{
 		String sql = "update vehicle set fuel_economy="+vehicle.getFuel_economy()+",kms_driven="+vehicle.getKms_driven()+",fuel_consumed="+vehicle.getFuel_consumed()+",fuel_economy_status='"+vehicle.getFuel_economy_status()+"' where vehicle_id="+vehicle.getVehicle_id();
         jdbcTemplate.update(sql);
