@@ -22,9 +22,12 @@ public class BookingDAOImpl implements BookingDAO {
 	@Override
 	public boolean saveRide(Booking booking) {
 		try {
-			String sql = "insert into booking values(" + null + "," + booking.getCustomer_id() + ",'"
-					+ booking.getTimestamp() + "'," + booking.getCost() + "," + booking.getSeats_booked() + ","
-					+ booking.getTrip_id() + "," + booking.getIsPaid() + ");";
+			String subQuery1 = booking.getCustomer_id() + ",'"
+					+ booking.getTimestamp() + "'," + booking.getCost();
+			String subQuery2 = booking.getSeats_booked() + ","
+					+ booking.getTrip_id() + "," + booking.getIsPaid();
+			String query = subQuery1 + "," + subQuery2;
+			String sql = "insert into booking values(" + null + "," + query + ");";
 			jdbcTemplate.update(sql);
 			logger.debug("Ride saved successfully");
 			return true;
