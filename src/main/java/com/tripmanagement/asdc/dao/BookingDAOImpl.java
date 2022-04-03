@@ -21,6 +21,8 @@ public class BookingDAOImpl implements BookingDAO {
 
 	@Override
 	public boolean saveRide(Booking booking) {
+		if(booking==null||booking.getTimestamp().isEmpty())
+			return false;
 		try {
 			String sql = "insert into booking values(" + null + "," + booking.getCustomer_id() + ",'"
 					+ booking.getTimestamp() + "'," + booking.getCost() + "," + booking.getSeats_booked() + ","

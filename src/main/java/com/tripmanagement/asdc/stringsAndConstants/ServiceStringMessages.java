@@ -14,4 +14,11 @@ public final class ServiceStringMessages {
     public static final String RIDE_CREATED="Ride created successfully";
     public static final String RIDE_BOOKED="Ride booked successfully";
     public static final String PLEASE_BUY_CREDITS = "Please buy credits first";
+    public static final String FAILURE="Failure";
+    public static final String GOOD="GOOD";
+    public static final String BAD="BAD";
+    public static final String AVERAGE="AVERAGE";
+
+
+
 }
