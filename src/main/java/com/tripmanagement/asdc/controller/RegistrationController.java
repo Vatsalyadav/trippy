@@ -56,7 +56,9 @@ public class RegistrationController {
                 httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
                 List<Trip> previousTripsForVehicleOwner = tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id());
                 httpSession.setAttribute("previousRides", previousTripsForVehicleOwner);
-                httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+                int vehicleOwner_id = vehicleOwner.getVehicleOwner_id();
+                List<Trip> upcomingTripsForVehicleOwner = tripService.getUpcomingTripsForVehicleOwner(vehicleOwner_id);
+                httpSession.setAttribute("upcomingRides", upcomingTripsForVehicleOwner);
                 return "owner-dashboard";
             }
             else {
