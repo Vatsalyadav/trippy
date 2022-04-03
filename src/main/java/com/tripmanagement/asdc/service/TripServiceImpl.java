@@ -14,7 +14,8 @@ import com.tripmanagement.asdc.model.Ride;
 import com.tripmanagement.asdc.model.Trip;
 import com.tripmanagement.asdc.model.Vehicle;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
+import com.tripmanagement.asdc.util.Utility;
+import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class TripServiceImpl implements TripService {
 			trip.setSeats_remaining(trip.getAvailable_seats());
 			boolean isSuccess = tripDAO.saveTrip(trip);
 			if (isSuccess)
-				notificationService.sendEmail(StringMessages.RIDE_CREATED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), StringMessages.RIDE_CREATED,
+				notificationService.sendEmail(ServiceStringMessages.RIDE_CREATED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), ServiceStringMessages.RIDE_CREATED,
 						vehicleOwnerDAO
 								.getVehicleOwnerById(
 										vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id())
@@ -73,9 +74,9 @@ public class TripServiceImpl implements TripService {
 			List<Trip> upcomingTrips = new ArrayList<>();
 			for (Trip trip : allTrips) {
 				String start_time = trip.getStart_time().replace("T", " ");
-				String current_time = getCurrentTime();
-				trip.setStart_time(trip.getStart_time().replace("T", " "));
-				trip.setEnd_time(trip.getEnd_time().replace("T", " "));
+				String current_time = Utility.getCurrentTime();
+				trip.setStart_time(Utility.convertDate(trip.getStart_time()));
+				trip.setEnd_time(Utility.convertDate(trip.getEnd_time()));
 				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(start) < 0) {
@@ -106,15 +107,27 @@ public class TripServiceImpl implements TripService {
 			return null;
 		try {
 			List<Ride> rideList = new ArrayList<>();
-			List<Trip> tripList = tripDAO.getAvailableTripsList(source, destination, getCurrentTime().toString());
+			List<Trip> tripList = tripDAO.getAvailableTripsList(source, destination, Utility.getCurrentTime().toString());
 			for (Trip trip : tripList) {
 				Vehicle vehicle = vehicleDAO.getVehicleDetails(trip.getVehicle_id());
 				VehicleOwner vehicleOwner = vehicleOwnerDAO
 						.getVehicleOwnerById(vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id());
+				String start_time = trip.getEnd_time().replace("T", " ");
+				//Float value
+				trip.setStart_time(Utility.convertDate(trip.getStart_time()));
+				trip.setEnd_time(Utility.convertDate(trip.getEnd_time()));
 				Ride ride = new Ride(trip, vehicle.getVehicle_id(), vehicle.getNumber_plate(),
 						vehicle.getFuel_economy(), vehicleOwner.getVehicleowner_fname(), vehicle.getVehicleowner_id(),
 						vehicleOwner.getPhone(), calculateCost(vehicle, trip), trip.getAvailable_seats());
-				rideList.add(ride);
+				if(trip.getSeats_remaining()>0)
+				{
+				String current_time = Utility.getCurrentTime();
+				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
+				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
+				if (current.compareTo(start) < 0) {
+					rideList.add(ride);
+				}
+				}
 			}
 			return rideList;
 		} catch (Exception e) {
@@ -126,9 +139,11 @@ public class TripServiceImpl implements TripService {
 	@Override
 	@Transactional
 	public float calculateCost(Vehicle vehicle, Trip trip) {
-		if (trip == null || vehicle == null || vehicle.getAvailable_seats() == 0)
+		if (vehicle == null || trip == null) {
 			return 0;
-		else {
+		} else if (vehicle.getAvailable_seats() == 0) {
+			return 0;
+		} else {
 			return 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * vehicle.getAvailable_seats()));
 		}
 	}
@@ -141,9 +156,9 @@ public class TripServiceImpl implements TripService {
 			List<Trip> previousTrips = new ArrayList<>();
 			for (Trip trip : allTrips) {
 				String end_time = trip.getEnd_time().replace("T", " ");
-				trip.setStart_time(trip.getStart_time().replace("T", " "));
-				trip.setEnd_time(trip.getEnd_time().replace("T", " "));
-				String current_time = getCurrentTime();
+				trip.setStart_time(Utility.convertDate(trip.getStart_time()));
+				trip.setEnd_time(Utility.convertDate(trip.getEnd_time()));
+				String current_time = Utility.getCurrentTime();
 				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(end_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(start) > 0) {
@@ -170,12 +185,6 @@ public class TripServiceImpl implements TripService {
 
 	}
 
-	public String getCurrentTime() {
-		long millis = System.currentTimeMillis();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		Date resultdate = new Date(millis);
-		sdf.setTimeZone(TimeZone.getTimeZone("America/Halifax"));
-		return sdf.format(resultdate);
-	}
+
 
 }

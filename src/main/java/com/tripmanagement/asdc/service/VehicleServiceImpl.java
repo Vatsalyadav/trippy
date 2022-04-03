@@ -71,7 +71,7 @@ public class VehicleServiceImpl implements VehicleService {
 	@Transactional
 	public boolean updateFuelEconomy(FuelEconomy fuelEconomy) {
 		try{
-		float fuelEco=setFuel_economy(fuelEconomy.getKms_travelled(), fuelEconomy.getKms_travelled());
+		float fuelEco=setFuel_economy(fuelEconomy.getKms_travelled(), fuelEconomy.getFuel_consumed());
 		fuelEconomy.setFuel_economy(fuelEco);
 		Vehicle vehicle=vehicleDAO.getVehicleDetails(fuelEconomy.getVehicle_id());
 		vehicle.setFuel_consumed(vehicle.getFuel_consumed()+fuelEconomy.getFuel_consumed());
@@ -110,7 +110,7 @@ public class VehicleServiceImpl implements VehicleService {
 	}
 
 	private String getFuelEconomyStatus(float fuelEconomy) {
-		if (fuelEconomy > 16)
+		if (fuelEconomy > 13)
 			return FuelEconomyStatus.GOOD.name();
 		else if (fuelEconomy < 8)
 			return FuelEconomyStatus.BAD.name();

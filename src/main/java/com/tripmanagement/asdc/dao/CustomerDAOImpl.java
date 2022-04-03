@@ -40,7 +40,8 @@ public class CustomerDAOImpl implements CustomerDAO {
         if(email==null||email.isEmpty())
         return null;
         try{
-            Customer customer = jdbcTemplate.query("select * from customer where email='"+email+"'", new ResultSetExtractor<Customer>() {
+            String s = "select * from customer where email='" + email + "'";
+            Customer customer = jdbcTemplate.query(s, new ResultSetExtractor<Customer>() {
                 @Override
                 public Customer extractData(ResultSet rs) throws SQLException,
                         DataAccessException {
@@ -68,7 +69,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public Customer getCustomerById(int id) {
         try{
-        Customer customer=jdbcTemplate.queryForObject("select * from customer where customer_id="+id,
+            String query="select * from customer where customer_id="+id;
+        Customer customer=jdbcTemplate.queryForObject(query,
         BeanPropertyRowMapper.newInstance(Customer.class));
         return customer;
         }

@@ -74,5 +74,15 @@ public class VehicleOwnerController {
         return "payment";
     }
 
+    @RequestMapping("/ride-history")
+    public String showRideHistory(HttpSession session, Model model){
+        return "ride-history";
+    }
+
+
+    @RequestMapping("/owner-dashboard")
+    public String showOwnerDashboard(HttpSession session, Model model){
+        return "owner-dashboard";
+    }
 
 }

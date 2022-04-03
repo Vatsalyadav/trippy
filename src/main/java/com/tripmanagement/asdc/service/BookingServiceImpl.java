@@ -3,13 +3,13 @@ package com.tripmanagement.asdc.service;
 import com.tripmanagement.asdc.dao.BookingDAO;
 import com.tripmanagement.asdc.dao.CustomerDAO;
 import com.tripmanagement.asdc.dao.TripDAO;
-import com.tripmanagement.asdc.dao.VehicleDAO;
 import com.tripmanagement.asdc.dao.VehicleOwnerDAO;
 import com.tripmanagement.asdc.model.Booking;
 import com.tripmanagement.asdc.model.Customer;
 import com.tripmanagement.asdc.model.Trip;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.stringsAndConstants.StringMessages;
+import com.tripmanagement.asdc.util.Utility;
+import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ public class BookingServiceImpl implements BookingService {
 				boolean isSuccess = bookedRidesDAO.saveRide(booking);
 				if (isSuccess) {
 					logger.info("Successfully booked seats");
-					notificationService.sendEmail(StringMessages.RIDE_BOOKED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), StringMessages.RIDE_BOOKED,
+					notificationService.sendEmail(ServiceStringMessages.RIDE_BOOKED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), ServiceStringMessages.RIDE_BOOKED,
 							customerDAO.getCustomerById(booking.getCustomer_id()).getEmail());
 					tripDAO.updateAvailableSeats(trip.getTrip_id(),
 							trip.getSeats_remaining() - booking.getSeats_booked());
@@ -79,19 +79,20 @@ public class BookingServiceImpl implements BookingService {
 	@Transactional
 	public List<Booking> getUpcomingRidesForCustomer(int customer_id) {
 		try {
-			List<Booking> allRides = bookedRidesDAO.getAllRidesForCustomer(customer_id);
-			List<Booking> upcomingRides = new ArrayList<>();
-			for (Booking ride : allRides) {
-				String start_time = ride.getTimestamp().replace("T", " ");
-				ride.setTimestamp(ride.getTimestamp().replace("T", " "));
-				String current_time = getCurrentTime();
+			List<Booking> bookingList = bookedRidesDAO.getAllRidesForCustomer(customer_id);
+			List<Booking> upcomingBookings = new ArrayList<>();
+			for (Booking booking : bookingList) {
+				String start_time = booking.getTimestamp().replace("T", " ");
+				booking.setTimestamp(Utility.convertDate(booking.getTimestamp()));
+				booking.setTrip(tripDAO.getTripDetails(booking.getTrip_id()));
+				String current_time = Utility.getCurrentTime();
 				Date start = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(start) < 0) {
-					upcomingRides.add(ride);
+					upcomingBookings.add(booking);
 				}
 			}
-			return upcomingRides;
+			return upcomingBookings;
 		} catch (Exception e) {
 			return new ArrayList<Booking>();
 		}
@@ -105,8 +106,9 @@ public class BookingServiceImpl implements BookingService {
 			List<Booking> previousRides = new ArrayList<>();
 			for (Booking ride : allRides) {
 				String start_time = ride.getTimestamp().replace("T", " ");
-				String current_time = getCurrentTime();
-				ride.setTimestamp(ride.getTimestamp().replace("T", " "));
+				String current_time = Utility.getCurrentTime();
+				ride.setTimestamp(Utility.convertDate(ride.getTimestamp()));
+				ride.setTrip(tripDAO.getTripDetails(ride.getTrip_id()));
 				Date end = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(start_time);
 				Date current = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH).parse(current_time);
 				if (current.compareTo(end) > 0) {
@@ -119,14 +121,6 @@ public class BookingServiceImpl implements BookingService {
 			return new ArrayList<Booking>();
 		}
 
-	}
-
-	public String getCurrentTime() {
-		long millis = System.currentTimeMillis();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		Date resultdate = new Date(millis);
-		sdf.setTimeZone(TimeZone.getTimeZone("America/Halifax"));
-		return sdf.format(resultdate);
 	}
 
 	@Override
@@ -146,13 +140,14 @@ public class BookingServiceImpl implements BookingService {
 			VehicleOwner vehicleOwner=vehicleOwnerDAO.getVehicleOwnerById(tripDAO.getTripDetails(booking.getTrip_id()).getVehicle_owner_id());
 			vehicleOwnerDAO.updateAvaialableCredits(vehicleOwner.getVehicleOwner_id(), vehicleOwner.getAvailable_credits()+cost_credits);
 			customerDAO.updateAvaialableCredits(customer.getCustomer_id(), customer.getAvailable_credits()-cost_credits);
-			return StringMessages.SUCCESS;
+			return ServiceStringMessages.SUCCESS;
 		}
 		else
 		{
-			return StringMessages.PLEASE_BUY_CREDITS;
+			return ServiceStringMessages.PLEASE_BUY_CREDITS;
 		}
 	}
+
 
 
 
