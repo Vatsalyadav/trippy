@@ -30,8 +30,13 @@ public class CustomerController {
     BookingService bookingService;
 
     @PostMapping("/search-rides")
-    public String searchRides(Trip trip, Model model) {
-        System.out.println("Available rides: "+tripService.getAvailableTripsList(trip.getSource(),trip.getDestination()).size());
+    public String searchRides(Trip trip, Model model) 
+    {
+        String source = trip.getSource();
+        String destination = trip.getDestination();
+        int availableRides = tripService.getAvailableTripsList(source, destination).size();
+        String numAvailableRides = "Available rides: " + availableRides;
+        System.out.println(availableRides);
         model.addAttribute("listOfRides", tripService.getAvailableTripsList(trip.getSource(),trip.getDestination()));
         return "customer-dashboard";
     }
