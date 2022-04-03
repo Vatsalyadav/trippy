@@ -34,6 +34,7 @@
             format: 'DD/MM/YYYY h:mm A'
         });
     </script>
+    <script type="text/javascript"> function preventBack() {window.history.forward();} setTimeout("preventBack()", 0); window.onunload = function () {null};</script>
 </head>
 <body class="sb-nav-toggled">
 <nav class="sb-topnav navbar shadow fixed-top navbar-expand navbar-dark bg-dark">
@@ -48,7 +49,7 @@
             <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                id="navbarDropdown" role="button"><i class="fas fa-user fa-fw"></i></a>
             <ul aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li><a class="dropdown-item" th:onclick="|window.location.href='/'|">Logout</a></li>
             </ul>
         </li>
     </ul>
@@ -214,7 +215,7 @@
 <!--                                                                <input class="form-control" id="fuel_economy_fuel_eco"-->
 <!--                                                                       name="fuel_consumed" type="text">-->
                                                                 <div class="input-group">
-                                                                    <input type="number" class="form-control" id="fuel_economy_fuel_eco" name="fuel_economy_fuel_eco"
+                                                                    <input type="number" class="form-control" id="fuel_economy_fuel_eco" name="fuel_consumed"
                                                                            placeholder="Total consumed fuel" min="0" max="10000" required>
                                                                     <div class="input-group-append">
                                                                         <span class="input-group-text"> liters </span>
@@ -265,7 +266,7 @@
                                                     <select class="form-control" name="vehicle_id"
                                                             id="vehicle_id" required>
                                                         <option value="" selected>Select your Car</option>
-                                                        <option th:each="vehicle : ${listOfVehicle}"
+                                                        <option th:each="vehicle : ${session.listOfVehicle}"
                                                                 th:value="${vehicle.vehicle_id}"
                                                                 th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"></option>
                                                     </select>
