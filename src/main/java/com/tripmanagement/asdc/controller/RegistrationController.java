@@ -1,9 +1,6 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.Customer;
-import com.tripmanagement.asdc.model.Ride;
-import com.tripmanagement.asdc.model.User;
-import com.tripmanagement.asdc.model.VehicleOwner;
+import com.tripmanagement.asdc.model.*;
 import com.tripmanagement.asdc.service.*;
 import com.tripmanagement.asdc.stringsAndConstants.Constants;
 import com.tripmanagement.asdc.stringsAndConstants.ControllerStringMessages;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class RegistrationController {
@@ -56,8 +54,10 @@ public class RegistrationController {
                     VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByEmail(user.getEmail());
                     httpSession.setAttribute("vehicleOwner", vehicleOwner);
                     httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
-                    httpSession.setAttribute("previousRides", tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
-                    httpSession.setAttribute("upcomingRides", tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id()));
+                    List<Trip> previousTripsForVehicleOwner = tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id());
+                    httpSession.setAttribute("previousRides", previousTripsForVehicleOwner);
+                    List<Trip> upcomingTripsForVehicleOwner = tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id());
+                    httpSession.setAttribute("upcomingRides", upcomingTripsForVehicleOwner);
                     return "owner-dashboard";
                 } else {
                     Customer customer = customerService.getCustomerByEmail(user.getEmail());
@@ -66,9 +66,11 @@ public class RegistrationController {
                     httpSession.setAttribute("customer", customer);
 
                     model.addAttribute("listOfRides", new ArrayList<Ride>());
-                    httpSession.setAttribute("previousRides", bookedRidesService.getPreviousRidesForCustomer(customer.getCustomer_id()));
+                    List<Booking> previousRidesForCustomer = bookedRidesService.getPreviousRidesForCustomer(customer.getCustomer_id());
+                    httpSession.setAttribute("previousRides", previousRidesForCustomer);
 
-                    httpSession.setAttribute("upcomingRides", bookedRidesService.getUpcomingRidesForCustomer(customer.getCustomer_id()));
+                    List<Booking> upcomingRidesForCustomer = bookedRidesService.getUpcomingRidesForCustomer(customer.getCustomer_id());
+                    httpSession.setAttribute("upcomingRides", upcomingRidesForCustomer);
                     httpSession.setAttribute("sourceList", tripService.getSources());
                     httpSession.setAttribute("destinationList", tripService.getDestinations());
                     return "customer-dashboard";
