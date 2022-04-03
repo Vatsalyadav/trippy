@@ -30,8 +30,10 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 		vehicleOwner.setEmail(user.getEmail());
 		vehicleOwner.setPassword(user.getPassword());
 		boolean isSuccess=vehicleOwnerDAO.saveVehicleOwner(vehicleOwner);
-		if(isSuccess)
-		notificationService.sendEmail(vehicleOwner.getVehicleowner_fname()+ServiceStringMessages.USER_REGISTERED_SUCCESSFULLY, ServiceStringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
+		if(isSuccess) {
+			String message = vehicleOwner.getVehicleowner_fname() + ServiceStringMessages.USER_REGISTERED_SUCCESSFULLY;
+			notificationService.sendEmail(message, ServiceStringMessages.AUTH_SUCCESSFUL,vehicleOwner.getEmail());
+		}
 		return isSuccess;
 		}
 		catch(Exception e)

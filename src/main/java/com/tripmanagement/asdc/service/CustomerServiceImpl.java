@@ -32,7 +32,11 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.setPassword(user.getPassword());
 		boolean isSuccess= customerDAO.saveCustomer(customer);
 		if(isSuccess)
-		notificationService.sendEmail("Hey "+customer.getCustomer_fname()+ServiceStringMessages.USER_REGISTERED_SUCCESSFULLY, ServiceStringMessages.AUTH_SUCCESSFUL,customer.getEmail());
+		{
+			String greeting = "Hey " + customer.getCustomer_fname();
+			String message = greeting + ServiceStringMessages.USER_REGISTERED_SUCCESSFULLY;
+			notificationService.sendEmail(message, ServiceStringMessages.AUTH_SUCCESSFUL, customer.getEmail());
+		}
 		return isSuccess;
 		}
 		catch(Exception e)
