@@ -27,6 +27,8 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 
     @Override
     public boolean checkUserExistByEmail(String email) {
+        if(email==null||email.isEmpty())
+        return false;
         try{
             String selectQuery = "select count(*) from vehicleowner where email='" + email + "'";
             int emailCount = jdbcTemplate.queryForObject(selectQuery

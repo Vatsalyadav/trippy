@@ -24,6 +24,8 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	@Transactional
 	public boolean addVehicle(Vehicle vehicle) {
+		if(vehicle==null||vehicle.getVehicle_name().isEmpty())
+		return false;
 		try {
 			float economy = setFuel_economy(vehicle.getKms_driven(), vehicle.getFuel_consumed());
 			vehicle.setFuel_economy(economy);
@@ -70,6 +72,8 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	@Transactional
 	public boolean updateFuelEconomy(FuelEconomy fuelEconomy) {
+		if(fuelEconomy==null)
+		return false;
 		try{
 		float fuelEco=setFuel_economy(fuelEconomy.getKms_travelled(), fuelEconomy.getFuel_consumed());
 		fuelEconomy.setFuel_economy(fuelEco);
@@ -119,6 +123,8 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	public boolean saveFuelEconomy(FuelEconomy fuelEconomy) {
+		if(fuelEconomy==null)
+		return false;
 		try{
 		fuelEconomyDAO.saveFuelEconomy(fuelEconomy);
 		return true;

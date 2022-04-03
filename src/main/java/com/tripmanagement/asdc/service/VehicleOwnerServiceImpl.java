@@ -21,6 +21,8 @@ public class VehicleOwnerServiceImpl implements VehicleOwnerService {
 	@Override
 	@Transactional
 	public boolean saveVehicleOwner(User user) {
+		if(user==null||user.getEmail()==null)
+		return false;
 		try{
 		VehicleOwner vehicleOwner = new VehicleOwner();
 		vehicleOwner.setVehicleowner_fname(user.getFirst_name());

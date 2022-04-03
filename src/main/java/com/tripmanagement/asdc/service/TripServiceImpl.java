@@ -39,6 +39,8 @@ public class TripServiceImpl implements TripService {
 	@Override
 	@Transactional
 	public boolean saveTrip(Trip trip) {
+		if(trip==null||trip.getSource()==null)
+			return false;
 		try {
 			trip.setCost(calculateCost(vehicleDAO.getVehicleDetails(trip.getVehicle_id()), trip));
 			trip.setSeats_remaining(trip.getAvailable_seats());
