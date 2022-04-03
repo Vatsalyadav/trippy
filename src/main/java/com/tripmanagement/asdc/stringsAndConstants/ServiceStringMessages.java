@@ -9,16 +9,12 @@ public final class ServiceStringMessages {
     public static final String USER_REGISTERED_SUCCESSFULLY=", You are registered successfully";
     public static final String AUTH_SUCCESSFUL="Authentication Successful";
     public static final String USER_ALREADY_EXIST = "User already exists";
-    public static final String RIDE_CREATED_SUCCESSFULLY="Ride created successfully for  ";
-    public static final String RIDE_BOOKED_SUCCESSFULLY="Ride created successfully for ";
-    public static final String RIDE_CREATED="Ride created successfully";
-    public static final String RIDE_BOOKED="Ride booked successfully";
+    public static final String RIDE_CREATED_SUCCESSFULLY="Your ride is created successfully from ";
+    public static final String RIDE_BOOKED_SUCCESSFULLY="Your ride is booked successfully from ";
+    public static final String RIDE_CREATED="Ride Created Successfully!";
+    public static final String RIDE_BOOKED="Ride Booked Successfully!";
     public static final String PLEASE_BUY_CREDITS = "Please buy credits first";
     public static final String FAILURE="Failure";
-    public static final String GOOD="GOOD";
-    public static final String BAD="BAD";
-    public static final String AVERAGE="AVERAGE";
-
-
+    public static final String EMAIL_SENDER = "tripmanagementasdc@gmail.com";
 
 }

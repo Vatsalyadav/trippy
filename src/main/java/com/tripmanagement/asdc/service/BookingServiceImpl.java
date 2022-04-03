@@ -60,7 +60,7 @@ public class BookingServiceImpl implements BookingService {
 				boolean isSuccess = bookedRidesDAO.saveRide(booking);
 				if (isSuccess) {
 					logger.info("Successfully booked seats");
-					notificationService.sendEmail(ServiceStringMessages.RIDE_BOOKED_SUCCESSFULLY+trip.getSource()+"-->"+trip.getDestination(), ServiceStringMessages.RIDE_BOOKED,
+					notificationService.sendEmail(ServiceStringMessages.RIDE_BOOKED_SUCCESSFULLY+trip.getSource()+" to "+trip.getDestination(), ServiceStringMessages.RIDE_BOOKED,
 							customerDAO.getCustomerById(booking.getCustomer_id()).getEmail());
 					tripDAO.updateAvailableSeats(trip.getTrip_id(),
 							trip.getSeats_remaining() - booking.getSeats_booked());
@@ -83,6 +83,8 @@ public class BookingServiceImpl implements BookingService {
 			List<Booking> bookingList = bookedRidesDAO.getAllRidesForCustomer(customer_id);
 			List<Booking> upcomingBookings = new ArrayList<>();
 			for (Booking booking : bookingList) {
+				float cost=(float) Math.round(booking.getCost() * 100.0) / 100.0f;
+				booking.setCost(cost);
 				String start_time = booking.getTimestamp().replace("T", " ");
 				booking.setTimestamp(Utility.convertDate(booking.getTimestamp()));
 				booking.setTrip(tripDAO.getTripDetails(booking.getTrip_id()));
@@ -106,6 +108,8 @@ public class BookingServiceImpl implements BookingService {
 			List<Booking> allRides = bookedRidesDAO.getAllRidesForCustomer(customer_id);
 			List<Booking> previousRides = new ArrayList<>();
 			for (Booking ride : allRides) {
+				float cost=(float) Math.round(ride.getCost() * 100.0) / 100.0f;
+				ride.setCost(cost);
 				String start_time = ride.getTimestamp().replace("T", " ");
 				String current_time = Utility.getCurrentTime();
 				ride.setTimestamp(Utility.convertDate(ride.getTimestamp()));

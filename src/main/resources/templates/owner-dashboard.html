@@ -265,7 +265,7 @@
                                                     <select class="form-control" name="vehicle_id"
                                                             id="vehicle_id" required>
                                                         <option value="" selected>Select your Car</option>
-                                                        <option th:each="vehicle : ${listOfVehicle}"
+                                                        <option th:each="vehicle : ${session.listOfVehicle}"
                                                                 th:value="${vehicle.vehicle_id}"
                                                                 th:text="${vehicle.vehicle_name} +' : '+${vehicle.number_plate}"></option>
                                                     </select>
