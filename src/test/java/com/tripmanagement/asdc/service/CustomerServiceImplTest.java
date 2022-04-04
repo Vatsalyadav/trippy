@@ -1,11 +1,15 @@
 package com.tripmanagement.asdc.service;
 
 import com.tripmanagement.asdc.dao.CustomerDAO;
+import com.tripmanagement.asdc.dao.CustomerDAOImpl;
 import com.tripmanagement.asdc.model.Customer;
 import com.tripmanagement.asdc.model.User;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,13 +21,16 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 class CustomerServiceImplTest {
 
-    @Autowired
-    CustomerService customerService;
-
+    @InjectMocks
+    CustomerServiceImpl customerService;
     @Mock
     CustomerDAO customerDAO;
-
-
+    @Mock
+    CustomerDAOImpl customerDAOImpl;
+    @BeforeClass
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
     @Test
     void testSaveNullCustomer() {
         assertFalse(customerService.saveCustomer(null));
@@ -38,21 +45,24 @@ class CustomerServiceImplTest {
     void testSaveCustomerCorrect() {
 
         User user = new User();
-        user.setFirst_name("test");
-        Customer customer = new Customer();
-        customer.setCustomer_fname("Sania");
-        customer.setCustomer_id(1);
-        customer.setCustomer_lname("kumar");
-        customer.setEmail("someemail@dal.ca");
-        customer.setPassword("password");
+        user.setFirst_name("Vatsal");
         user.setLast_name("case");
         user.setEmail("test@case.com");
         user.setPassword("123456");
         user.setUserType("CUSTOMER");
+
+        Customer customer = new Customer();
+        customer.setCustomer_fname("Sania");
+        customer.setCustomer_id(1);
+        customer.setCustomer_lname("kumar");
+        customer.setEmail("someemal@dal.ca");
+        customer.setPassword("password");
+
         when(customerDAO.saveCustomer(customer)).thenReturn(true);
         boolean result = customerService.saveCustomer(user);
         assertTrue(result);
     }
+
     @Test
     void testSaveCustomerIllegaleName() {
 

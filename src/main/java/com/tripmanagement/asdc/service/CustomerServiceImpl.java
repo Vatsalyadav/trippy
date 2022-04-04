@@ -39,6 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		catch(Exception e)
 		{
+			System.out.println("exception occurred");
 			return false;
 		}
 	}

@@ -29,8 +29,7 @@ CustomerDAO customerDAO;
 
     @Test
     void testSaveEmptyCustomer() {
-
-        assertFalse(customerDAO.saveCustomer(new Customer()));
+        assertNull(customerDAO.saveCustomer(new Customer()));
     }
 
     @Test

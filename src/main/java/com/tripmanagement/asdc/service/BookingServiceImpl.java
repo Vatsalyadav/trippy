@@ -51,6 +51,8 @@ public class BookingServiceImpl implements BookingService {
 		try {
 			logger.info("Inside saveRide method of BookingServiceImpl");
 			Trip trip = tripDAO.getTripDetails(booking.getTrip_id());
+			if(trip==null)
+				return false;
 			if ((trip.getSeats_remaining()) - booking.getSeats_booked() >= 0) {
 				booking.setCost(trip.getCost()*booking.getSeats_booked());
 				booking.setTimestamp(trip.getStart_time());
@@ -136,6 +138,9 @@ public class BookingServiceImpl implements BookingService {
 			return ServiceStringMessages.FAILURE;
 		Customer customer=customerDAO.getCustomerById(booking.getCustomer_id());
 		int cost_credits=(int) Math.ceil(booking.getCost());
+		Trip trip=tripDAO.getTripDetails(booking.getTrip_id());
+		if(trip==null||customer==null)
+			return ServiceStringMessages.FAILURE;
 		if(customer.getAvailable_credits()>= cost_credits)
 		{
 			bookedRidesDAO.updateIsPaid(customer.getCustomer_id(), booking.getBooked_ride_id());

@@ -21,7 +21,6 @@ class VehicleOwnerDAOImplTest {
         vehicleOwner.setEmail("test@email.test");
         vehicleOwner.setPassword("123456");
         vehicleOwner.setVehicleOwner_id(1111111);
-
         vehicleOwner.setPhone("1234567890");
         assertTrue(vehicleOwnerDAO.saveVehicleOwner(vehicleOwner));
     }
@@ -34,7 +33,6 @@ class VehicleOwnerDAOImplTest {
         vehicleOwner.setEmail("test@email.test");
         vehicleOwner.setPassword("123456");
         vehicleOwner.setVehicleOwner_id(1111111);
-
         vehicleOwner.setPhone("1234567890");
         assertFalse(vehicleOwnerDAO.saveVehicleOwner(vehicleOwner));
     }

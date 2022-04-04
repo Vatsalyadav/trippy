@@ -142,4 +142,5 @@ class TripServiceImplTest {
         Trip trip = new Trip();
         assertTrue(tripService.calculateCost(vehicle,trip)==0);
     }
+
 }
