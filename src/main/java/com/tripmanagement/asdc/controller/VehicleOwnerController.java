@@ -1,8 +1,6 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.Trip;
-import com.tripmanagement.asdc.model.Vehicle;
-import com.tripmanagement.asdc.model.VehicleOwner;
+import com.tripmanagement.asdc.model.*;
 import com.tripmanagement.asdc.service.TripService;
 import com.tripmanagement.asdc.service.VehicleOwnerService;
 import com.tripmanagement.asdc.service.VehicleService;
@@ -10,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -88,4 +87,13 @@ public class VehicleOwnerController {
         return "owner-dashboard";
     }
 
+    @PostMapping("/add-credits-owner")
+    public String addCreditsOwner(Credits credits, HttpSession session, Model model) {
+        System.out.println("credits "+credits.getCredits());
+        System.out.println("credits "+credits.getUserId());
+        vehicleOwnerService.buyCredits(credits.getUserId(), credits.getCredits());
+        VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByOwnerId(credits.getUserId());
+        session.setAttribute("vehicleOwner", vehicleOwner);
+        return "payment";
+    }
 }
