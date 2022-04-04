@@ -6,5 +6,6 @@ public interface Constants {
     public static final String GOOD="GOOD";
     public static final String BAD="BAD";
     public static final String AVERAGE="AVERAGE";
+    public static final int INITIAL_CREDITS=500;
 
 }
