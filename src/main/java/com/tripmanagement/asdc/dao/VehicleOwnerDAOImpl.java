@@ -28,7 +28,14 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 		if(vehicleOwner==null||vehicleOwner.getEmail()==null)
 		return false;
 		try{
-        String sql = "insert into vehicleowner values("+null+",'"+vehicleOwner.getVehicleowner_fname()+"','"+vehicleOwner.getVehicleowner_lname()+"','"+vehicleOwner.getPhone()+"','"+vehicleOwner.getEmail()+"','"+vehicleOwner.getPassword()+"',"+vehicleOwner.getAvailable_credits()+");";
+			String vehicleowner_fname = vehicleOwner.getVehicleowner_fname();
+			String vehicleowner_lname = vehicleOwner.getVehicleowner_lname();
+			String phone = vehicleOwner.getPhone();
+			String query1 = vehicleowner_fname + "','" + vehicleowner_lname + "','" + phone;
+			String email = vehicleOwner.getEmail();
+			String password = vehicleOwner.getPassword();
+			String query2 = email + "','" + password + "'," + vehicleOwner.getAvailable_credits();
+			String sql = "insert into vehicleowner values(" + null + ",'" + query1 + "','" + query2 + ");";
         jdbcTemplate.update(sql);
 			return true;
 	}
