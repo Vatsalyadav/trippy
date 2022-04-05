@@ -28,20 +28,7 @@ public class VehicleController {
 
     @Autowired
     VehicleOwnerService vehicleOwnerService;
-//
-//    @PostMapping("/add-vehicle")
-//    public String addVehicle(Vehicle vehicle, Model model) {
-//        Boolean addVehicleStatus = vehicleService.addVehicle(vehicle);
-//        model.addAttribute("addVehicleStatus",addVehicleStatus);
-//        return "owner-dashboard";
-//    }
-//
-//    @PostMapping("/delete-vehicle")
-//    public String deleteVehicle(Vehicle vehicle, Model model) {
-//        Boolean deleteVehicleStatus = vehicleService.deleteVehicle(vehicle.getVehicle_id());
-//        model.addAttribute("deleteVehicleStatus",deleteVehicleStatus);
-//        return "owner-dashboard";
-//    }
+
 
     @PostMapping("/add-fuel-economy")
     public String addTripDetails(FuelEconomy fuelEconomy, Model model) {

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/*Service class for Vehicle contains logic related to vehicle and fuel economy of teh vehicle. This class interacts with the Vehicle DAO and Fueleconomy DAO  for database operations*/
 @Service
 public class VehicleServiceImpl implements VehicleService {
 
@@ -22,6 +23,7 @@ public class VehicleServiceImpl implements VehicleService {
 	@Autowired
 	FuelEconomyDAO fuelEconomyDAO;
 
+	//This method interacts with VehicleDAO to save vehicleOwner into the database
 	@Override
 	@Transactional
 	public boolean addVehicle(Vehicle vehicle) {
@@ -44,6 +46,7 @@ public class VehicleServiceImpl implements VehicleService {
 		}
 	}
 
+	//This method interacts with VehicleDAO to get vehicle details by vehicle_id
 	@Override
 	@Transactional
 	public Vehicle getVehicleDetails(int vehicle_id) {
@@ -57,6 +60,7 @@ public class VehicleServiceImpl implements VehicleService {
 		}
 	}
 
+	//This method interacts with VehicleDAO to get list of vehicles by vehicleOwner_id
 	@Override
 	@Transactional
 	public List<Vehicle> getVehicles(int vehicleOwnerId) {
@@ -70,6 +74,7 @@ public class VehicleServiceImpl implements VehicleService {
 		}
 	}
 
+	//This method interacts with vehicle DAO and fuel economy DAO to update fuel economy of a vehicle and add new entry in the fuelEconomy table
 	@Override
 	@Transactional
 	public boolean updateFuelEconomy(FuelEconomy fuelEconomy) {
@@ -93,6 +98,7 @@ public class VehicleServiceImpl implements VehicleService {
 		}
 	}
 
+	//This method interacts with VehicleDAO to delete vehicle from the database
 	@Override
 	@Transactional
 	public boolean deleteVehicle(int vehicleId) {
@@ -105,6 +111,7 @@ public class VehicleServiceImpl implements VehicleService {
 		}
 	}
 
+	//This method contains formula to calculate fuel economy of a vehicle
 	@Override
 	public float setFuel_economy(float kms_driven, float fuel_consumed) {
 		float fuelEconomy = 0.00f;
@@ -114,6 +121,7 @@ public class VehicleServiceImpl implements VehicleService {
 		return (float) Math.round(fuelEconomy * 100.0) / 100.0f;
 	}
 
+	//This method is used to get Fuel economy status based on the value of the fuel economy
 	private String getFuelEconomyStatus(float fuelEconomy) {
 		if (fuelEconomy > 13)
 			return Constants.GOOD;
@@ -122,6 +130,7 @@ public class VehicleServiceImpl implements VehicleService {
 		else return Constants.AVERAGE;
 	}
 
+	//This method interacts with Fuel economy DAO to save new fuel economy in fuelEconomy table
 	@Override
 	public boolean saveFuelEconomy(FuelEconomy fuelEconomy) {
 		if(fuelEconomy==null)

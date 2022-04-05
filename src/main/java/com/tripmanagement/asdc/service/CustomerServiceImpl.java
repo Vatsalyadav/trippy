@@ -11,6 +11,7 @@ import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/*Service class for customer contains logic related to customer. This class interacts with the customer DAO class for database operations*/
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -20,6 +21,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private NotificationService notificationService;
 
+	//This method contains logic for saving customer before saving it to the database using booking DAO
 	@Override
 	@Transactional
 	public boolean saveCustomer(User user) {
@@ -43,6 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 	}
 
+	//This method gets Customer by his email using customer DAO 
 	@Override
 	@Transactional
 	public Customer getCustomerByEmail(String email) {
@@ -58,6 +61,7 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 	}
 
+	//This method gets Customer by his id using customer DAO
 	@Override
 	@Transactional
 	public Customer getCustomerById(int id) {
@@ -71,6 +75,7 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 	}
 
+	//This method is used to update credits using customer DAO when customer hits buy credits
 	@Override
 	@Transactional
 	public boolean buyCredits(int customer_id, int credits) {

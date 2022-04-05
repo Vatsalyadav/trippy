@@ -36,24 +36,9 @@ public class CustomerController {
     {
         String source = trip.getSource();
         String destination = trip.getDestination();
-        int availableRides = tripService.getAvailableTripsList(source, destination).size();
-        String numAvailableRides = "Available rides: " + availableRides;
-        System.out.println(availableRides);
-        model.addAttribute("listOfRides", tripService.getAvailableTripsList(trip.getSource(),trip.getDestination()));
+        model.addAttribute("listOfRides", tripService.getAvailableTripsList(source,destination));
         return "customer-dashboard";
     }
-//
-//    @GetMapping("/get-booked-rides")
-//    public String getBookedRides(String customerId, Model model) {
-//        // call service with rideData
-//        return "";
-//    }
-//
-//    @GetMapping("/ride-history")
-//    public String getRideHistory(String customerId, Model model) {
-//
-//        return "";
-//    }
 
     @PostMapping("/book-ride")
     public String bookRide(Booking booking, HttpSession session, Model model) {

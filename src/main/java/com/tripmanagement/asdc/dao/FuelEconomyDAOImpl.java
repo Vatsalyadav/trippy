@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/*Class contains methods specific to database operations on fueleconomy table*/
 @Repository
 public class FuelEconomyDAOImpl implements FuelEconomyDAO {
 
@@ -16,7 +17,7 @@ public class FuelEconomyDAOImpl implements FuelEconomyDAO {
 
 	Logger logger = LoggerFactory.getLogger(FuelEconomyDAOImpl.class);
 
-
+    //This method is used to insert fuelEconomy object into the database
 	@Override
 	public boolean saveFuelEconomy(FuelEconomy fuel_economy) {
 		if(fuel_economy==null)
