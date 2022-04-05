@@ -15,8 +15,14 @@
     <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
     <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script crossorigin="anonymous"
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+            setTimeout(function() {
+                $('#alertDiv').fadeOut('fast');
+            }, 2500);
+        </script>
     <script>
         $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
             icons: {
@@ -59,7 +65,14 @@
     <main>
         <div class="container-fluid">
             <h1 class="mt-4" style="font-family: 'Courgette';font-size: 34px; margin-left: 50px"
-                th:text="'Good Evenin ' + ${session.vehicleOwner.vehicleowner_fname} + '!'"/>
+                th:text="'Hey' + ${session.vehicleOwner.vehicleowner_fname} + '!'"/>
+            <div th:if="!${message==null}">
+                <div style="width:400px; position: absolute; top: 70px;right: 5px;" id="alertDiv" class="alert alert-cyan alert-solid"
+                     th:classappend="${messageStatus=='FAILURE'?'alert-pink':'alert-cyan'}"
+                     th:text="${message}" role="alert">
+                    <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8">
