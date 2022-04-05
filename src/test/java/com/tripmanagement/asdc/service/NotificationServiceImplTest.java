@@ -22,7 +22,7 @@ NotificationService notificationService;
     }
     @Test
     void testsendEmailnullsubject(){
-        assertTrue(notificationService.sendEmail("test case",null,"dharmaysureja@gmail.com"));
+        assertFalse(notificationService.sendEmail("test case",null,"dharmaysureja@gmail.com"));
     }
     @Test
     void testsendEmailnullemail(){

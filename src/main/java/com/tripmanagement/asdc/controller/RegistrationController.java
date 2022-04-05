@@ -85,7 +85,7 @@ public class RegistrationController {
      * */
     @RequestMapping("/forgot-password")
     public String forgotPassword() {
-        return "forgot-password";
+        return "forgot";
     }
 
     /*

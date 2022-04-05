@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -125,24 +126,15 @@ public class TestController {
     @Test
     public void testregisterUserNewVehicleOwner() throws Exception {
         when(registrationService.checkUserExistByEmail(any())).thenReturn(false);
-
-        User user = new User();
-        user.setUserType("Vehicle Owner");
-        when(user.getUserType()).thenReturn(user.getUserType());
-        mockMvc.perform(post("/register-user"))
+        mockMvc.perform(post("/register-user").param("userType","Vehicle Owner"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("login"));
     }
 
     @Test
     public void testRegisterUserNew() throws Exception {
-        User user = Mockito.mock(User.class);
-//        when(user.getUserType()).thenReturn("Vehicle Owner");
-//        when(user.getUserType().equals("Vehicle Owner")).thenReturn(true);
-//        doReturn(true).when(user).getUserType().equals("Vehicle Owner");
-        doReturn("Vehicle Owner").when(user).getUserType();
         when(registrationService.checkUserExistByEmail(any())).thenReturn(false);
-        mockMvc.perform(post("/register-user"))
+        mockMvc.perform(post("/register-user").param("userType","Vehicle Owner"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("login"));
     }
@@ -152,7 +144,7 @@ public class TestController {
 
         mockMvc.perform(get("/forgot-password"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("forgot-password"));
+                .andExpect(view().name("forgot"));
     }
 
     @Test
