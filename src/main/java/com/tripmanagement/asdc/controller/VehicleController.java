@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @Controller
 public class VehicleController {
@@ -30,23 +29,39 @@ public class VehicleController {
         vehicleService.updateFuelEconomy(fuelEconomy);
         int vehicleOwnerId = vehicleService.getVehicleDetails(fuelEconomy.getVehicle_id()).getVehicleowner_id();
         httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwnerId));
-    return "owner-dashboard";
+        return "owner-dashboard";
     }
 
     @PostMapping("/add-trip")
-    public String addTripDetailsAll(FuelEconomy fuelEconomy, ModelAndView model, HttpSession httpSession) {
+    public String addTripDetailsAll(FuelEconomy fuelEconomy, Model model, HttpSession httpSession) {
         vehicleService.updateFuelEconomy(fuelEconomy);
         int vehicleOwnerId = vehicleService.getVehicleDetails(fuelEconomy.getVehicle_id()).getVehicleowner_id();
         httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwnerId));
+        getChartData(vehicleOwnerId, model);
         return "all-vehicles";
     }
 
     @RequestMapping("/show-all-vehicles")
     public String showAllVehicles(HttpSession session, Model model){
-        ArrayList<ChartData> vehicleUseChart = vehicleService.getFuelConsumedChart( ((VehicleOwner)session.getAttribute("vehicleOwner")).getVehicleOwner_id());
+        getChartData(((VehicleOwner)session.getAttribute("vehicleOwner")).getVehicleOwner_id(), model);
+        return "all-vehicles";
+    }
+
+    @PostMapping("/add-new-vehicle")
+    public String addNewVehicle(Vehicle vehicle, Model model, HttpSession session) {
+        if (vehicleService.addVehicle(vehicle))
+            model.addAttribute("addVehicleStatus", "Vehicle added successfully");
+        else
+            model.addAttribute("addVehicleStatus", "Vehicle adding failed");
+        session.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicle.getVehicleowner_id()));
+        getChartData(vehicle.getVehicleowner_id(), model);
+        return "all-vehicles";
+    }
+
+    private void getChartData(int vehicleOwnerId, Model model){
+        ArrayList<ChartData> vehicleUseChart = vehicleService.getFuelConsumedChart(vehicleOwnerId);
         model.addAttribute("vehicleKmChartDataset",vehicleUseChart.get(0));
         model.addAttribute("vehicleFuelChartDataset",vehicleUseChart.get(1));
-        return "all-vehicles";
     }
 
 
