@@ -75,7 +75,7 @@ public class TripServiceImpl implements TripService {
 			List<Trip> allTrips = tripDAO.getAllTripsForVehicleOwner(vehicleOwnerId);
 			List<Trip> upcomingTrips = new ArrayList<>();
 			for (Trip trip : allTrips) {
-				float cost=(float) Math.round(trip.getCost() * 100.0) / 100.0f;
+				float cost=(float) Math.ceil(trip.getCost());
 				trip.setCost(cost);
 				String start_time = trip.getStart_time().replace("T", " ");
 				String current_time = Utility.getCurrentTime();
@@ -113,7 +113,7 @@ public class TripServiceImpl implements TripService {
 			List<Ride> rideList = new ArrayList<>();
 			List<Trip> tripList = tripDAO.getAvailableTripsList(source, destination, Utility.getCurrentTime().toString());
 			for (Trip trip : tripList) {
-				float cost=(float) Math.round(trip.getCost() * 100.0) / 100.0f;
+				float cost=(float) Math.ceil(trip.getCost());
 				trip.setCost(cost);
 				Vehicle vehicle = vehicleDAO.getVehicleDetails(trip.getVehicle_id());
 				VehicleOwner vehicleOwner = vehicleOwnerDAO
@@ -151,7 +151,7 @@ public class TripServiceImpl implements TripService {
 		} else if (vehicle.getAvailable_seats() == 0) {
 			cost= 0;
 		} else {
-			cost= 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * vehicle.getAvailable_seats()));
+			cost= 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * trip.getAvailable_seats()));
 			cost=(float) Math.round(cost * 100.0) / 100.0f;
 		}
 		return cost;
@@ -164,7 +164,7 @@ public class TripServiceImpl implements TripService {
 			List<Trip> allTrips = tripDAO.getAllTripsForVehicleOwner(vehicleOwnerId);
 			List<Trip> previousTrips = new ArrayList<>();
 			for (Trip trip : allTrips) {
-				float cost=(float) Math.round(trip.getCost() * 100.0) / 100.0f;
+				float cost=(float) Math.ceil(trip.getCost());
 				trip.setCost(cost);
 				String end_time = trip.getEnd_time().replace("T", " ");
 				trip.setStart_time(Utility.convertDate(trip.getStart_time()));
