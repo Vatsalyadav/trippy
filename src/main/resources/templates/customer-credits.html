@@ -23,9 +23,8 @@
 <nav class="sb-topnav navbar shadow fixed-top navbar-expand navbar-dark bg-dark">
     <img class="navbar-brand ps-3" th:src="@{/images/trippy.svg}" height="50px" width="100%" th:onclick="|window.location.href='/customer-dashboard'|">
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
-    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/booking-history'|">Bookings</button>
-<!--  rrr  <label class="text-light" th:text="${session.vehicleOwner.vehicleowner_fname}"></label>-->
-    <label class="text-light" th:text="${session.customer.customer_fname}"></label>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 20px" th:onclick="|window.location.href='/booking-history'|">Bookings</button>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/open-credit-customer'|"><i class="fas fa-dollar-sign"></i> <span th:text="${session.customer.available_credits}+' Credit'"></span></button>
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"

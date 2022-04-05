@@ -84,14 +84,14 @@ var radarChartKm = new Chart(kmCanvas, {
     <img class="navbar-brand ps-3" th:src="@{/images/trippy.svg}" height="50px" width="100%" th:onclick="|window.location.href='/owner-dashboard'|">
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
     <button class="btn btn-outline-light" type="button" style="margin-right: 20px" th:onclick="|window.location.href='/ride-history'|">Rides</button>
-    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/open-credit'|">Credit</button>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 10px" th:onclick="|window.location.href='/open-owner-credit'|"><i class="fas fa-dollar-sign"></i> <span th:text="${session.vehicleOwner.available_credits}"></span></button>
     <label class="text-light" th:text="${session.vehicleOwner.vehicleowner_fname}"></label>
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
                id="navbarDropdown" role="button"><i class="fas fa-user fa-fw"></i></a>
             <ul aria-labelledby="navbarDropdown" class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#!">Logout</a></li>
+                <li><a class="dropdown-item" th:onclick="|window.location.href='/'|">Logout</a></li>
             </ul>
         </li>
     </ul>
@@ -122,7 +122,7 @@ var radarChartKm = new Chart(kmCanvas, {
                                                     type="button"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form method="post" th:action="@{/add-vehicle}"
+                                            <form method="post" th:action="@{/add-new-vehicle}"
                                                   th:object="${vehicle}">
                                                 <label class="text-secondary">Brand:</label><br/>
                                                 <input class="form-control" id="brand"
