@@ -48,10 +48,7 @@ TripDAO tripDAO;
     }
     @Test
     void saveCorrectTripIllegaldestination() {
-//        " + null + ",'" + trip.getSource() + "','" + trip.getDestination()
-//                + "'," + trip.getEstimated_kms() + "," + trip.getVehicle_id() + "," + trip.getKms_travelled() + ","
-//                + trip.getAvailable_seats() + ",'" + trip.getStart_time() + "','" + trip.getEnd_time() + "',"
-//                + trip.getSeats_remaining() + "," + trip.getCost() + ",'" + trip.getVehicle_owner_id() + "');";
+
         Trip trip=new Trip();
         trip.setVehicle_id(5);
         trip.setSource("test_source");
@@ -67,11 +64,6 @@ TripDAO tripDAO;
         assertFalse(tripDAO.saveTrip(trip));
     }
 
-
-    @Test
-    void deleteWrongTrip() {
-      assertFalse(tripDAO.deleteTrip(00));
-    }
 
     @Test
     void getAllTripsForCorrectVehicleOwner(){
@@ -96,34 +88,6 @@ TripDAO tripDAO;
         assertNull(tripDAO.getTripDetails(00));
     }
 
-//    @Test
-//    void testGetCorrectUpcomingTripsForVehicleOwner() {
-//        assertTrue(tripDAO.getUpcomingTripsForVehicleOwner(14, Date.valueOf("2022-01-01").toString()).size()>=0);
-//    }
-//    @Test
-//    void testGetUpcomingTripsForVehicleOwnerIllegaldate() {
-//        assertTrue(tripDAO.getUpcomingTripsForVehicleOwner(14, Date.valueOf("2022-01-01\'").toString()).size()>=0);
-//    }
-//
-//    @Test
-//    void testGetWrongUpcomingTripsForVehicleOwner() {
-//        assertFalse(tripDAO.getUpcomingTripsForVehicleOwner(00,Date.valueOf("2022-01-01").toString()).size()<=0);
-//    }
-//
-//    @Test
-//    void testGetCorrectPreviousTripsForVehicleOwner() {
-//        assertTrue(tripDAO.getPreviousTripsForVehicleOwner(12,Date.valueOf("2022-01-01").toString()).size()>=0);
-//    }
-//    @Test
-//    void testGetPreviousTripsForVehicleOwnerIllegalTime() {
-//        assertTrue(tripDAO.getPreviousTripsForVehicleOwner(12,Date.valueOf("2022-01-01\'").toString()).size()>=0);
-//    }
-//
-//    @Test
-//    void testGetWrongPreviousTripsForVehicleOwner_false() {
-//        assertTrue(tripDAO.getPreviousTripsForVehicleOwner(00,Date.valueOf("2022-01-01").toString()).size()<=0);
-//    }
-//
     @Test
     void testGetAvailableTripsList() {
         assertTrue(tripDAO.getAvailableTripsList("Halifax","Lucknow",Date.valueOf("2022-01-01").toString()).size()>=0);

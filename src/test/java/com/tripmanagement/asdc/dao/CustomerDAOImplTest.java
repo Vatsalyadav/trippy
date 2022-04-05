@@ -29,7 +29,9 @@ CustomerDAO customerDAO;
 
     @Test
     void testSaveEmptyCustomer() {
-        assertNull(customerDAO.saveCustomer(new Customer()));
+        Customer customer = new Customer();
+        customer.setCustomer_fname("");
+        assertFalse(customerDAO.saveCustomer(customer));
     }
 
     @Test

@@ -21,8 +21,9 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringJUnit4ClassRunner.class)
 class CustomerServiceImplTest {
 
-    @InjectMocks
+    @Autowired
     CustomerServiceImpl customerService;
+
     @Mock
     CustomerDAO customerDAO;
     @Mock
@@ -45,22 +46,13 @@ class CustomerServiceImplTest {
     void testSaveCustomerCorrect() {
 
         User user = new User();
-        user.setFirst_name("Vatsal");
+        user.setFirst_name("test");
         user.setLast_name("case");
         user.setEmail("test@case.com");
-        user.setPassword("123456");
+        user.setPassword("1234563");
         user.setUserType("CUSTOMER");
 
-        Customer customer = new Customer();
-        customer.setCustomer_fname("Sania");
-        customer.setCustomer_id(1);
-        customer.setCustomer_lname("kumar");
-        customer.setEmail("someemal@dal.ca");
-        customer.setPassword("password");
-
-        when(customerDAO.saveCustomer(customer)).thenReturn(true);
-        boolean result = customerService.saveCustomer(user);
-        assertTrue(result);
+        assertTrue(customerService.saveCustomer(user));
     }
 
     @Test
@@ -132,12 +124,7 @@ class CustomerServiceImplTest {
 
     @Test
     void testGetCustomerByWrongId(){
-        int id = -1;
-        Customer customer = new Customer();
-        when(customerDAO.getCustomerById(id)).thenReturn(customer);
-        Customer result= customerService.getCustomerById(id);
-        assertEquals(result.toString(),"Customer{customer_id=0, customer_fname='null', customer_lname='null', mobile_no='null', available_seats='0', email='null', password='null'}");
-       // assertNull(customerService.getCustomerById(-1));
+        assertEquals(customerService.getCustomerById(0),null);
     }
     @Test
     void testGetCustomerByCorrectId(){

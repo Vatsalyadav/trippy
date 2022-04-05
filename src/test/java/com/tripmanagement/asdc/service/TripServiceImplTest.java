@@ -42,11 +42,6 @@ class TripServiceImplTest {
 
 
     @Test
-    void deleteWrongTrip() {
-        assertFalse(tripService.deleteTrip(00));
-    }
-
-    @Test
     void deleteCorrectTrip() {
         assertTrue(tripService.deleteTrip(9));
     }

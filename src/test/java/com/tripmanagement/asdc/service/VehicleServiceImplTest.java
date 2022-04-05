@@ -51,12 +51,12 @@ class VehicleServiceImplTest {
     @Test
     void testupdateFuelEconomy_true() {
         FuelEconomy fuelEconomy = new FuelEconomy();
-        fuelEconomy.setVehicle_id(11111111);
-        fuelEconomy.setFuel_economy(22);
-        fuelEconomy.setKms_travelled(2020);
-        fuelEconomy.setFuel_consumed(123);
+        fuelEconomy.setVehicle_id(1);
+        fuelEconomy.setFuel_economy(12);
+        fuelEconomy.setKms_travelled(202);
+        fuelEconomy.setFuel_consumed(12);
         assertTrue(vehicleService.updateFuelEconomy(fuelEconomy));
-        //assertTrue(vehicleService.updateFuelEconomy(1111,855,22));
+
     }
 
     @Test

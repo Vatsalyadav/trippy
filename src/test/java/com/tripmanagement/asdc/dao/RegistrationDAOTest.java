@@ -93,7 +93,6 @@ class RegistrationDAOTest {
 
     @Test
     void testCheckEmailEmptyPassword() {
-        //assertNull(registrationDAO.checkEmailPassword("svt@gmailcom", ""));
         assertEquals(registrationDAO.checkEmailPassword("svt@gmailcom",""),"Incorrect email or password");
     }
 

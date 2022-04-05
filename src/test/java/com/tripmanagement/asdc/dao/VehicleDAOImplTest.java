@@ -80,11 +80,6 @@ class VehicleDAOImplTest {
     }
 
     @Test
-    void deleteVehicle_false() {
-        int vehicleId = -1;
-        assertFalse(vehicleDAO.deleteVehicle(vehicleId));
-    }
-    @Test
     void testupdateVehicleFuelEconomyCorrect(){
         Vehicle vehicle= new Vehicle();
         vehicle.setVehicle_id(11111111);
