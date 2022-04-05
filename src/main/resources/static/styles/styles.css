@@ -12070,3 +12070,14 @@ ride-h1 {
   padding-left:60px;
 }
 
+.alert-cyan {
+    color: #007c80;
+    background-color: #ccf5f7;
+    border-color: #b3f1f2;
+}
+
+.alert-pink {
+    color: #880035;
+    background-color: #f9ccde;
+    border-color: #f7b3cd;
+}
