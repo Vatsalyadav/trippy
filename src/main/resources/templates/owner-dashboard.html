@@ -182,7 +182,6 @@
                                                                 <h3 th:text="'Fuel Economy: '+${vehicle.fuel_economy}"></h3>
                                                             </div>
                                         <a th:attr="data-bs-target='#modalAddFuelEconomy'+${vehicle.vehicle_id}" data-bs-toggle="modal">Add trip</a>
-                                                            <a th:object="${vehicle}" th:href="@{/show-trip-history}">Show trips</a>
                                             <!-- Modal -->
                                             <div aria-hidden="true" aria-labelledby="myLargeModalLabel"
                                                  class="modal fade" th:id="modalAddFuelEconomy+${vehicle.vehicle_id}" role="dialog"
