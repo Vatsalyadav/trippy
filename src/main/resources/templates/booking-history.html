@@ -57,6 +57,9 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <label class="text-secondary" style="font-weight:bold; font-size:22px">Upcoming Bookings</label>
+                                <div th:if="${#lists.size(session.upcomingRides)==0}">
+                                    <label class="text-secondary" style="font-weight:bold; font-size:14px" >No Upcoming Bookings Available</label>
+                                </div>
                                 <div class="page-wrapper"  th:each="upcomingRide: ${session.upcomingRides}">
                                     <form th:action="@{/pay-ride}" th:object="${booking}" method="post">
                                         <!-- FIRST CARD -->
@@ -108,6 +111,9 @@
                         <br>
                         <div class="container-fluid">
                                 <label class="text-secondary" style="font-weight:bold; font-size:22px" >Previous Bookings</label>
+                            <div th:if="${#lists.size(session.previousRides)==0}">
+                                <label class="text-secondary" style="font-weight:bold; font-size:14px" >No Upcoming Bookings Available</label>
+                            </div>
                             <div class="page-wrapper"  th:each="previousRide: ${session.previousRides}">
                                 <form th:action="@{/pay-ride}" th:object="${booking}" method="post">
                                     <!-- FIRST CARD -->
@@ -195,6 +201,8 @@
         </div>
     </footer>
 </div>
+<br>
+<br>
 </div>
 <script crossorigin="anonymous"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
