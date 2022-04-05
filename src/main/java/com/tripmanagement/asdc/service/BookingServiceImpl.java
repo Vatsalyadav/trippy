@@ -62,8 +62,10 @@ public class BookingServiceImpl implements BookingService {
 				boolean isSuccess = bookedRidesDAO.saveRide(booking);
 				if (isSuccess) {
 					logger.info("Successfully booked seats");
-					notificationService.sendEmail(ServiceStringMessages.RIDE_BOOKED_SUCCESSFULLY+trip.getSource()+" to "+trip.getDestination(), ServiceStringMessages.RIDE_BOOKED,
-							customerDAO.getCustomerById(booking.getCustomer_id()).getEmail());
+					String email = customerDAO.getCustomerById(booking.getCustomer_id()).getEmail();
+					String message = ServiceStringMessages.RIDE_BOOKED_SUCCESSFULLY + trip.getSource() + "-->" + trip.getDestination();
+					notificationService.sendEmail(message, ServiceStringMessages.RIDE_BOOKED,
+							email);
 					tripDAO.updateAvailableSeats(trip.getTrip_id(),
 							trip.getSeats_remaining() - booking.getSeats_booked());
 					logger.info("Successfully sent notification");
@@ -143,10 +145,11 @@ public class BookingServiceImpl implements BookingService {
 		if(customer.getAvailable_credits()>= cost_credits)
 		{
 			bookedRidesDAO.updateIsPaid(customer.getCustomer_id(), booking.getBooked_ride_id());
-			VehicleOwner vehicleOwner=vehicleOwnerDAO.getVehicleOwnerById(tripDAO.getTripDetails(booking.getTrip_id()).getVehicle_owner_id());
+			int vehicle_owner_id = tripDAO.getTripDetails(booking.getTrip_id()).getVehicle_owner_id();
+			VehicleOwner vehicleOwner=vehicleOwnerDAO.getVehicleOwnerById(vehicle_owner_id);
 			int increment_credits=vehicleOwner.getAvailable_credits()+cost_credits;
 			int decrease_credits=customer.getAvailable_credits()-cost_credits;
-			vehicleOwnerDAO.updateAvaialableCredits(vehicleOwner.getVehicleOwner_id(), increment_credits);
+			vehicleOwnerDAO.updateAvaialableCredits(vehicle_owner_id, increment_credits);
 			customerDAO.updateAvaialableCredits(customer.getCustomer_id(), decrease_credits);
 			return ServiceStringMessages.SUCCESS;
 		}

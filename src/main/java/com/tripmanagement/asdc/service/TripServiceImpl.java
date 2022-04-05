@@ -46,12 +46,16 @@ public class TripServiceImpl implements TripService {
 			trip.setCost(calculateCost(vehicleDAO.getVehicleDetails(trip.getVehicle_id()), trip));
 			trip.setSeats_remaining(trip.getAvailable_seats());
 			boolean isSuccess = tripDAO.saveTrip(trip);
-			if (isSuccess)
-				notificationService.sendEmail(ServiceStringMessages.RIDE_CREATED_SUCCESSFULLY+trip.getSource()+" to "+trip.getDestination(), ServiceStringMessages.RIDE_CREATED,
-						vehicleOwnerDAO
-								.getVehicleOwnerById(
-										vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id())
-								.getEmail());
+			if (isSuccess) {
+				String message = ServiceStringMessages.RIDE_CREATED_SUCCESSFULLY + trip.getSource() + "-->" + trip.getDestination();
+				int vehicleowner_id = vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id();
+				String email = vehicleOwnerDAO
+						.getVehicleOwnerById(
+								vehicleowner_id)
+						.getEmail();
+				notificationService.sendEmail(message, ServiceStringMessages.RIDE_CREATED,
+						email);
+			}
 			return isSuccess;
 		} catch (Exception e) {
 			return false;
@@ -121,15 +125,23 @@ public class TripServiceImpl implements TripService {
 				float cost=(float) Math.ceil(trip.getCost());
 				trip.setCost(cost);
 				Vehicle vehicle = vehicleDAO.getVehicleDetails(trip.getVehicle_id());
-				VehicleOwner vehicleOwner = vehicleOwnerDAO
-						.getVehicleOwnerById(vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id());
+				int vehicleowner_id = vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id();
+				VehicleOwner vehicleOwner = vehicleOwnerDAO.getVehicleOwnerById(vehicleowner_id);
 				String start_time = trip.getEnd_time().replace("T", " ");
 				//Float value
 				trip.setStart_time(Utility.convertDate(trip.getStart_time()));
 				trip.setEnd_time(Utility.convertDate(trip.getEnd_time()));
-				Ride ride = new Ride(trip, vehicle.getVehicle_id(), vehicle.getNumber_plate(),
-						vehicle.getFuel_economy(), vehicleOwner.getVehicleowner_fname(), vehicle.getVehicleowner_id(),
-						vehicleOwner.getPhone(), calculateCost(vehicle, trip), trip.getAvailable_seats());
+				int id = vehicle.getVehicle_id();
+				String number_plate = vehicle.getNumber_plate();
+				float economy = vehicle.getFuel_economy();
+				String fname = vehicleOwner.getVehicleowner_fname();
+				int ownerId = vehicle.getVehicleowner_id();
+				String phone = vehicleOwner.getPhone();
+				float cost = calculateCost(vehicle, trip);
+				int seats = trip.getAvailable_seats();
+				Ride ride = new Ride(trip, id, number_plate,
+						economy, fname, ownerId,
+						phone, cost, seats);
 				if(trip.getSeats_remaining()>0)
 				{
 				String current_time = Utility.getCurrentTime();
@@ -190,14 +202,14 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
-	//This method interacts with tripDAO to get distinct sources from the database 
+	//This method interacts with tripDAO to get distinct sources from the database
 	@Override
 	@Transactional
 	public List<String> getSources() {
 		return tripDAO.getSources();
 	}
 
-	//This method interacts with tripDAO to get distinct destinations from the database 
+	//This method interacts with tripDAO to get distinct destinations from the database
 	@Override
 	@Transactional
 	public List<String> getDestinations() {
