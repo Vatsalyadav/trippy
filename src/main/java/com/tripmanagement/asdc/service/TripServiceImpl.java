@@ -118,6 +118,8 @@ public class TripServiceImpl implements TripService {
 	public List<Ride> getAvailableTripsList(String source, String destination) {
 		if (source == null || destination == null)
 			return null;
+		if(source.isEmpty()||destination.isEmpty())
+		return null;
 		try {
 			List<Ride> rideList = new ArrayList<>();
 			List<Trip> tripList = tripDAO.getAvailableTripsList(source, destination, Utility.getCurrentTime().toString());

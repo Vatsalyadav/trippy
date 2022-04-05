@@ -47,7 +47,6 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 			return false;
 
 		}
-		
 	}
 
 	//This method returns vehicleOwner by email
@@ -79,7 +78,6 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 		{
 			logger.error("Error getting vehicleOwner by email ",e);
 			return null;
-
 		}
 	}
 
@@ -114,7 +112,6 @@ public class VehicleOwnerDAOImpl implements VehicleOwnerDAO {
 	
 			}
     }
-
 }
 
 
