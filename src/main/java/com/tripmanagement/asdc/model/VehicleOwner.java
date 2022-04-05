@@ -1,100 +1,121 @@
 package com.tripmanagement.asdc.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+//Entity class for vehicleOwner table
 @Entity
 @Table(name="vehicleowner")
 public class VehicleOwner {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="vehicleowner_id")
-	private int vehicleowner_id;
-	
-	@Column(name="vehicleowner_name")
-	private String vehicleowner_name;
-	
-	
-	@Column(name="email")
-	private String email;
-	
-	@Column(name="address")
-	private String address;
-	
-	@Column(name="phone")
-	private String phone;
-	
-	@Column(name="vehicle_id")
-	private int vehicle_id;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="vehicleOwner_id")
+    private int vehicleOwner_id;
 
-	
+    @Column(name="vehicleowner_fname")
+    private String vehicleowner_fname;
 
-	public VehicleOwner() {
-		
-	}
+    @Column(name="vehicleowner_lname")
+    private String vehicleowner_lname;
 
-	public VehicleOwner(int vehicleowner_id, String vehicleowner_name, String email, String address, String phone, int vehicle_id) {
-		this.vehicleowner_id = vehicleowner_id;
-		this.vehicleowner_name = vehicleowner_name;
-		this.email = email;
-		this.address = address;
-		this.phone = phone;
-		this.vehicle_id=vehicle_id;
-	}
+    @Column(name="phone")
+    private String phone;
 
-	public int getVehicleowner_id() {
-		return vehicleowner_id;
-	}
+    @Column(name="email")
+    private String email;
 
-	public void setVehicleowner_id(int vehicleowner_id) {
-		this.vehicleowner_id = vehicleowner_id;
-	}
+    @Column(name="password")
+    private String password;
 
-	public String getVehicleowner_name() {
-		return vehicleowner_name;
-	}
+    @Column(name="available_credits")
+    private int available_credits;
 
-	public void setVehicleowner_name(String vehicleowner_name) {
-		this.vehicleowner_name = vehicleowner_name;
-	}
+    public VehicleOwner() {
 
-	public String getEmail() {
-		return email;
-	}
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public VehicleOwner(int vehicleOwner_id, String vehicleowner_fname, String vehicleowner_lname, String phone, String email, String password, int available_seats) {
+        this.vehicleOwner_id = vehicleOwner_id;
+        this.vehicleowner_fname = vehicleowner_fname;
+        this.vehicleowner_lname = vehicleowner_lname;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.available_credits=available_seats;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public String getVehicleowner_fname() {
+        return vehicleowner_fname;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setVehicleowner_fname(String vehicleowner_fname) {
+        this.vehicleowner_fname = vehicleowner_fname;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getVehicleowner_lname() {
+        return vehicleowner_lname;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setVehicleowner_lname(String vehicleowner_lname) {
+        this.vehicleowner_lname = vehicleowner_lname;
+    }
 
-	public int getVehicle_id() {
-		return vehicle_id;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setVehicle_id(int vehicle_id) {
-		this.vehicle_id = vehicle_id;
-	}
-		
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getVehicleOwner_id() {
+        return vehicleOwner_id;
+    }
+
+    public void setVehicleOwner_id(int vehicleOwner_id) {
+        this.vehicleOwner_id = vehicleOwner_id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    public int getAvailable_credits() {
+        return available_credits;
+    }
+
+    public void setAvailable_credits(int available_credits) {
+        this.available_credits = available_credits;
+    }
+
+    @Override
+    public String toString() {
+        String query1 = "VehicleOwner{" +
+                ", vehicleowner_fname='" + vehicleowner_fname + '\'';
+        String query2 = ", vehicleowner_lname='" + vehicleowner_lname + '\'' +
+                ", phone='" + phone + '\'';
+        String query3 = ", available_credits='" + available_credits + '\'' +
+                ", email='" + email + '\'';
+        String query4 = ", password='" + password + '\'' +
+                '}';
+        return query1 +
+                query2 +
+                query3 +
+                query4;
+    }
 }
 
 

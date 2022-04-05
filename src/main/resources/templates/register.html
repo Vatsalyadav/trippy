@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Register - Trip Management</title>
+    <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+            crossorigin="anonymous"></script>
+    <link rel="icon" th:href="@{/images/trippy.svg}" type="image/x-icon">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+            setTimeout(function() {
+                $('#alertDiv').fadeOut('fast');
+            }, 2500);
+        </script>
+</head>
+<body background="https://i.ibb.co/brsQ892/bg-final-login.jpg">
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div th:if="!${message==null}">
+                    <div style="width:400px; position: absolute; top: 70px;right: 5px;" id="alertDiv" class="alert alert-cyan alert-solid"
+                         th:classappend="${messageStatus=='FAILURE'?'alert-pink':'alert-cyan'}"
+                         th:text="${message}" role="alert">
+                        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4" ></h3>
+                                <img th:src="@{/images/trippy.svg}" height="100px" width="100%">
+                            </div>
+
+                            <div class="card-body">
+                                <form th:action="@{/register-user}" th:object="${user}" method="post">
+                                    <div>
+                                        <h3 class="text-center font-weight-light my-4">Create Account</h3>
+                                        <div class="d-flex justify-content-around">
+                                        <div class="form-radio">
+                                            <input class="form-check-input" id="selectVehicleOwner" type="radio" name="userType" value="VEHICLE_OWNER">
+                                            <label class="form-check-label" for="selectVehicleOwner">Vehicle Owner</label>
+                                            <input class="form-check-input" id="selectCustomer" type="radio" name="userType" checked value="Customer">
+                                            <label class="form-check-label" for="selectCustomer">Customer</label>
+                                        </div>
+                                        </div>
+                                        <br/>
+<!--                                        <input class="form-radio" id="selectVehicleOwner" name="userType" type="radio"-->
+<!--                                               placeholder="Vehicle Owner" value="Vehicle Owner" checked="checked"/>-->
+<!--                                        <label for="selectVehicleOwner">Vehicle Owner</label>-->
+<!--                                        <input class="form-radio" id="selectCustomer" name="userType" type="radio"-->
+<!--                                               placeholder="Customer" value="Customer"/>-->
+<!--                                        <label for="selectCustomer">Customer</label>-->
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <input class="form-control" id="first_name"
+                                                       name="first_name" type="text"
+                                                       placeholder="Enter your first name" required/>
+                                                <label for="first_name">First name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating">
+                                                <input class="form-control" id="last_name" name="last_name" type="text"
+                                                       placeholder="Enter your last name" required/>
+                                                <label for="last_name">Last name</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="email" name="email" type="email"
+                                               placeholder="name@example.com" pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
+                                               required=""/>
+                                        <div class="valid-feedback">Email field is valid!</div>
+                                        <div class="invalid-feedback">Email field cannot be blank!</div>
+                                        <label for="email">Email address</label>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <input class="form-control" id="password" name="password" type="password"
+                                                       placeholder="Create a password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required/>
+                                                <label for="password">Password</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <input class="form-control" id="inputPasswordConfirm" type="password"
+                                                       placeholder="Confirm password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required/>
+                                                <label for="inputPasswordConfirm">Confirm Password</label>
+                                            </div>
+                                        </div>
+                                        <label class="text-secondary" size="10px">* Must include one capital letter, small letter.</label>
+                                        <label class="text-secondary">* Must include one special character, one digit value 0-9.</label>
+                                    </div>
+                                    <div class="mt-4 mb-0">
+                                        <div class="d-grid">
+
+                                            <input class="btn-primary" type="submit" value="Create Account">
+                                            <!--                                                    <a class="btn btn-primary btn-block" th:href="@{register-vehicle-owner}">Create Account</a>-->
+
+                                        </div>
+                                    </div>
+<!--                                    <label class="form-check-label" th:text="${error_message}"></label>-->
+                                </form>
+                            </div>
+                            <div class="card-footer text-center py-3">
+                                <div class="small"><a th:href="@{/}">Have an account? Go to login</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="layoutAuthentication_footer">
+        <footer class="bg-light mt-auto fixed-bottom" >
+            <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">Copyright &copy; Trip Management 2022</div>
+                    <div>
+                        <a href="#">Privacy Policy</a>
+                        &middot;
+                        <a href="#">Terms &amp; Conditions</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <br>
+    <br>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+</body>
+</html>

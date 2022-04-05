@@ -1,9 +1,10 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.UserLogin;
-import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.service.RegistrationService;
-import com.tripmanagement.stringsAndConstants.StringMessages;
+import com.tripmanagement.asdc.model.*;
+import com.tripmanagement.asdc.service.*;
+import com.tripmanagement.asdc.stringsAndConstants.ControllerConstants;
+import com.tripmanagement.asdc.stringsAndConstants.ControllerStringMessages;
+import com.tripmanagement.asdc.stringsAndConstants.ServiceStringMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,24 +12,75 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class RegistrationController {
 
     @Autowired
     RegistrationService registrationService;
 
+    @Autowired
+    VehicleOwnerService vehicleOwnerService;
+
+    @Autowired
+    CustomerService customerService;
+
+    @Autowired
+    VehicleService vehicleService;
+
+    @Autowired
+    TripService tripService;
+
+    @Autowired
+    BookingService bookedRidesService;
+
     @RequestMapping("/")
     public String basePage() {
         return "login";
     }
 
-    @RequestMapping("/login")
-    public String userLogin(UserLogin userLogin, Model model) {
-        String message = registrationService.checkEmailPassword(userLogin.getEmail(), userLogin.getPassword());
-        if (message.equalsIgnoreCase(StringMessages.SUCCESS))
-            return "dashboard";
+    @PostMapping("/dashboard")
+    public String userLogin(User user, HttpSession httpSession, Model model) {
+        if(registrationService.checkUserExistByEmail(user.getEmail())) {
+            String message = registrationService.checkEmailPassword(user.getEmail(), user.getPassword());
+            if (message.equalsIgnoreCase(ControllerStringMessages.INCORRECT_AUTH)) {
+                model.addAttribute("messageStatus","FAILURE");
+                model.addAttribute("message",message);
+                return "login";
+            } else {
+                if (message.equalsIgnoreCase(ControllerConstants.USER_TYPE_VEHICLE_OWNER)) {
+                    VehicleOwner vehicleOwner = vehicleOwnerService.getVehicleOwnerByEmail(user.getEmail());
+                    httpSession.setAttribute("vehicleOwner", vehicleOwner);
+                    httpSession.setAttribute("listOfVehicle", vehicleService.getVehicles(vehicleOwner.getVehicleOwner_id()));
+                    List<Trip> previousTripsForVehicleOwner = tripService.getPreviousTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id());
+                    httpSession.setAttribute("previousRides", previousTripsForVehicleOwner);
+                    List<Trip> upcomingTripsForVehicleOwner = tripService.getUpcomingTripsForVehicleOwner(vehicleOwner.getVehicleOwner_id());
+                    httpSession.setAttribute("upcomingRides", upcomingTripsForVehicleOwner);
+                    return "owner-dashboard";
+                } else {
+                    Customer customer = customerService.getCustomerByEmail(user.getEmail());
+                    httpSession.setAttribute("source", "");
+                    httpSession.setAttribute("destination", "");
+                    httpSession.setAttribute("customer", customer);
+
+                    model.addAttribute("listOfRides", new ArrayList<Ride>());
+                    List<Booking> previousRidesForCustomer = bookedRidesService.getPreviousRidesForCustomer(customer.getCustomer_id());
+                    httpSession.setAttribute("previousRides", previousRidesForCustomer);
+
+                    List<Booking> upcomingRidesForCustomer = bookedRidesService.getUpcomingRidesForCustomer(customer.getCustomer_id());
+                    httpSession.setAttribute("upcomingRides", upcomingRidesForCustomer);
+                    httpSession.setAttribute("sourceList", tripService.getSources());
+                    httpSession.setAttribute("destinationList", tripService.getDestinations());
+                    return "customer-dashboard";
+                }
+            }
+        }
         else {
-            model.addAttribute("error_message", message);
+            model.addAttribute("messageStatus","FAILURE");
+            model.addAttribute("message","User does not exists, please register.");
             return "login";
         }
     }
@@ -38,55 +90,34 @@ public class RegistrationController {
      * */
     @RequestMapping("/forgot-password")
     public String forgotPassword() {
-        return "forgot-password";
+        return "forgot";
     }
 
     /*
-     * Will return Forget Password Page
+     * Will return Registration Page
      * */
     @RequestMapping("/register-user")
     public String registerUser() {
         return "register";
     }
 
-    /*
-     * Will open dashboard depending upon user type
-     * */
-    @RequestMapping("/dashboard")
-    public String dashboard() {
-        // TODO: open dashboard depending upon user type
-        return "dashboard";
-    }
 
-    @PostMapping("/register-vehicle-owner")
-    public String registerVehicleOwner(VehicleOwner vehicleOwner, BindingResult result, Model model) {
-        // TODO: Link with Vehicle service
-        // service.checkEmailExists(vehicleOwner.email)
-        // service.registerVehicleOwner(vehicleOwner)
-        System.out.println("Name: "+ vehicleOwner.getVehicleowner_name());
-        System.out.println("Phone Number: "+ vehicleOwner.getPhone());
-        System.out.println("Email: "+ vehicleOwner.getEmail());
-        System.out.println("Address: "+ vehicleOwner.getAddress());
-        System.out.println(""+ vehicleOwner.getVehicle_id());
-
-        String message = "return message";
-        if(message.equalsIgnoreCase("Success"))
-            return "register-user";
-        else {
-            model.addAttribute("error_message", message);
+    @PostMapping("/register-user")
+    public String registerUser(User user, BindingResult result, Model model) {
+        if(!registrationService.checkUserExistByEmail(user.getEmail())) {
+            if (user.getUserType().equalsIgnoreCase(ControllerConstants.USER_TYPE_VEHICLE_OWNER))
+                vehicleOwnerService.saveVehicleOwner(user);
+            else
+                customerService.saveCustomer(user);
+            model.addAttribute("messageStatus", ControllerStringMessages.SUCCESS_STATUS);
+            model.addAttribute("message",ControllerStringMessages.ACCOUNT_CREATED);
             return "login";
         }
-    }
-
-    @PostMapping("/add-customer")
-    public String registerCustomer(VehicleOwner vehicleOwner, BindingResult result, Model model) {
-        // TODO: Link with service
-        System.out.println("Name: "+ vehicleOwner.getVehicleowner_name());
-        System.out.println("Phone Number:"+ vehicleOwner.getPhone());
-        System.out.println("Email: "+ vehicleOwner.getEmail());
-        System.out.println("Address: "+ vehicleOwner.getAddress());
-        System.out.println("Vehicle ID:"+ vehicleOwner.getVehicle_id());
-        return "login";
+        else {
+            model.addAttribute("messageStatus", ControllerStringMessages.FAILURE_STATUS);
+            model.addAttribute("message", ServiceStringMessages.USER_ALREADY_EXIST);
+            return "register";
+        }
     }
 
 }

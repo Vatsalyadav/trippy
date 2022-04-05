@@ -1,16 +1,16 @@
 package com.tripmanagement.asdc.dao;
 
-//import java.util.List;
 import com.tripmanagement.asdc.model.VehicleOwner;
 
 public interface VehicleOwnerDAO {
 
-	//public List<CarOwner> getCustomers();
+	public boolean saveVehicleOwner(VehicleOwner carOwner);
 
-	public void saveCarOwner(VehicleOwner carOwner);
+	public VehicleOwner getVehicleOwnerByEmail(String email);
 
-	public VehicleOwner getCarOwner(int theId);
+	public VehicleOwner getVehicleOwnerById(int vehicleOwnerId);
 
-	//public void deleteCustomer(int theId);
-	
+	public boolean updateAvaialableCredits(int vehicleOwnerId, int available_credits);
+
+
 }

@@ -1,12 +1,7 @@
 package com.tripmanagement.asdc.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 @Entity
 @Table(name="customer")
 public class Customer {
@@ -16,41 +11,38 @@ public class Customer {
     @Column(name="customer_id")
     private int customer_id;
 
-    @Column(name="customer_name")
-    private String customer_name;
+    @Column(name="customer_fname")
+    private String customer_fname;
+
+    @Column(name="customer_lname")
+    private String customer_lname;
 
     @Column(name="mobile_no")
     private String mobile_no;
 
-    @Column(name="address")
-    private String address;
-
     @Column(name="email")
     private String email;
 
-    @Column(name="owner_tag")
-    private String owner_tag;
+    @Column(name="password")
+    private String password;
 
-    @Column(name="trip_id")
-    private int trip_id;
+    @Column(name="available_credits")
+    private int available_credits;
 
-    @Column(name="payment_id")
-    private int payment_id;
 
     public Customer() {
 
     }
 
-    public Customer(int customer_id, String customer_name, String mobile_no, String address, String email, String owner_tag, int trip_id, int payment_id)
+    public Customer(int customer_id, String customer_fname, String customer_lname,String mobile_no, String address, String email, String owner_tag, String password, int available_credits)
     {
        this.customer_id=customer_id;
-       this.customer_name=customer_name;
+       this.customer_fname=customer_fname;
+       this.customer_lname=customer_lname;
        this.mobile_no=mobile_no;
-       this.address=address;
        this.email=email;
-       this.owner_tag=owner_tag;
-       this.trip_id=trip_id;
-       this.payment_id=payment_id;
+       this.password=password;
+       this.available_credits=available_credits;
     }
 
     public int getCustomer_id() {
@@ -61,12 +53,12 @@ public class Customer {
         this.customer_id = customer_id;
     }
 
-    public String getCustomer_name() {
-        return customer_name;
+    public String getCustomer_lname() {
+        return customer_lname;
     }
 
-    public void setCustomer_name(String customer_name) {
-        this.customer_name = customer_name;
+    public void setCustomer_lname(String customer_lname) {
+        this.customer_lname = customer_lname;
     }
 
     public String getMobile_no() {
@@ -77,51 +69,56 @@ public class Customer {
         this.mobile_no = mobile_no;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getEmail(){
         return email;
+    }
+
+    public String getCustomer_fname() {
+        return customer_fname;
+    }
+
+    public void setCustomer_fname(String customer_fname) {
+        this.customer_fname = customer_fname;
     }
 
     public void setEmail(String email){
         this.email=email;
     }
 
-    public String getOwner_tag() {
-        return owner_tag;
+    public String getPassword() {
+        return password;
     }
 
-    public void setOwner_tag(String owner_tag) {
-        this.owner_tag = owner_tag;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public int getPayment_id() {
-        return payment_id;
+
+    public int getAvailable_credits() {
+        return available_credits;
     }
 
-    public void setPayment_id(int payment_id) {
-        this.payment_id = payment_id;
-    }
-
-    public int getTrip_id() {
-        return trip_id;
-    }
-
-    public void setTrip_id(int trip_id) {
-        this.trip_id = trip_id;
+    public void setAvailable_credits(int available_credits) {
+        this.available_credits = available_credits;
     }
 
     @Override
     public String toString() {
-        return "customer [customer_id=" + customer_id + ", customer_name=" + customer_name + ", mobile_no=" + mobile_no + ", address=" + address + ", email=" + email + ",owner_tag=" + owner_tag + ",trip_id=" + trip_id + ",payment_id=" + payment_id +"]";
+        String query1 = "Customer{" +
+                "customer_id=" + customer_id;
+        String query2 = ", customer_fname='" + customer_fname + '\'';
+        String query3 = ", customer_lname='" + customer_lname + '\'' +
+                ", mobile_no='" + mobile_no + '\'';
+        String query4 = ", available_seats='" + available_credits + '\'' +
+                ", email='" + email + '\'';
+        String query5 = ", password='" + password + '\'' +
+                '}';
+        return query1 +
+                query2 +
+                query3 +
+                query4 +
+                query5;
     }
-
 }
 
 
