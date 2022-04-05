@@ -4,6 +4,9 @@
 
 QScored Analysis: [QScored WebPage](https://qscored.com/summary/16c7e2d9-1007-4e2a-92f1-f3be129d02f3/114/)
 
+Confluence Documentation : [Confluence Site](https://csci5308-group16.atlassian.net/wiki/spaces/C5W2G1/pages)
+
+
 
 ## About
 - Current fuel economy calculation is based upon a immediate calculation, whereas we are proposing to build a system with extensive tracking of vehicles and trips.
