@@ -136,7 +136,7 @@ class CustomerServiceImplTest {
         Customer customer = new Customer();
         when(customerDAO.getCustomerById(id)).thenReturn(customer);
         Customer result= customerService.getCustomerById(id);
-        assertNull(result);
+        assertEquals(result.toString(),"Customer{customer_id=0, customer_fname='null', customer_lname='null', mobile_no='null', available_seats='0', email='null', password='null'}");
        // assertNull(customerService.getCustomerById(-1));
     }
     @Test
