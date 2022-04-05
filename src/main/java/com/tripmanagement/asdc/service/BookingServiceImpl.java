@@ -23,6 +23,7 @@ import java.util.Locale;
 
 import javax.transaction.Transactional;
 
+/*Service class for booking contains logic related to ride booking. This class interacts with the different DAO classes related to Booking for database operations*/
 @Service
 public class BookingServiceImpl implements BookingService {
 
@@ -43,6 +44,7 @@ public class BookingServiceImpl implements BookingService {
 
 	Logger logger = LoggerFactory.getLogger(BookingServiceImpl.class);
 
+	//This method contains logic for saving ride before saving it to the database using booking DAO
 	@Override
 	@Transactional
 	public boolean saveRide(Booking booking) {
@@ -78,6 +80,7 @@ public class BookingServiceImpl implements BookingService {
 		}
 	}
 
+	//This method gets list of upcoming rides from the database using booking DAO, converts date and cost of the ride to a specific format and return it to the controller
 	@Override
 	@Transactional
 	public List<Booking> getUpcomingRidesForCustomer(int customer_id) {
@@ -103,6 +106,7 @@ public class BookingServiceImpl implements BookingService {
 		}
 	}
 
+	//This method gets list of previous rides from the database using booking DAO, converts date and cost of the ride to a specific format and return it to the controller
 	@Override
 	@Transactional
 	public List<Booking> getPreviousRidesForCustomer(int customer_id) {
@@ -130,7 +134,7 @@ public class BookingServiceImpl implements BookingService {
 
 	}
 
-
+	//This method updates IsPaid to 1 from booking table and transfers credits from Customer credits to vehicleOwner credits when the customer pays for the ride
 	@Override
 	@Transactional
 	public String payforRide(Booking booking) {

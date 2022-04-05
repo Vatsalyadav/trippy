@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import com.tripmanagement.asdc.dao.TripDAO;
 import com.tripmanagement.asdc.dao.VehicleDAO;
@@ -21,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/*Service class for Trip contains logic related to ride creation. This class interacts with the different DAO classes related to trips for database operations*/
 @Service
 public class TripServiceImpl implements TripService {
 
@@ -36,6 +36,7 @@ public class TripServiceImpl implements TripService {
 	@Autowired
 	NotificationService notificationService;
 
+	//This method is used tsave trip using TRip DAO to interact with the database
 	@Override
 	@Transactional
 	public boolean saveTrip(Trip trip) {
@@ -57,6 +58,7 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
+	//This method is used to get Trip details by trip_id using Trip DAO
 	@Override
 	@Transactional
 	public Trip getTripDetails(int trip_id) {
@@ -68,6 +70,7 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
+	//This method gets list of upcoming rides of vehicleOwner from the database using trip DAO, converts date and cost of the ride to a specific format and return it to the controller
 	@Override
 	@Transactional
 	public List<Trip> getUpcomingTripsForVehicleOwner(int vehicleOwnerId) {
@@ -75,7 +78,7 @@ public class TripServiceImpl implements TripService {
 			List<Trip> allTrips = tripDAO.getAllTripsForVehicleOwner(vehicleOwnerId);
 			List<Trip> upcomingTrips = new ArrayList<>();
 			for (Trip trip : allTrips) {
-				float cost=(float) Math.round(trip.getCost() * 100.0) / 100.0f;
+				float cost=(float) Math.ceil(trip.getCost());
 				trip.setCost(cost);
 				String start_time = trip.getStart_time().replace("T", " ");
 				String current_time = Utility.getCurrentTime();
@@ -94,6 +97,7 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
+	//This method interacts with Trip DAO to delete trip by a specific trip_id
 	@Override
 	@Transactional
 	public boolean deleteTrip(int trip_id) {
@@ -104,6 +108,7 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
+	//This method gets list of avaialble rides of vehicleOwner when the customer searches for a ride, converts date and cost of the ride to a specific format and return it to the controller
 	@Override
 	@Transactional
 	public List<Ride> getAvailableTripsList(String source, String destination) {
@@ -115,7 +120,7 @@ public class TripServiceImpl implements TripService {
 			List<Ride> rideList = new ArrayList<>();
 			List<Trip> tripList = tripDAO.getAvailableTripsList(source, destination, Utility.getCurrentTime().toString());
 			for (Trip trip : tripList) {
-				float cost=(float) Math.round(trip.getCost() * 100.0) / 100.0f;
+				float cost=(float) Math.ceil(trip.getCost());
 				trip.setCost(cost);
 				Vehicle vehicle = vehicleDAO.getVehicleDetails(trip.getVehicle_id());
 				VehicleOwner vehicleOwner = vehicleOwnerDAO
@@ -144,6 +149,7 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
+	//This method is used to calculate cost of a ride based on the booked seats, total Kms and fuel economy of the vehicle
 	@Override
 	@Transactional
 	public float calculateCost(Vehicle vehicle, Trip trip) {
@@ -153,12 +159,13 @@ public class TripServiceImpl implements TripService {
 		} else if (vehicle.getAvailable_seats() == 0) {
 			cost= 0;
 		} else {
-			cost= 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * vehicle.getAvailable_seats()));
+			cost= 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * trip.getAvailable_seats()));
 			cost=(float) Math.round(cost * 100.0) / 100.0f;
 		}
 		return cost;
 	}
 
+	//This method gets list of previous rides of vehicleOwner from the database using trip DAO, converts date and cost of the ride to a specific format and return it to the controller
 	@Override
 	@Transactional
 	public List<Trip> getPreviousTripsForVehicleOwner(int vehicleOwnerId) {
@@ -166,7 +173,7 @@ public class TripServiceImpl implements TripService {
 			List<Trip> allTrips = tripDAO.getAllTripsForVehicleOwner(vehicleOwnerId);
 			List<Trip> previousTrips = new ArrayList<>();
 			for (Trip trip : allTrips) {
-				float cost=(float) Math.round(trip.getCost() * 100.0) / 100.0f;
+				float cost=(float) Math.ceil(trip.getCost());
 				trip.setCost(cost);
 				String end_time = trip.getEnd_time().replace("T", " ");
 				trip.setStart_time(Utility.convertDate(trip.getStart_time()));
@@ -185,12 +192,14 @@ public class TripServiceImpl implements TripService {
 		}
 	}
 
+	//This method interacts with tripDAO to get distinct sources from the database 
 	@Override
 	@Transactional
 	public List<String> getSources() {
 		return tripDAO.getSources();
 	}
 
+	//This method interacts with tripDAO to get distinct destinations from the database 
 	@Override
 	@Transactional
 	public List<String> getDestinations() {

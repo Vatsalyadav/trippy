@@ -18,7 +18,7 @@
 <nav class="sb-topnav navbar shadow fixed-top navbar-expand navbar-dark bg-dark">
     <a class="navbar-brand ps-3" th:onclick="|window.location.href='/customer-dashboard'|">Trip Management</a>
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
-    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/open-credit'|"><i class="fas fa-dollar-sign"></i> <span th:text="${session.customer.available_credits}+' Credit'"></span></button>
+    <button class="btn btn-outline-light" type="button" style="margin-right: 30px" th:onclick="|window.location.href='/open-credit-customer'|"><i class="fas fa-dollar-sign"></i> <span th:text="${session.customer.available_credits}+' Credit'"></span></button>
     <label class="text-light" th:text="${session.customer.customer_fname}"></label>
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">

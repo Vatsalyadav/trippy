@@ -10,10 +10,23 @@
         <title>Trip Management</title>
         <link th:href="@{/styles/styles.css}" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script type="text/javascript"> function preventBack() {window.history.forward();} setTimeout("preventBack()", 0); window.onunload = function () {null};</script>
+        <script>
+            setTimeout(function() {
+                $('#alertDiv').fadeOut('fast');
+            }, 2000);
+        </script>
     </head>
     <body>
         <div id="layoutAuthentication">
+            <div th:if="!${message==null}">
+            <div style="width:400px; position: absolute; top: 20px;right: 5px;" id="alertDiv" class="alert alert-cyan alert-solid"
+                 th:classappend="${messageStatus=='FAILURE'?'alert-pink':'alert-cyan'}"
+                 th:text="${message}" role="alert">
+                <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            </div>
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
