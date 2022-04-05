@@ -115,10 +115,11 @@ class TripServiceImplTest {
     void testcalculateCostCorrect(){
         Vehicle vehicle = new Vehicle();
         vehicle.setFuel_economy(30);
-        vehicle.setAvailable_seats(4);
         Trip trip = new Trip();
         trip.setEstimated_kms(2000);
-        assertEquals((int)tripService.calculateCost(vehicle,trip),20);
+        vehicle.setAvailable_seats(4);
+        trip.setAvailable_seats(4);
+        assertEquals(tripService.calculateCost(vehicle,trip),32.2f);
     }
 
     @Test

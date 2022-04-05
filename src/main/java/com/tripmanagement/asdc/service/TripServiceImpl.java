@@ -36,7 +36,7 @@ public class TripServiceImpl implements TripService {
 	@Autowired
 	NotificationService notificationService;
 
-	//This method is used tsave trip using TRip DAO to interact with the database
+	//This method is used to save trip using TRip DAO to interact with the database
 	@Override
 	@Transactional
 	public boolean saveTrip(Trip trip) {
@@ -139,11 +139,11 @@ public class TripServiceImpl implements TripService {
 				String fname = vehicleOwner.getVehicleowner_fname();
 				int ownerId = vehicle.getVehicleowner_id();
 				String phone = vehicleOwner.getPhone();
-				float cost = calculateCost(vehicle, trip);
+//				float cost = calculateCost(vehicle, trip);
 				int seats = trip.getAvailable_seats();
 				Ride ride = new Ride(trip, id, number_plate,
 						economy, fname, ownerId,
-						phone, cost, seats);
+						phone, tripCost, seats);
 				if(trip.getSeats_remaining()>0)
 				{
 				String current_time = Utility.getCurrentTime();
@@ -166,12 +166,13 @@ public class TripServiceImpl implements TripService {
 	@Transactional
 	public float calculateCost(Vehicle vehicle, Trip trip) {
 		float cost;
+		float currentFuelPrice = 1.61f; // The current fuel price, will give a Magic number
 		if (vehicle == null || trip == null) {
 			cost= 0;
 		} else if (vehicle.getAvailable_seats() == 0) {
 			cost= 0;
 		} else {
-			cost= 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * trip.getAvailable_seats()));
+			cost= currentFuelPrice * 1.2f * (trip.getEstimated_kms() / (vehicle.getFuel_economy() * trip.getAvailable_seats()));
 			cost=(float) Math.round(cost * 100.0) / 100.0f;
 		}
 		return cost;

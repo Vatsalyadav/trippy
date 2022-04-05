@@ -157,12 +157,6 @@ public class VehicleServiceImpl implements VehicleService {
 		float[] fuelConsumed = new float[vehicles.size()];
 		String[] labels = new String[vehicles.size()];
 		String[] backgroundColor = new String[vehicles.size()];
-//		for (Vehicle vehicle: vehicles){
-//			ChartData chartData = new ChartData();
-//			chartData.setLabel(vehicle.getVehicle_name());
-//			chartData.setData(new float[]{vehicle.getFuel_consumed(), vehicle.getKms_driven(), vehicle.getFuel_economy()});
-//			chartDataArrayList.add(chartData);
-//		}
 		ChartData chartData1 = new ChartData();
 		ChartData chartData2 =  new ChartData();
 		for (int i = 0; i < vehicles.size(); i++) {
@@ -193,12 +187,6 @@ public class VehicleServiceImpl implements VehicleService {
 		float[] fuelConsumed = new float[vehicles.size()];
 		String[] labels = new String[vehicles.size()];
 		String[] backgroundColor = new String[vehicles.size()];
-//		for (Vehicle vehicle: vehicles){
-//			ChartData chartData = new ChartData();
-//			chartData.setLabel(vehicle.getVehicle_name());
-//			chartData.setData(new float[]{vehicle.getFuel_consumed(), vehicle.getKms_driven(), vehicle.getFuel_economy()});
-//			chartDataArrayList.add(chartData);
-//		}
 		ChartData chartData1 = new ChartData();
 		ChartData chartData2 =  new ChartData();
 		for (int i = 0; i < vehicles.size(); i++) {
