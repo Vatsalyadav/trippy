@@ -207,6 +207,9 @@ var radarChartKm = new Chart(kmCanvas, {
                         </div>
                         <div class="container-fluid">
                             <div class="row">
+                                <div th:if="${#lists.size(session.listOfVehicle)==0}">
+                                    <label class="text-secondary" style="font-weight:bold; font-size:14px" >No Vehicles Available, Please add a Vehicle</label>
+                                </div>
                                 <div class="col-md-4" th:each="vehicle: ${session.listOfVehicle}">
                                     <div class="containerCard">
                                         <div class="containerCard">
@@ -345,6 +348,8 @@ var radarChartKm = new Chart(kmCanvas, {
             </div>
         </div>
     </footer>
+    <br>
+    <br>
 </div>
 
 <script crossorigin="anonymous"

@@ -10,6 +10,7 @@ public final class ControllerStringMessages {
     public static final String FAILURE_STATUS = "FAILURE";
     public static final String SUCCESS_STATUS = "SUCCESS";
 
+    public static final String ACCOUNT_CREATED = "User Account Created!";
     public static final String RIDE_BOOKED = "Ride Successfully Booked!";
     public static final String CREDITS_ADDED = "Credits Added Successfully!";
     public static final String CAR_ADDED= "Vehicle Added Successfully!";
