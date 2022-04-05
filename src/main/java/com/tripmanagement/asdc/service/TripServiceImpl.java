@@ -122,8 +122,8 @@ public class TripServiceImpl implements TripService {
 			List<Ride> rideList = new ArrayList<>();
 			List<Trip> tripList = tripDAO.getAvailableTripsList(source, destination, Utility.getCurrentTime().toString());
 			for (Trip trip : tripList) {
-				float cost=(float) Math.ceil(trip.getCost());
-				trip.setCost(cost);
+				float tripCost=(float) Math.ceil(trip.getCost());
+				trip.setCost(tripCost);
 				Vehicle vehicle = vehicleDAO.getVehicleDetails(trip.getVehicle_id());
 				int vehicleowner_id = vehicleDAO.getVehicleDetails(trip.getVehicle_id()).getVehicleowner_id();
 				VehicleOwner vehicleOwner = vehicleOwnerDAO.getVehicleOwnerById(vehicleowner_id);
