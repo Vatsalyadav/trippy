@@ -6,11 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class VehicleServiceImplTest {
     @Autowired
     VehicleService vehicleService;
@@ -40,7 +42,7 @@ class VehicleServiceImplTest {
 
     @Test
     void testgetVehicleDetails_true() {
-        assertTrue(vehicleService.getVehicleDetails(1) != null);
+        assertTrue(vehicleService.getVehicleDetails(47) != null);
     }
 
     @Test
@@ -51,7 +53,7 @@ class VehicleServiceImplTest {
     @Test
     void testupdateFuelEconomy_true() {
         FuelEconomy fuelEconomy = new FuelEconomy();
-        fuelEconomy.setVehicle_id(1);
+        fuelEconomy.setVehicle_id(47);
         fuelEconomy.setFuel_economy(12);
         fuelEconomy.setKms_travelled(202);
         fuelEconomy.setFuel_consumed(12);
@@ -74,7 +76,7 @@ class VehicleServiceImplTest {
 
     @Test
     void testgetVehicles(){
-        assertTrue(vehicleService.getVehicles(1).size()>0);
+        assertTrue(vehicleService.getVehicles(71).size()>0);
     }
 
 

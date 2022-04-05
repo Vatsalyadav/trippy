@@ -6,11 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class VehicleOwnerServiceImplTest {
 
     @Autowired
@@ -36,7 +38,7 @@ class VehicleOwnerServiceImplTest {
 
     @Test
     void testGetCorrectVehicleOwnerByEmail() {
-        assertNotNull(vehicleOwnerService.getVehicleOwnerByEmail("test@test.test"));
+        assertNotNull(vehicleOwnerService.getVehicleOwnerByEmail("test@case.com"));
     }
     @Test
     void testGetWrongVehicleOwnerbyEmail() {
@@ -55,7 +57,7 @@ class VehicleOwnerServiceImplTest {
 
     @Test
     void testgetVehicleOwnerById_true() {
-        assertTrue(vehicleOwnerService.getVehicleOwnerByOwnerId(13)!=null);
+        assertTrue(vehicleOwnerService.getVehicleOwnerByOwnerId(69)!=null);
     }
 
     @Test
@@ -66,7 +68,7 @@ class VehicleOwnerServiceImplTest {
     @Test
     void testbuycredits()
     {
-        assertTrue(vehicleOwnerService.buyCredits(1,1));
+        assertTrue(vehicleOwnerService.buyCredits(69,1));
     }
     @Test
     void testbuycredits_false() {

@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class VehicleOwnerDAOImplTest {
     @Autowired
     VehicleOwnerDAO vehicleOwnerDAO;
@@ -46,7 +48,7 @@ class VehicleOwnerDAOImplTest {
 
     @Test
     void testGetCorrectVehicleOwnerByEmail() {
-        assertNotNull(vehicleOwnerDAO.getVehicleOwnerByEmail("test@email.test"));
+        assertNotNull(vehicleOwnerDAO.getVehicleOwnerByEmail("test1@case.com"));
     }
     @Test
     void testGetWrongVehicleOwnerbyEmail() {
@@ -65,7 +67,7 @@ class VehicleOwnerDAOImplTest {
 
     @Test
     void testgetVehicleOwnerById_true() {
-        assertTrue(vehicleOwnerDAO.getVehicleOwnerById(13)!=null);
+        assertTrue(vehicleOwnerDAO.getVehicleOwnerById(71)!=null);
     }
 
     @Test

@@ -20,6 +20,7 @@ public class FuelEconomyDAOImpl implements FuelEconomyDAO {
     //This method is used to insert fuelEconomy object into the database
 	@Override
 	public boolean saveFuelEconomy(FuelEconomy fuel_economy) {
+
 		if(fuel_economy==null)
 		return false;
 		try{

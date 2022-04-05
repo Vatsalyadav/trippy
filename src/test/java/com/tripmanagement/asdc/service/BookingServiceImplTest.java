@@ -1,19 +1,17 @@
 package com.tripmanagement.asdc.service;
 
-import com.tripmanagement.asdc.dao.BookingDAO;
 import com.tripmanagement.asdc.model.Booking;
 import com.tripmanagement.asdc.model.Trip;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.sql.Date;
-
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class BookingServiceImplTest {
     @Autowired
     BookingService bookingService;
@@ -55,7 +53,7 @@ class BookingServiceImplTest {
         trip.setSeats_remaining(8);
         trip.setCost(1000);
         trip.setVehicle_owner_id(1111);
-        Booking booking = new Booking(100,4,"2022-03-31",55,0,56,111,trip);
+        Booking booking = new Booking(30,40,"2022-03-31",55,0,105,111,trip);
         //Booking booking=new Booking(100, "test_source", "test_destination", 2, 4, 3, 3, "2022-01-01", 20, 23);
         assertTrue(bookingService.saveRide(booking));
 
@@ -73,12 +71,12 @@ class BookingServiceImplTest {
     @Test
     void testpayforRideSucess() {
         Booking booking=new Booking();
-        booking.setBooked_ride_id(1111);
-        booking.setCustomer_id(4);
+        booking.setBooked_ride_id(35);
+        booking.setCustomer_id(41);
         booking.setTimestamp("2022-03-31");
-        booking.setCost(55);
+        booking.setCost(1);
         booking.setSeats_booked(2);
-        booking.setTrip_id(56);
+        booking.setTrip_id(107);
         booking.setIsPaid(1);
         booking.setTrip(new Trip());
         assertEquals(bookingService.payforRide(booking),"Success");

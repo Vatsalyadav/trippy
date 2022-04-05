@@ -8,11 +8,13 @@ import java.sql.Date;
 
 import com.tripmanagement.asdc.model.Trip;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class TripDAOmplTest {
 
 @Autowired
@@ -67,7 +69,7 @@ TripDAO tripDAO;
 
     @Test
     void getAllTripsForCorrectVehicleOwner(){
-        assertTrue(tripDAO.getAllTripsForVehicleOwner(5).size()>0);
+        assertTrue(tripDAO.getAllTripsForVehicleOwner(2).size()>0);
     }
     @Test
     void getAllTripsForWrongVehicleOwner(){
@@ -81,7 +83,7 @@ TripDAO tripDAO;
 
     @Test
     void testgetTripDetails() {
-        assertTrue(tripDAO.getTripDetails(3)!=null);
+        assertTrue(tripDAO.getTripDetails(105)!=null);
     }
     @Test
     void testWrongTripDetails() {

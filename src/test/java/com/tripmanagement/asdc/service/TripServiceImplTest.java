@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Date;
@@ -13,6 +14,7 @@ import java.sql.Date;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class TripServiceImplTest {
 
 
@@ -34,7 +36,7 @@ class TripServiceImplTest {
     @Test
     void saveCorrectTrip() {
         Trip trip=new Trip();
-        trip.setVehicle_id(5);
+        trip.setVehicle_id(47);
         trip.setSource("test_source");
         trip.setDestination("test_destination");
         assertTrue(tripService.saveTrip(trip));
@@ -48,7 +50,7 @@ class TripServiceImplTest {
 
     @Test
     void testgetTripDetails() {
-        assertTrue(tripService.getTripDetails(3)!=null);
+        assertTrue(tripService.getTripDetails(105)!=null);
     }
     @Test
     void testWrongTripDetails() {

@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class CustomerServiceImplTest {
 
     @Autowired
@@ -81,9 +83,9 @@ class CustomerServiceImplTest {
         customer.setCustomer_fname("Sania");
         customer.setCustomer_id(1);
         customer.setCustomer_lname("kumar");
-        customer.setEmail("someemail@dal.ca");
+        customer.setEmail("testing@case.com");
         customer.setPassword("password");
-        String email= "svt@gmail.com";
+        String email= "testing@case.com";
         when(customerDAO.getCustomerByEmail(email)).thenReturn(customer);
         Customer result = customerService.getCustomerByEmail(email);
         assertTrue(result!=null);
@@ -128,7 +130,7 @@ class CustomerServiceImplTest {
     }
     @Test
     void testGetCustomerByCorrectId(){
-        int id = 1;
+        int id = 41;
         Customer customer = new Customer();
         customer.setCustomer_fname("Sania");
         customer.setCustomer_id(1);
@@ -143,7 +145,7 @@ class CustomerServiceImplTest {
 
     @Test
     void testupdateAvaialableCredits(){
-        int customer_id = 9;
+        int customer_id = 41;
         Customer customer = new Customer();
         customer.setCustomer_fname("Sania");
         customer.setCustomer_id(1);

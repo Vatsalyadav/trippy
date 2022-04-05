@@ -6,6 +6,7 @@ import com.tripmanagement.asdc.dao.TripDAO;
 import com.tripmanagement.asdc.dao.VehicleOwnerDAO;
 import com.tripmanagement.asdc.model.Booking;
 import com.tripmanagement.asdc.model.Customer;
+
 import com.tripmanagement.asdc.model.Trip;
 import com.tripmanagement.asdc.model.VehicleOwner;
 import com.tripmanagement.asdc.util.Utility;
@@ -100,6 +101,7 @@ public class BookingServiceImpl implements BookingService {
 					upcomingBookings.add(booking);
 				}
 			}
+
 			return upcomingBookings;
 		} catch (Exception e) {
 			return new ArrayList<Booking>();

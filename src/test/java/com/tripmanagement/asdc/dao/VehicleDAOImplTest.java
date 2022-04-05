@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class VehicleDAOImplTest {
     @Autowired
     VehicleDAO vehicleDAO;
@@ -42,7 +44,7 @@ class VehicleDAOImplTest {
 
     @Test
     void testgetVehicleDetails_true() {
-        assertTrue(vehicleDAO.getVehicleDetails(1) != null);
+        assertTrue(vehicleDAO.getVehicleDetails(45) != null);
     }
 
     @Test
@@ -53,7 +55,7 @@ class VehicleDAOImplTest {
     @Test
     void testgetVehicleCorrect()
     {
-        assertTrue(vehicleDAO.getVehicles(1).size()>0);
+        assertTrue(vehicleDAO.getVehicles(11111).size()>0);
     }
     @Test
     void testgetVehicleWrong()

@@ -4,11 +4,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class RegistrationDAOTest {
 
     @Autowired
@@ -16,7 +18,7 @@ class RegistrationDAOTest {
 
     @Test
     void testcheckUserExistByCorrectEmail() {
-        assertTrue(registrationDAO.checkUserExistByEmail("vatsal@abc.com"));
+        assertTrue(registrationDAO.checkUserExistByEmail("test@case.com"));
     }
    @Test
     void testcheckUserExistByIllegalEmail() {
@@ -25,7 +27,7 @@ class RegistrationDAOTest {
 
     @Test
     void testcheckUservehicleOwnerExistByCorrectEmail() {
-        assertTrue(registrationDAO.checkUserExistByEmail("test@test.test"));
+        assertTrue(registrationDAO.checkUserExistByEmail("test@case.com"));
     }
 
     @Test
@@ -39,30 +41,8 @@ class RegistrationDAOTest {
     }
 
     @Test
-    void testCheckCorrectEmailExist() {
-        assertTrue(registrationDAO.checkEmailExists("xyz@qwe.com", "CUSTOMER"));
-        assertTrue(registrationDAO.checkEmailExists("test@test.test", "VEHICLE_OWNER"));
-    }
-
-    @Test
-    void testcheckWrongEmailExists() {
-        assertFalse(registrationDAO.checkEmailExists("xyz1@qwe.com", "CUSTOMER"));
-        assertFalse(registrationDAO.checkEmailExists("test1@test.test", "VEHICLE_OWNER"));
-    }
-
-    @Test
-    void testCheckNullEmailExists() {
-        assertFalse(registrationDAO.checkEmailExists(null, "CUSTOMER"));
-    }
-
-    @Test
-    void testCheckEmptyEmailExists() {
-        assertFalse(registrationDAO.checkEmailExists("", "CUSTOMER"));
-    }
-
-    @Test
     void testCheckWrongEmailPassword() {
-        assertEquals(registrationDAO.checkEmailPassword("test@test.test", "test"),"VEHICLE_OWNER");
+        assertEquals(registrationDAO.checkEmailPassword("test@test.test", "test"),"Incorrect email or password");
     }
 
     @Test

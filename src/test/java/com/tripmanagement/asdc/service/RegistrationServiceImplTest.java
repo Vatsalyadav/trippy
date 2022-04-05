@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +15,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class RegistrationServiceImplTest {
 
     @Autowired
@@ -41,7 +43,7 @@ class RegistrationServiceImplTest {
 
     @Test
     void testcheckUserExistByCorrectEmail() {
-        assertTrue(registrationService.checkUserExistByEmail("svt@gmail.com"));
+        assertTrue(registrationService.checkUserExistByEmail("test@case.com"));
     }
 
     @Test
@@ -80,8 +82,8 @@ class RegistrationServiceImplTest {
 
     @Test
     void testCheckCorrectEmailExist() {
-        assertTrue(registrationService.checkUserExistByEmail("xyz@qwe.com"));
-        assertTrue(registrationService.checkUserExistByEmail("test@test.test"));
+        assertTrue(registrationService.checkUserExistByEmail("test@case.com"));
+        assertTrue(registrationService.checkUserExistByEmail("test1@case.com"));
     }
 
     @Test

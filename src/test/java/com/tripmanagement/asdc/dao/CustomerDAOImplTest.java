@@ -11,12 +11,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.tripmanagement.asdc.model.Customer;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Date;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
+@TestPropertySource("/application-test.properties")
 class CustomerDAOImplTest {
 
 @Autowired
@@ -67,7 +69,7 @@ CustomerDAO customerDAO;
     }
     @Test
     void testGetCustomerByCorrectId(){
-        assertNotNull(customerDAO.getCustomerById(1));
+        assertNotNull(customerDAO.getCustomerById(40));
 
     }
     @Test
