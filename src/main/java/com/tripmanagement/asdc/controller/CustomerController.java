@@ -59,9 +59,21 @@ public class CustomerController {
         System.out.println("customer_id: "+booking.getCustomer_id());
 
         bookingService.payforRide(booking);
+        Customer customer = customerService.getCustomerById(booking.getCustomer_id());
+        session.setAttribute("customer", customer);
         session.setAttribute("upcomingRides", bookingService.getUpcomingRidesForCustomer(booking.getCustomer_id()));
         session.setAttribute("previousRides", bookingService.getPreviousRidesForCustomer(booking.getCustomer_id()));
         return "booking-history";
+    }
+
+    @PostMapping("/pay-booking")
+    public String payBooking(Booking booking, Model model, HttpSession session){
+        bookingService.payforRide(booking);
+        Customer customer = customerService.getCustomerById(booking.getCustomer_id());
+        session.setAttribute("customer", customer);
+        session.setAttribute("upcomingRides", bookingService.getUpcomingRidesForCustomer(booking.getCustomer_id()));
+        session.setAttribute("previousRides", bookingService.getPreviousRidesForCustomer(booking.getCustomer_id()));
+        return "customer-dashboard";
     }
 
     @RequestMapping("/booking-history")
