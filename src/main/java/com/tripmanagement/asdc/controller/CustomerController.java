@@ -63,7 +63,7 @@ public class CustomerController {
         return "customer-dashboard";
     }
 
-    @RequestMapping(value = "/open-credit")
+    @RequestMapping(value = "/open-credit-customer")
     public String openCredit( Model model) {
         return "customer-credits";
     }
