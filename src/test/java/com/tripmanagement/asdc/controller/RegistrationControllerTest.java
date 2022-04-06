@@ -1,10 +1,16 @@
 package com.tripmanagement.asdc.controller;
 
-import com.tripmanagement.asdc.model.Customer;
-import com.tripmanagement.asdc.model.User;
-import com.tripmanagement.asdc.model.Vehicle;
-import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.service.*;
+import com.tripmanagement.asdc.controller.authentication.RegistrationController;
+import com.tripmanagement.asdc.model.users.Customer;
+import com.tripmanagement.asdc.model.users.User;
+import com.tripmanagement.asdc.model.vehicle.Vehicle;
+import com.tripmanagement.asdc.model.users.VehicleOwner;
+import com.tripmanagement.asdc.service.authentication.RegistrationService;
+import com.tripmanagement.asdc.service.booking.BookingService;
+import com.tripmanagement.asdc.service.customer.CustomerService;
+import com.tripmanagement.asdc.service.trip.TripService;
+import com.tripmanagement.asdc.service.vehicle.VehicleService;
+import com.tripmanagement.asdc.service.vehicleOwner.VehicleOwnerService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +41,7 @@ public class RegistrationControllerTest {
 
         private MockMvc mockMvc;
         @InjectMocks
-        private  RegistrationController registrationController;
+        private RegistrationController registrationController;
 
         @Mock
         private VehicleService vehicleService;
