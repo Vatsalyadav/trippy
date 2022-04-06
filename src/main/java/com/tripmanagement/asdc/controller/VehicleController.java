@@ -4,9 +4,6 @@ import com.tripmanagement.asdc.model.ChartData;
 import com.tripmanagement.asdc.model.FuelEconomy;
 import com.tripmanagement.asdc.model.Vehicle;
 import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.service.BookingService;
-import com.tripmanagement.asdc.service.TripService;
-import com.tripmanagement.asdc.service.VehicleOwnerService;
 import com.tripmanagement.asdc.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,10 +55,11 @@ public class VehicleController {
         return "all-vehicles";
     }
 
-    private void getChartData(int vehicleOwnerId, Model model){
+    private ArrayList<ChartData> getChartData(int vehicleOwnerId, Model model){
         ArrayList<ChartData> vehicleUseChart = vehicleService.getFuelConsumedChart(vehicleOwnerId);
         model.addAttribute("vehicleKmChartDataset",vehicleUseChart.get(0));
         model.addAttribute("vehicleFuelChartDataset",vehicleUseChart.get(1));
+        return vehicleUseChart;
     }
 
 

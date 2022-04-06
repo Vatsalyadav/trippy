@@ -62,13 +62,6 @@ public class VehicleOwnerController {
         return "owner-dashboard";
     }
 
-    @PostMapping("/delete-vehicle")
-    public String deleteVehicle(Vehicle vehicle, Model model) {
-        Boolean deleteVehicleStatus = vehicleService.deleteVehicle(vehicle.getVehicle_id());
-        model.addAttribute("deleteVehicleStatus", deleteVehicleStatus);
-        return "owner-dashboard";
-    }
-
     @RequestMapping(value = "/open-owner-credit")
     public String openCredit( Model model) {
         return "payment";
