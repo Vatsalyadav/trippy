@@ -1,5 +1,9 @@
 package com.tripmanagement.asdc.controller;
 
+import com.tripmanagement.asdc.controller.user.VehicleOwnerController;
+import com.tripmanagement.asdc.service.trip.TripService;
+import com.tripmanagement.asdc.service.vehicle.VehicleService;
+import com.tripmanagement.asdc.service.vehicleOwner.VehicleOwnerService;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -11,10 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import com.tripmanagement.asdc.model.Trip;
-import com.tripmanagement.asdc.model.Vehicle;
-import com.tripmanagement.asdc.model.VehicleOwner;
-import com.tripmanagement.asdc.service.*;
+import com.tripmanagement.asdc.model.rideSharing.Trip;
+import com.tripmanagement.asdc.model.vehicle.Vehicle;
+import com.tripmanagement.asdc.model.users.VehicleOwner;
 
 import org.mockito.Mock;
 
